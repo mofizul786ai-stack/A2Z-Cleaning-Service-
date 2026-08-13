@@ -1,1 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Pricing | A2Z Cleaning Service</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#f5f8fc;
+      color:#172033;
+      padding-bottom:70px;
+    }
+
+    header{
+      background:#fff;
+      padding:14px 16px;
+      position:sticky;
+      top:0;
+      z-index:10;
+      box-shadow:0 2px 12px rgba(0,0,0,.08);
+    }
+
+    .header{
+      max-width:900px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .logo{
+      color:#0879e8;
+      font-size:20px;
+      font-weight:800;
+    }
+
+    .call{
+      background:#0879e8;
+      color:white;
+      padding:9px 14px;
+      border-radius:9px;
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    .hero{
+      background:linear-gradient(135deg,#0879e8,#063b88);
+      color:white;
+      text-align:center;
+      padding:55px 20px;
+    }
+
+    .hero h1{
+      font-size:34px;
+      margin-bottom:8px;
+    }
+
+    .hero p{
+      color:#e4efff;
+    }
+
+    .container{
+      max-width:900px;
+      margin:auto;
+      padding:35px 15px;
+    }
+
+    .note{
+      background:#e8f3ff;
+      border-left:4px solid #0879e8;
+      padding:15px;
+      border-radius:10px;
+      margin-bottom:25px;
+      font-size:14px;
+      color:#47566b;
+    }
+
+    .price-card{
+      background:white;
+      margin-bottom:16px;
+      padding:21px;
+      border-radius:17px;
+      box-shadow:0 4px 18px rgba(0,0,0,.07);
+    }
+
+    .price-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:15px;
+    }
+
+    .service{
+      font-size:19px;
+      font-weight:800;
+    }
+
+    .icon{
+      font-size:25px;
+      margin-right:6px;
+    }
+
+    .price{
+      color:#0879e8;
+      font-size:20px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .desc{
+      color:#687386;
+      font-size:14px;
+      margin:8px 0 15px;
+    }
+
+    .book{
+      display:inline-block;
+      background:#0879e8;
+      color:white;
+      text-decoration:none;
+      padding:10px 17px;
+      border-radius:9px;
+      font-weight:bold;
+    }
+
+    .whatsapp{
+      display:inline-block;
+      background:#159447;
+      color:white;
+      text-decoration:none;
+      padding:10px 17px;
+      border-radius:9px;
+      font-weight:bold;
+      margin-left:5px;
+    }
+
+    .bottom{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:white;
+      box-shadow:0 -3px 15px rgba(0,0,0,.12);
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      z-index:20;
+    }
+
+    .bottom a{
+      text-align:center;
+      padding:10px 4px;
+      font-size:12px;
+      font-weight:bold;
+      text-decoration:none;
+      color:#172033;
+    }
+
+    @media(max-width:480px){
+      .price-top{
+        display:block;
+      }
+
+      .price{
+        display:block;
+        margin-top:7px;
+      }
+
+      .hero h1{
+        font-size:30px;
+      }
+
+      .whatsapp{
+        margin-left:2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header">
+    <div class="logo">A2Z Cleaning Service</div>
+
+    <a class="call" href="tel:+919101616836">
+      📞 Call
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Our Pricing</h1>
+  <p>Affordable Cleaning Services in Guwahati, Assam</p>
+</section>
+
+<main class="container">
+
+  <div class="note">
+    💡 <strong>Starting Price:</strong>
+    Final price may vary depending on property size,
+    cleaning condition and service requirements.
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🛁 Bathroom Deep Cleaning</div>
+      <div class="price">₹499+</div>
+    </div>
+    <div class="desc">
+      Toilet, basin, tiles, floor and deep scrubbing.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20Bathroom%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🍳 Kitchen Deep Cleaning</div>
+      <div class="price">₹999+</div>
+    </div>
+    <div class="desc">
+      Degreasing, platform, sink and cabinet exterior cleaning.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20Kitchen%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🏠 1BHK Home Deep Cleaning</div>
+      <div class="price">₹1,499+</div>
+    </div>
+    <div class="desc">
+      Complete home cleaning including rooms, floors, kitchen and bathroom.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%201BHK%20Home%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🏠 2BHK Home Deep Cleaning</div>
+      <div class="price">₹1,999+</div>
+    </div>
+    <div class="desc">
+      Complete deep cleaning for a 2BHK home.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%202BHK%20Home%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🏠 3BHK Home Deep Cleaning</div>
+      <div class="price">₹2,499+</div>
+    </div>
+    <div class="desc">
+      Complete deep cleaning for a 3BHK home.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%203BHK%20Home%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🛋️ Sofa Cleaning</div>
+      <div class="price">₹199 / Seat</div>
+    </div>
+    <div class="desc">
+      Vacuuming, shampoo cleaning and stain treatment.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20Sofa%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🛏️ Mattress Cleaning</div>
+      <div class="price">₹499+</div>
+    </div>
+    <div class="desc">
+      Mattress vacuuming and deep cleaning.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20Mattress%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🧼 Carpet Cleaning</div>
+      <div class="price">₹399+</div>
+    </div>
+    <div class="desc">
+      Carpet vacuuming and deep cleaning.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20Carpet%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🪟 Window / Glass Cleaning</div>
+      <div class="price">₹299+</div>
+    </div>
+    <div class="desc">
+      Window frames, glass panels and surface cleaning.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20Window%20and%20Glass%20Cleaning.">WhatsApp</a>
+  </div>
+
+  <div class="price-card">
+    <div class="price-top">
+      <div class="service">🏢 Office Cleaning</div>
+      <div class="price">₹999+</div>
+    </div>
+    <div class="desc">
+      Office floor, dusting, washroom and common-area cleaning.
+    </div>
+    <a class="book" href="index.html#booking">Book Now</a>
+    <a class="whatsapp" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20Office%20Cleaning.">WhatsApp</a>
+  </div>
+
+</main>
+
+<div class="bottom">
+  <a href="index.html">
+    🏠<br>Home
+  </a>
+
+  <a href="tel:+919101616836">
+    📞<br>Call
+  </a>
+
+  <a href="https://wa.me/919101616836">
+    💬<br>WhatsApp
+  </a>
+</div>
+
+</body>
+    </html>
