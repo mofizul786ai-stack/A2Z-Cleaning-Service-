@@ -1,1 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>A2Z Cleaning Service | Guwahati, Assam</title>
+  <meta name="description" content="A2Z Cleaning Service provides professional home, office, bathroom, kitchen, sofa and window cleaning services in Guwahati, Assam.">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5f8fc;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    }
+
+    .navbar {
+      max-width: 1150px;
+      margin: auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 800;
+      color: #0879e8;
+    }
+
+    .logo span {
+      color: #172033;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #0879e8;
+    }
+
+    .menu-btn {
+      display: none;
+      border: none;
+      background: #0879e8;
+      color: white;
+      font-size: 22px;
+      padding: 7px 11px;
+      border-radius: 8px;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(rgba(5,30,65,0.72), rgba(5,30,65,0.72)),
+        url("https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80")
+        center/cover;
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 1150px;
+      width: 100%;
+      margin: auto;
+      padding: 50px 20px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.16);
+      padding: 8px 14px;
+      border-radius: 30px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      max-width: 700px;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: #4db4ff;
+    }
+
+    .hero p {
+      max-width: 650px;
+      font-size: 18px;
+      color: #e5eef8;
+      margin-bottom: 28px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #0879e8;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0566c7;
+    }
+
+    .btn-light {
+      background: white;
+      color: #0879e8;
+    }
+
+    /* GENERAL */
+    section {
+      padding: 70px 18px;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title small {
+      color: #0879e8;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      margin-top: 6px;
+    }
+
+    .section-title p {
+      max-width: 650px;
+      margin: 10px auto 0;
+      color: #657084;
+    }
+
+    /* SERVICES */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 25px rgba(20,50,90,0.08);
+      transition: 0.25s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 15px;
+      background: #e8f3ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      color: #687386;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      color: #0879e8;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    /* PRICING */
+    .pricing-section {
+      background: #eef6ff;
+    }
+
+    .price-table {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px rgba(20,50,90,0.08);
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 17px 20px;
+      border-bottom: 1px solid #edf0f4;
+    }
+
+    .price-row:last-child {
+      border-bottom: none;
+    }
+
+    .price-row strong {
+      color: #0879e8;
+    }
+
+    /* WHY US */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .why-card {
+      background: white;
+      padding: 25px 18px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(20,50,90,0.07);
+    }
+
+    .why-card .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .why-card p {
+      font-size: 13px;
+      color: #697386;
+      margin-top: 6px;
+    }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    /* REVIEWS */
+    .reviews {
+      background: #eef6ff;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .review-card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(20,50,90,0.07);
+    }
+
+    .stars {
+      color: #f5a400;
+      margin-bottom: 10px;
+    }
+
+    .review-card p {
+      color: #596579;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    /* ABOUT */
+    .about-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .about-box img {
+      width: 100%;
+      border-radius: 20px;
+    }
+
+    .about-text h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .about-text p {
+      color: #637084;
+      margin-bottom: 15px;
+    }
+
+    /* BOOKING */
+    .booking {
+      background: #071f3d;
+      color: white;
+    }
+
+    .booking-box {
+      max-width: 750px;
+      margin: auto;
+      background: white;
+      color: #172033;
+      padding: 30px;
+      border-radius: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #dce2ea;
+      border-radius: 9px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .booking-btn {
+      width: 100%;
+      border: none;
+      background: #0879e8;
+      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .contact-card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(20,50,90,0.07);
+    }
+
+    .contact-card .icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .contact-card p {
+      color: #647084;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #041426;
+      color: white;
+      padding: 45px 18px 90px;
+    }
+
+    .footer-grid {
+      max-width: 1150px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 30px;
+    }
+
+    footer h3 {
+      margin-bottom: 12px;
+    }
+
+    footer p,
+    footer li {
+      color: #b8c5d4;
+      font-size: 14px;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer li {
+      margin-bottom: 7px;
+    }
+
+    /* MOBILE BAR */
+    .mobile-bar {
+      display: none;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+
+      .navbar {
+        padding: 12px 15px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 62px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 18px;
+        gap: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hero {
+        min-height: 600px;
+      }
+
+      .hero-content {
+        padding: 40px 18px 80px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      section {
+        padding: 55px 15px;
+      }
+
+      .section-title h2 {
+        font-size: 27px;
+      }
+
+      .services-grid,
+      .gallery-grid,
+      .review-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-box {
+        grid-template-columns: 1fr;
+      }
+
+      .about-text h2 {
+        font-size: 27px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-bar {
+        position: fixed;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+        background: white;
+        box-shadow: 0 -3px 15px rgba(0,0,0,0.12);
+      }
+
+      .mobile-bar a {
+        text-align: center;
+        padding: 10px 5px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .mobile-bar a:nth-child(1) {
+        color: #0879e8;
+      }
+
+      .mobile-bar a:nth-child(2) {
+        color: #159447;
+      }
+
+      .mobile-bar a:nth-child(3) {
+        color: #0879e8;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar">
+
+      <a href="#home" class="logo">
+        A2Z <span>Cleaning Service</span>
+      </a>
+
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#booking">Booking</a></li>
+      </ul>
+
+    </nav>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        📍 Serving Guwahati, Assam
+      </div>
+
+      <h1>
+        Professional Cleaning Services
+        <span>in Guwahati</span>
+      </h1>
+
+      <p>
+        Reliable, affordable and professional cleaning services
+        for homes, offices and businesses.
+      </p>
+
+      <div class="buttons">
+        <a href="#booking" class="btn btn-primary">
+          📅 Book Now
+        </a>
+
+        <a href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20want%20to%20book%20a%20cleaning%20service."
+           class="btn btn-light">
+          💬 WhatsApp Us
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SERVICES -->
+  <section id="services">
+
+    <div class="container">
+
+      <div class="section-title">
+        <small>Our Services</small>
+        <h2>Professional Cleaning Services</h2>
+        <p>
+          Quality cleaning solutions for homes, offices and commercial spaces.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon">🏠</div>
+          <h3>Home Cleaning</h3>
+          <p>Complete home deep cleaning for a fresh and hygienic home.</p>
+          <div class="price">From ₹1,499</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🏢</div>
+          <h3>Office Cleaning</h3>
+          <p>Professional cleaning for offices and commercial spaces.</p>
+          <div class="price">From ₹999</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🛁</div>
+          <h3>Bathroom Cleaning</h3>
+          <p>Deep scrubbing, tile, toilet and basin cleaning.</p>
+          <div class="price">From ₹499</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🍳</div>
+          <h3>Kitchen Cleaning</h3>
+          <p>Degreasing, platform, sink and kitchen cleaning.</p>
+          <div class="price">From ₹999</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🛋️</div>
+          <h3>Sofa Cleaning</h3>
+          <p>Professional sofa vacuum, shampoo and stain cleaning.</p>
+          <div class="price">From ₹199 / Seat</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🪟</div>
+          <h3>Window / Glass Cleaning</h3>
+          <p>Crystal-clear window and glass cleaning service.</p>
+          <div class="price">From ₹299</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PRICING -->
+  <section class="pricing-section" id="pricing">
+
+    <div class="container">
+
+      <div class="section-title">
+        <small>Our Pricing</small>
+        <h2>Starting Prices</h2>
+        <p>Affordable cleaning services in Guwahati.</p>
+      </div>
+
+      <div class="price-table">
+
+        <div class="price-row">
+          <span>Bathroom Deep Cleaning</span>
+          <strong>₹499+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>Kitchen Deep Cleaning</span>
+          <strong>₹999+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>1BHK Home Deep Cleaning</span>
+          <strong>₹1,499+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>2BHK Home Deep Cleaning</span>
+          <strong>₹1,999+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>3BHK Home Deep Cleaning</span>
+          <strong>₹2,499+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>Sofa Cleaning</span>
+          <strong>₹199 / Seat</strong>
+        </div>
+
+        <div class="price-row">
+          <span>Mattress Cleaning</span>
+          <strong>₹499+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>Carpet Cleaning</span>
+          <strong>₹399+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>Window / Glass Cleaning</span>
+          <strong>₹299+</strong>
+        </div>
+
+        <div class="price-row">
+          <span>Office Cleaning</span>
+          <strong>₹999+</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- WHY CHOOSE US -->
+  <section>
+
+    <div class="container">
+
+      <div class="section-title">
+        <small>Why Choose Us</small>
+        <h2>Why A2Z Cleaning Service?</h2>
+      </div>
+
+      <div class="why-grid">
+
+        <div class="why-card">
+          <div class="icon">🧹</div>
+          <h3>Professional Team</h3>
+          <p>Trained cleaning professionals.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon">💰</div>
+          <h3>Affordable Price</h3>
+          <p>Competitive local pricing.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon">⭐</div>
+          <h3>Quality Service</h3>
+          <p>Quality-focused cleaning.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon">📍</div>
+          <h3>Guwahati Service</h3>
+          <p>Serving customers across Guwahati.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- GALLERY -->
+  <section id="gallery">
+
+    <div class="container">
+
+      <div class="section-title">
+        <small>Our Work</small>
+        <h2>Cleaning Gallery</h2>
+        <p>Professional cleaning work by A2Z Cleaning Service.</p>
+      </div>
+
+      <div class="gallery-grid">
+
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80" alt="Professional home cleaning">
+
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80" alt="Bathroom cleaning">
+
+        <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80" alt="Kitchen cleaning">
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews">
+
+    <div class="container">
+
+      <div class="section-title">
+        <small>Customer Reviews</small>
+        <h2>What Our Customers Say</h2>
+      </div>
+
+      <div class="review-grid">
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>
+            Very good cleaning service. The team was professional
+            and the work was excellent.
+          </p>
+          <strong>— Customer, Guwahati</strong>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>
+            Bathroom cleaning was done very nicely.
+            Good service and reasonable price.
+          </p>
+          <strong>— Customer, Guwahati</strong>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>
+            Professional team and good quality service.
+            Highly recommended.
+          </p>
+          <strong>— Customer, Guwahati</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ABOUT -->
+  <section id="about">
+
+    <div class="container">
+
+      <div class="about-box">
+
+        <img
+          src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=80"
+          alt="A2Z Cleaning Service"
+        >
+
+        <div class="about-text">
+
+          <small style="color:#0879e8;font-weight:bold;">
+            ABOUT A2Z CLEANING SERVICE
+          </small>
+
+          <h2>Making Guwahati Cleaner & Better</h2>
+
+          <p>
+            A2Z Cleaning Service provides reliable and professional
+            cleaning services for homes, offices and businesses in Guwahati.
+          </p>
+
+          <p>
+            Our goal is simple — provide quality cleaning,
+            transparent pricing and convenient booking for every customer.
+          </p>
+
+          <a href="#booking" class="btn btn-primary">
+            Book a Service
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- BOOKING -->
+  <section class="booking" id="booking">
+
+    <div class="container">
+
+      <div class="section-title">
+        <small style="color:#58b7ff;">BOOKING</small>
+        <h2 style="color:white;">Book Your Cleaning Service</h2>
+        <p style="color:#cbd8e8;">
+          Fill the form and contact us on WhatsApp to confirm your booking.
+        </p>
+      </div>
+
+      <div class="booking-box">
+
+        <form onsubmit="sendBooking(event)">
+
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="customerName" placeholder="Enter your name" required>
+          </div>
+
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="customerPhone" placeholder="Enter phone number" required>
+          </div>
+
+          <div class="form-group">
+            <label>Select Service</label>
+
+            <select id="service" required>
+              <option value="">Choose a service</option>
+              <option>Home Cleaning</option>
+              <option>Office Cleaning</option>
+              <option>Bathroom Cleaning</option>
+              <option>Kitchen Cleaning</option>
+              <option>Sofa Cleaning</option>
+              <option>Window / Glass Cleaning</option>
+              <option>Mattress Cleaning</option>
+              <option>Carpet Cleaning</option>
+            </select>
+
+          </div>
+
+          <div class="form-group">
+            <label>Area in Guwahati</label>
+            <input type="text" id="area" placeholder="Example: Fancy Bazar" required>
+          </div>
+
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" id="date" required>
+          </div>
+
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="message" placeholder="Tell us about your cleaning requirement"></textarea>
+          </div>
+
+          <button class="booking-btn" type="submit">
+            📲 Send Booking on WhatsApp
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONTACT -->
+  <section id="contact">
+
+    <div class="container">
+
+      <div class="section-title">
+        <small>Contact Us</small>
+        <h2>Get In Touch</h2>
+        <p>Contact A2Z Cleaning Service for your cleaning requirements.</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <a class="contact-card" href="tel:+919101616836">
+          <div class="icon">📞</div>
+          <h3>Call Us</h3>
+          <p>9101616836</p>
+        </a>
+
+        <a class="contact-card"
+           href="https://wa.me/919101616836">
+          <div class="icon">💬</div>
+          <h3>WhatsApp</h3>
+          <p>Chat with us</p>
+        </a>
+
+        <a class="contact-card"
+           href="mailto:info@a2zcleaningservice.in">
+          <div class="icon">📧</div>
+          <h3>Email</h3>
+          <p>info@a2zcleaningservice.in</p>
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="footer-grid">
+
+      <div>
+        <h3>A2Z Cleaning Service</h3>
+
+        <p>
+          Professional cleaning services in Guwahati, Assam.
+          Home, office, bathroom, kitchen, sofa and glass cleaning.
+        </p>
+
+        <br>
+
+        <p>
+          📍 Guwahati, Assam
+        </p>
+
+        <p>
+          📞 9101616836
+        </p>
+
+        <p>
+          📧 info@a2zcleaningservice.in
+        </p>
+      </div>
+
+      <div>
+        <h3>Quick Links</h3>
+
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#booking">Booking</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Services</h3>
+
+        <ul>
+          <li>Home Cleaning</li>
+          <li>Office Cleaning</li>
+          <li>Bathroom Cleaning</li>
+          <li>Kitchen Cleaning</li>
+          <li>Sofa Cleaning</li>
+          <li>Window Cleaning</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- MOBILE BOTTOM BAR -->
+  <div class="mobile-bar">
+
+    <a href="tel:+919101616836">
+      📞<br>Call
+    </a>
+
+    <a href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20a%20cleaning%20service.">
+      💬<br>WhatsApp
+    </a>
+
+    <a href="#booking">
+      📅<br>Book
+    </a>
+
+  </div>
+
+
+  <script>
+
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("active");
+    }
+
+    function sendBooking(event) {
+
+      event.preventDefault();
+
+      const name = document.getElementById("customerName").value;
+      const phone = document.getElementById("customerPhone").value;
+      const service = document.getElementById("service").value;
+      const area = document.getElementById("area").value;
+      const date = document.getElementById("date").value;
+      const message = document.getElementById("message").value;
+
+      const whatsappMessage =
+        "Hello A2Z Cleaning Service,%0A%0A" +
+        "I want to book a cleaning service.%0A%0A" +
+        "Name: " + encodeURIComponent(name) + "%0A" +
+        "Phone: " + encodeURIComponent(phone) + "%0A" +
+        "Service: " + encodeURIComponent(service) + "%0A" +
+        "Area: " + encodeURIComponent(area) + "%0A" +
+        "Preferred Date: " + encodeURIComponent(date) + "%0A" +
+        "Message: " + encodeURIComponent(message);
+
+      window.open(
+        "https://wa.me/919101616836?text=" + whatsappMessage,
+        "_blank"
+      );
+    }
+
+  </script>
+
+</body>
+</html>
