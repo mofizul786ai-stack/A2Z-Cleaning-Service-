@@ -990,6 +990,29 @@
             <input type="date" id="date" required>
           </div>
 
+          <!-- ADDED: Preferred Time Selection -->
+          <div class="form-group">
+            <label>Preferred Time</label>
+            <select id="time" required>
+              <option value="">Select time slot</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
+            </select>
+          </div>
+
+          <!-- ADDED: Payment Method Selection -->
+          <div class="form-group">
+            <label>Payment Method</label>
+            <select id="paymentMethod" required>
+              <option value="">Select payment method</option>
+              <option value="Cash on Delivery">Cash on Delivery</option>
+              <option value="Debit/Credit Card">Debit / Credit Card</option>
+              <option value="UPI (9101616836@ptyes)">UPI (PhonePe / GPay / Paytm)</option>
+            </select>
+          </div>
+
           <div class="form-group">
             <label>Message</label>
             <textarea id="message" placeholder="Tell us about your cleaning requirement"></textarea>
@@ -1139,6 +1162,8 @@
       const service = document.getElementById("service").value;
       const area = document.getElementById("area").value;
       const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const paymentMethod = document.getElementById("paymentMethod").value;
       const message = document.getElementById("message").value;
 
       const whatsappMessage =
@@ -1149,6 +1174,8 @@
         "Service: " + encodeURIComponent(service) + "%0A" +
         "Area: " + encodeURIComponent(area) + "%0A" +
         "Preferred Date: " + encodeURIComponent(date) + "%0A" +
+        "Preferred Time: " + encodeURIComponent(time) + "%0A" +
+        "Payment Method: " + encodeURIComponent(paymentMethod) + "%0A" +
         "Message: " + encodeURIComponent(message);
 
       window.open(
@@ -1161,3 +1188,4 @@
 
 </body>
 </html>
+      
