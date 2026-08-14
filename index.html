@@ -200,6 +200,9 @@
       padding: 25px;
       box-shadow: 0 5px 25px rgba(20,50,90,0.08);
       transition: 0.25s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .service-card:hover {
@@ -232,6 +235,25 @@
       color: #0879e8;
       font-size: 18px;
       font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .card-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      background: #0879e8;
+      color: white;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+
+    .card-btn:hover {
+      background: #0566c7;
     }
 
     /* PRICING */
@@ -471,7 +493,7 @@
       display: none;
     }
 
-    /* MOBILE */
+       /* MOBILE */
     @media (max-width: 768px) {
 
       .navbar {
@@ -660,45 +682,63 @@
       <div class="services-grid">
 
         <div class="service-card">
-          <div class="service-icon">🏠</div>
-          <h3>Home Cleaning</h3>
-          <p>Complete home deep cleaning for a fresh and hygienic home.</p>
-          <div class="price">From ₹1,499</div>
+          <div>
+            <div class="service-icon">🏠</div>
+            <h3>Home Cleaning</h3>
+            <p>Complete home deep cleaning for a fresh and hygienic home.</p>
+            <div class="price">From ₹1,499</div>
+          </div>
+          <a href="#booking" onclick="selectService('Home Cleaning')" class="card-btn">Book Now &rarr;</a>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🏢</div>
-          <h3>Office Cleaning</h3>
-          <p>Professional cleaning for offices and commercial spaces.</p>
-          <div class="price">From ₹999</div>
+          <div>
+            <div class="service-icon">🏢</div>
+            <h3>Office Cleaning</h3>
+            <p>Professional cleaning for offices and commercial spaces.</p>
+            <div class="price">From ₹999</div>
+          </div>
+          <a href="#booking" onclick="selectService('Office Cleaning')" class="card-btn">Book Now &rarr;</a>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🛁</div>
-          <h3>Bathroom Cleaning</h3>
-          <p>Deep scrubbing, tile, toilet and basin cleaning.</p>
-          <div class="price">From ₹499</div>
+          <div>
+            <div class="service-icon">🛁</div>
+            <h3>Bathroom Cleaning</h3>
+            <p>Deep scrubbing, tile, toilet and basin cleaning.</p>
+            <div class="price">From ₹499</div>
+          </div>
+          <a href="#booking" onclick="selectService('Bathroom Cleaning')" class="card-btn">Book Now &rarr;</a>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🍳</div>
-          <h3>Kitchen Cleaning</h3>
-          <p>Degreasing, platform, sink and kitchen cleaning.</p>
-          <div class="price">From ₹999</div>
+          <div>
+            <div class="service-icon">🍳</div>
+            <h3>Kitchen Cleaning</h3>
+            <p>Degreasing, platform, sink and kitchen cleaning.</p>
+            <div class="price">From ₹999</div>
+          </div>
+          <a href="#booking" onclick="selectService('Kitchen Cleaning')" class="card-btn">Book Now &rarr;</a>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🛋️</div>
-          <h3>Sofa Cleaning</h3>
-          <p>Professional sofa vacuum, shampoo and stain cleaning.</p>
-          <div class="price">From ₹199 / Seat</div>
+          <div>
+            <div class="service-icon">🛋️</div>
+            <h3>Sofa Cleaning</h3>
+            <p>Professional sofa vacuum, shampoo and stain cleaning.</p>
+            <div class="price">From ₹199 / Seat</div>
+          </div>
+          <a href="#booking" onclick="selectService('Sofa Cleaning')" class="card-btn">Book Now &rarr;</a>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🪟</div>
-          <h3>Window / Glass Cleaning</h3>
-          <p>Crystal-clear window and glass cleaning service.</p>
-          <div class="price">From ₹299</div>
+          <div>
+            <div class="service-icon">🪟</div>
+            <h3>Window / Glass Cleaning</h3>
+            <p>Crystal-clear window and glass cleaning service.</p>
+            <div class="price">From ₹299</div>
+          </div>
+          <a href="#booking" onclick="selectService('Window / Glass Cleaning')" class="card-btn">Book Now &rarr;</a>
         </div>
 
       </div>
@@ -776,9 +816,7 @@
     </div>
 
   </section>
-
-
-  <!-- WHY CHOOSE US -->
+    <!-- WHY CHOOSE US -->
   <section>
 
     <div class="container">
@@ -968,14 +1006,14 @@
 
             <select id="service" required>
               <option value="">Choose a service</option>
-              <option>Home Cleaning</option>
-              <option>Office Cleaning</option>
-              <option>Bathroom Cleaning</option>
-              <option>Kitchen Cleaning</option>
-              <option>Sofa Cleaning</option>
-              <option>Window / Glass Cleaning</option>
-              <option>Mattress Cleaning</option>
-              <option>Carpet Cleaning</option>
+              <option value="Home Cleaning">Home Cleaning</option>
+              <option value="Office Cleaning">Office Cleaning</option>
+              <option value="Bathroom Cleaning">Bathroom Cleaning</option>
+              <option value="Kitchen Cleaning">Kitchen Cleaning</option>
+              <option value="Sofa Cleaning">Sofa Cleaning</option>
+              <option value="Window / Glass Cleaning">Window / Glass Cleaning</option>
+              <option value="Mattress Cleaning">Mattress Cleaning</option>
+              <option value="Carpet Cleaning">Carpet Cleaning</option>
             </select>
 
           </div>
@@ -990,7 +1028,6 @@
             <input type="date" id="date" required>
           </div>
 
-          <!-- ADDED: Preferred Time Selection -->
           <div class="form-group">
             <label>Preferred Time</label>
             <select id="time" required>
@@ -1002,7 +1039,6 @@
             </select>
           </div>
 
-          <!-- ADDED: Payment Method Selection -->
           <div class="form-group">
             <label>Payment Method</label>
             <select id="paymentMethod" required>
@@ -1147,58 +1183,70 @@
   </div>
 
 
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-  function toggleMenu() {
-    document.getElementById("navLinks").classList.toggle("active");
-  }
 
-  function sendBooking(event) {
-    event.preventDefault();
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("active");
+    }
 
-    const name = document.getElementById("customerName").value;
-    const phone = document.getElementById("customerPhone").value;
-    const service = document.getElementById("service").value;
-    const area = document.getElementById("area").value;
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
-    const paymentMethod = document.getElementById("paymentMethod").value;
-    const message = document.getElementById("message").value;
-
-    // যদি ইউজার UPI সিলেক্ট করে, তবে সরাসরি UPI App খোলার অপশন
-    if (paymentMethod.includes("UPI")) {
-      const upiUrl = `upi://pay?pa=9101616836@ptyes&pn=A2Z%20Cleaning%20Service&cu=INR`;
-      
-      const confirmPayment = confirm("আপনি কি এখনই UPI-এর মাধ্যমে পেমেন্ট করতে চান?");
-      if (confirmPayment) {
-        window.location.href = upiUrl;
+    function selectService(serviceName) {
+      const serviceDropdown = document.getElementById("service");
+      if (serviceDropdown) {
+        serviceDropdown.value = serviceName;
       }
     }
 
-    // WhatsApp Message Format
-        const whatsappMessage =
-      "Hello A2Z Cleaning Service,%0A%0A" +
-      "I want to book a cleaning service.%0A%0A" +
-      "Booking Details:%0A" +
-      "- Name: " + encodeURIComponent(name) + "%0A" +
-      "- Phone: " + encodeURIComponent(phone) + "%0A" +
-      "- Service: " + encodeURIComponent(service) + "%0A" +
-      "- Area: " + encodeURIComponent(area) + "%0A" +
-      "- Preferred Date: " + encodeURIComponent(date) + "%0A" +
-      "- Preferred Time: " + encodeURIComponent(time) + "%0A" +
-      "- Payment Method: " + encodeURIComponent(paymentMethod) + "%0A" +
-      "- Message: " + encodeURIComponent(message);
+    function sendBooking(event) {
 
-    // Redirect to WhatsApp
-    setTimeout(() => {
-      window.open(
-        "https://wa.me/919101616836?text=" + whatsappMessage,
-        "_blank"
-      );
-    }, 500);
-  }
-</script>
+      event.preventDefault();
 
+      const name = document.getElementById("customerName").value;
+      const phone = document.getElementById("customerPhone").value;
+      const service = document.getElementById("service").value;
+      const area = document.getElementById("area").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const paymentMethod = document.getElementById("paymentMethod").value;
+      const message = document.getElementById("message").value;
+
+      // Clean WhatsApp Message Formatting
+      const whatsappMessage =
+        "Hello A2Z Cleaning Service,%0A%0A" +
+        "I want to book a cleaning service.%0A%0A" +
+        "Booking Details:%0A" +
+        "- Name: " + encodeURIComponent(name) + "%0A" +
+        "- Phone: " + encodeURIComponent(phone) + "%0A" +
+        "- Service: " + encodeURIComponent(service) + "%0A" +
+        "- Area: " + encodeURIComponent(area) + "%0A" +
+        "- Preferred Date: " + encodeURIComponent(date) + "%0A" +
+        "- Preferred Time: " + encodeURIComponent(time) + "%0A" +
+        "- Payment Method: " + encodeURIComponent(paymentMethod) + "%0A" +
+        "- Message: " + encodeURIComponent(message);
+
+      const whatsappUrl = "https://wa.me/919101616836?text=" + whatsappMessage;
+
+      // UPI Logic
+      if (paymentMethod.includes("UPI")) {
+        const upiUrl = `upi://pay?pa=9101616836@ptyes&pn=A2Z%20Cleaning%20Service&cu=INR`;
+        const confirmPayment = confirm("আপনি কি এখনই UPI-এর মাধ্যমে পেমেন্ট করতে চান?");
+        
+        if (confirmPayment) {
+          window.location.href = upiUrl;
+          
+          setTimeout(() => {
+            window.location.href = whatsappUrl;
+          }, 3000);
+        } else {
+          window.location.href = whatsappUrl;
+        }
+      } else {
+        window.location.href = whatsappUrl;
+      }
+    }
+
+  </script>
 
 </body>
-</html>
-      
+  </html>
+              
