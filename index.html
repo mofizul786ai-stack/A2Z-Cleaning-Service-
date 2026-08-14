@@ -1148,43 +1148,56 @@
 
 
   <script>
+  function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+  }
 
-    function toggleMenu() {
-      document.getElementById("navLinks").classList.toggle("active");
+  function sendBooking(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("customerName").value;
+    const phone = document.getElementById("customerPhone").value;
+    const service = document.getElementById("service").value;
+    const area = document.getElementById("area").value;
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const paymentMethod = document.getElementById("paymentMethod").value;
+    const message = document.getElementById("message").value;
+
+    // যদি ইউজার UPI সিলেক্ট করে, তবে সরাসরি UPI App খোলার অপশন
+    if (paymentMethod.includes("UPI")) {
+      const upiUrl = `upi://pay?pa=9101616836@ptyes&pn=A2Z%20Cleaning%20Service&cu=INR`;
+      
+      const confirmPayment = confirm("আপনি কি এখনই UPI-এর মাধ্যমে পেমেন্ট করতে চান?");
+      if (confirmPayment) {
+        window.location.href = upiUrl;
+      }
     }
 
-    function sendBooking(event) {
+    // WhatsApp Message Format
+    const whatsappMessage =
+      "Hello A2Z Cleaning Service,%0A%0A" +
+      "I want to book a cleaning service.%0A%0A" +
+      "📌 *Booking Details:*%0A" +
+      "• Name: " + encodeURIComponent(name) + "%0A" +
+      "• Phone: " + encodeURIComponent(phone) + "%0A" +
+      "• Service: " + encodeURIComponent(service) + "%0A" +
+      "• Area: " + encodeURIComponent(area) + "%0A" +
+      "• Preferred Date: " + encodeURIComponent(date) + "%0A" +
+      "• Preferred Time: " + encodeURIComponent(time) + "%0A" +
+      "• Payment Method: " + encodeURIComponent(paymentMethod) + "%0A" +
+      "• Message: " + encodeURIComponent(message);
 
-      event.preventDefault();
-
-      const name = document.getElementById("customerName").value;
-      const phone = document.getElementById("customerPhone").value;
-      const service = document.getElementById("service").value;
-      const area = document.getElementById("area").value;
-      const date = document.getElementById("date").value;
-      const time = document.getElementById("time").value;
-      const paymentMethod = document.getElementById("paymentMethod").value;
-      const message = document.getElementById("message").value;
-
-      const whatsappMessage =
-        "Hello A2Z Cleaning Service,%0A%0A" +
-        "I want to book a cleaning service.%0A%0A" +
-        "Name: " + encodeURIComponent(name) + "%0A" +
-        "Phone: " + encodeURIComponent(phone) + "%0A" +
-        "Service: " + encodeURIComponent(service) + "%0A" +
-        "Area: " + encodeURIComponent(area) + "%0A" +
-        "Preferred Date: " + encodeURIComponent(date) + "%0A" +
-        "Preferred Time: " + encodeURIComponent(time) + "%0A" +
-        "Payment Method: " + encodeURIComponent(paymentMethod) + "%0A" +
-        "Message: " + encodeURIComponent(message);
-
+    // Redirect to WhatsApp
+    setTimeout(() => {
       window.open(
         "https://wa.me/919101616836?text=" + whatsappMessage,
         "_blank"
       );
-    }
+    }, 500);
+  }
+</script>
 
-  </script>
 
 </body>
 </html>
