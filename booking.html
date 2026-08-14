@@ -409,13 +409,46 @@
 </div>
 
 
-<script>
+<!-- Firebase -->
+<script type="module">
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDK1fnjgeDwb712_lDTwifRjH_tpbZrtaw",
+    authDomain: "a2z-cleaning-service-5a568.firebaseapp.com",
+    projectId: "a2z-cleaning-service-5a568",
+    storageBucket: "a2z-cleaning-service-5a568.firebasestorage.app",
+    messagingSenderId: "896768770622",
+    appId: "1:896768770622:web:89e11df7906d4cbf26876f"
+  };
+
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firestore
+  const db = getFirestore(app);
+
 
   const form = document.getElementById("bookingForm");
 
-  form.addEventListener("submit", function(event){
+  const successBox = document.getElementById("success");
+
+
+  form.addEventListener("submit", async function(event) {
 
     event.preventDefault();
+
 
     const name =
       document.getElementById("name").value.trim();
@@ -439,13 +472,54 @@
       document.getElementById("message").value.trim();
 
 
-    if(!/^[0-9]{10}$/.test(phone)){
+    // Phone validation
+    if (!/^[0-9]{10}$/.test(phone)) {
+
       alert("Please enter a valid 10-digit phone number.");
+
       return;
+
     }
 
 
-    const text =
+    // Disable button while saving
+    const submitButton =
+      document.querySelector(".submit");
+
+    submitButton.disabled = true;
+
+    submitButton.innerText =
+      "⏳ Saving Booking...";
+
+
+    try {
+
+      // Save booking to Firestore
+      await addDoc(collection(db, "bookings"), {
+
+        name: name,
+
+        phone: phone,
+
+        service: service,
+
+        date: date,
+
+        time: time,
+
+        address: address,
+
+        message: message || "None",
+
+        status: "Pending",
+
+        createdAt: serverTimestamp()
+
+      });
+
+
+      // WhatsApp message
+      const text =
 `Hello A2Z Cleaning Service,
 
 I want to book a cleaning service.
@@ -461,16 +535,42 @@ I want to book a cleaning service.
 Please confirm my booking.`;
 
 
-    document.getElementById("success").style.display =
-      "block";
+      const whatsappURL =
+        "https://wa.me/919101616836?text=" +
+        encodeURIComponent(text);
 
 
-    const whatsappURL =
-      "https://wa.me/919101616836?text=" +
-      encodeURIComponent(text);
+      // Show success
+      successBox.innerHTML =
+        "✅ Booking saved successfully!<br>WhatsApp is opening...";
+
+      successBox.style.display = "block";
 
 
-    window.open(whatsappURL, "_blank");
+      // Open WhatsApp
+      window.open(whatsappURL, "_blank");
+
+
+      // Reset form
+      form.reset();
+
+
+    } catch (error) {
+
+      console.error("Firebase Error:", error);
+
+      alert(
+        "Booking save হয়নি। Internet connection অথবা Firebase settings check করুন।"
+      );
+
+    }
+
+
+    // Enable button again
+    submitButton.disabled = false;
+
+    submitButton.innerText =
+      "📲 Send Booking Request";
 
   });
 
