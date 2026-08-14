@@ -44,6 +44,9 @@
     .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
 
+    .item-list { list-style: none; margin-top: 15px; }
+    .item-list li { background: #f8fafc; padding: 10px 15px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
+
     @media (max-width: 768px) { 
       body { flex-direction: column; } 
       .sidebar { width: 100%; } 
@@ -57,8 +60,7 @@
     <h2>⚙️ Admin Panel</h2>
     <ul class="nav-menu">
       <li><a href="#" class="active" onclick="showTab('dashboard', this)">📊 Dashboard</a></li>
-      <li><a href="#" onclick="showTab('services', this)">🧹 Services</a></li>
-      <li><a href="#" onclick="showTab('prices', this)">🏷️ Prices</a></li>
+      <li><a href="#" onclick="showTab('services', this)">🧹 Services & Prices</a></li>
       <li><a href="#" onclick="showTab('gallery', this)">🖼️ Gallery</a></li>
       <li><a href="#" onclick="showTab('reviews', this)">⭐ Reviews</a></li>
       <li><a href="#" onclick="showTab('bookings', this)">📋 Bookings</a></li>
@@ -87,54 +89,71 @@
       </div>
     </div>
 
-    <!-- 2. SERVICES -->
+    <!-- 2. SERVICES & PRICES -->
     <div id="services" class="tab-content">
       <div class="card">
-        <h3>Manage Services</h3>
-        <p style="color:#666; margin-bottom:15px;">Add or edit cleaning services offered on your website.</p>
+        <h3>Add New Service & Price</h3>
+        <br>
         <div class="form-group">
           <label>Service Title</label>
-          <input type="text" placeholder="e.g. Deep Home Cleaning">
+          <input type="text" id="serviceName" placeholder="e.g. Sofa Cleaning">
         </div>
-        <button class="btn-primary">Add Service</button>
-      </div>
-    </div>
-
-    <!-- 3. PRICES -->
-    <div id="prices" class="tab-content">
-      <div class="card">
-        <h3>Service Pricing</h3>
-        <p style="color:#666; margin-bottom:15px;">Update pricing plans and rate charts.</p>
         <div class="form-group">
-          <label>Service Rate (₹)</label>
-          <input type="number" placeholder="e.g. 1499">
+          <label>Price (₹)</label>
+          <input type="number" id="servicePrice" placeholder="e.g. 799">
         </div>
-        <button class="btn-primary">Update Price</button>
+        <button class="btn-primary" onclick="addService()">Add Service</button>
+      </div>
+
+      <div class="card">
+        <h3>Active Services List</h3>
+        <ul id="services-list-container" class="item-list">
+          <li>Loading services...</li>
+        </ul>
       </div>
     </div>
 
-    <!-- 4. GALLERY -->
+    <!-- 3. GALLERY -->
     <div id="gallery" class="tab-content">
       <div class="card">
         <h3>Work Gallery</h3>
-        <p style="color:#666; margin-bottom:15px;">Upload photos of recent cleaning work.</p>
         <div class="form-group">
           <label>Image URL</label>
-          <input type="text" placeholder="https://example.com/photo.jpg">
+          <input type="text" id="galleryUrl" placeholder="https://example.com/photo.jpg">
         </div>
-        <button class="btn-primary">Add Photo</button>
+        <button class="btn-primary" onclick="addGalleryImage()">Add Photo</button>
+      </div>
+      <div class="card">
+        <h3>Current Images</h3>
+        <ul id="gallery-list-container" class="item-list">
+          <li>Loading images...</li>
+        </ul>
       </div>
     </div>
 
-    <!-- 5. REVIEWS -->
+    <!-- 4. REVIEWS -->
     <div id="reviews" class="tab-content">
       <div class="card">
-        <h3>Customer Reviews</h3>
-        <p style="color:#666; margin-bottom:15px;">Manage feedback shown on the homepage.</p>
+        <h3>Add Customer Review</h3>
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input type="text" id="revName" placeholder="Customer Name">
+        </div>
+        <div class="form-group">
+          <label>Review Comment</label>
+          <textarea id="revComment" placeholder="Write feedback..."></textarea>
+        </div>
+        <button class="btn-primary" onclick="addReview()">Add Review</button>
+      </div>
+      <div class="card">
+        <h3>All Reviews</h3>
+        <ul id="reviews-list-container" class="item-list">
+          <li>Loading reviews...</li>
+        </ul>
       </div>
     </div>
 
-    <!-- 6. BOOKINGS -->
+    <!-- 5. BOOKINGS -->
     <div id="bookings" class="tab-content">
       <div class="card">
         <h3>Live Booking Requests</h3>
@@ -161,19 +180,20 @@
       </div>
     </div>
 
-    <!-- 7. WEBSITE SETTINGS -->
+    <!-- 6. WEBSITE SETTINGS -->
     <div id="settings" class="tab-content">
       <div class="card">
         <h3>Website Settings</h3>
+        <br>
         <div class="form-group">
           <label>WhatsApp Number</label>
-          <input type="text" value="9101616836">
+          <input type="text" id="setWhatsapp" value="9101616836">
         </div>
         <div class="form-group">
           <label>UPI ID for Payments</label>
-          <input type="text" value="9101616836@ptyes">
+          <input type="text" id="setUpi" value="9101616836@ptyes">
         </div>
-        <button class="btn-primary">Save Settings</button>
+        <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
       </div>
     </div>
 
@@ -205,7 +225,7 @@
       document.getElementById('page-title').innerText = element.innerText;
     }
 
-    // Fetch Bookings Realtime from Firebase
+    // 1. LIVE BOOKINGS
     db.ref("bookings").on("value", (snapshot) => {
       const data = snapshot.val();
       const tbody = document.getElementById("booking-list");
@@ -231,18 +251,121 @@
           <td>${item.area}</td>
           <td>${item.date} (${item.time})</td>
           <td>${item.paymentMethod}</td>
-          <td><button class="btn-delete" onclick="deleteBooking('${key}')">Delete</button></td>
+          <td><button class="btn-delete" onclick="deleteData('bookings/${key}')">Delete</button></td>
         `;
         tbody.appendChild(tr);
       });
     });
 
-    // Delete Booking Function
-    function deleteBooking(key) {
-      if (confirm("Are you sure you want to delete this booking?")) {
-        db.ref("bookings/" + key).remove();
+    // 2. SERVICES & PRICES
+    function addService() {
+      const name = document.getElementById("serviceName").value;
+      const price = document.getElementById("servicePrice").value;
+      if (!name || !price) return alert("Please enter name and price");
+      
+      db.ref("services").push({ name, price }, () => {
+        document.getElementById("serviceName").value = "";
+        document.getElementById("servicePrice").value = "";
+        alert("Service added successfully!");
+      });
+    }
+
+    db.ref("services").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const container = document.getElementById("services-list-container");
+      container.innerHTML = "";
+      if (!data) return container.innerHTML = "<li>No services added.</li>";
+
+      Object.keys(data).forEach(key => {
+        const item = data[key];
+        const li = document.createElement("li");
+        li.innerHTML = `<span><strong>${item.name}</strong> - ₹${item.price}</span> 
+          <button class="btn-delete" onclick="deleteData('services/${key}')">Delete</button>`;
+        container.appendChild(li);
+      });
+    });
+
+    // 3. GALLERY
+    function addGalleryImage() {
+      const url = document.getElementById("galleryUrl").value;
+      if (!url) return alert("Enter image URL");
+
+      db.ref("gallery").push({ url }, () => {
+        document.getElementById("galleryUrl").value = "";
+        alert("Image added!");
+      });
+    }
+
+    db.ref("gallery").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const container = document.getElementById("gallery-list-container");
+      container.innerHTML = "";
+      if (!data) return container.innerHTML = "<li>No images added.</li>";
+
+      Object.keys(data).forEach(key => {
+        const item = data[key];
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${item.url}</span> 
+          <button class="btn-delete" onclick="deleteData('gallery/${key}')">Delete</button>`;
+        container.appendChild(li);
+      });
+    });
+
+    // 4. REVIEWS
+    function addReview() {
+      const name = document.getElementById("revName").value;
+      const comment = document.getElementById("revComment").value;
+      if (!name || !comment) return alert("Fill all fields");
+
+      db.ref("reviews").push({ name, comment }, () => {
+        document.getElementById("revName").value = "";
+        document.getElementById("revComment").value = "";
+        alert("Review added!");
+      });
+    }
+
+    db.ref("reviews").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const container = document.getElementById("reviews-list-container");
+      container.innerHTML = "";
+      if (!data) return container.innerHTML = "<li>No reviews found.</li>";
+
+      Object.keys(data).forEach(key => {
+        const item = data[key];
+        const li = document.createElement("li");
+        li.innerHTML = `<span><strong>${item.name}:</strong> ${item.comment}</span> 
+          <button class="btn-delete" onclick="deleteData('reviews/${key}')">Delete</button>`;
+        container.appendChild(li);
+      });
+    });
+
+    // 5. WEBSITE SETTINGS
+    function saveSettings() {
+      const whatsapp = document.getElementById("setWhatsapp").value;
+      const upi = document.getElementById("setUpi").value;
+
+      db.ref("settings").set({ whatsapp, upi }, (error) => {
+        if (error) alert("Error saving settings!");
+        else alert("Settings saved successfully!");
+      });
+    }
+
+    // Load initial settings
+    db.ref("settings").once("value", (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        if(data.whatsapp) document.getElementById("setWhatsapp").value = data.whatsapp;
+        if(data.upi) document.getElementById("setUpi").value = data.upi;
+      }
+    });
+
+    // Generic Delete function
+    function deleteData(path) {
+      if (confirm("Are you sure you want to delete this item?")) {
+        db.ref(path).remove();
       }
     }
   </script>
 </body>
-</html>
+  </html>
+  
