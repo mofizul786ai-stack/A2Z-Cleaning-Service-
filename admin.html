@@ -8,6 +8,19 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background: #f4f7fc; color: #172033; display: flex; min-height: 100vh; }
     
+    /* Login Modal Overlay */
+    #login-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(7, 31, 61, 0.95); display: flex;
+      justify-content: center; align-items: center; z-index: 9999;
+    }
+    .login-box {
+      background: white; padding: 30px; border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 90%; max-width: 380px; text-align: center;
+    }
+    .login-box h2 { color: #071f3d; margin-bottom: 10px; }
+    .login-box p { color: #666; font-size: 14px; margin-bottom: 20px; }
+
     /* Sidebar Styling */
     .sidebar { width: 260px; background: #071f3d; color: white; padding: 20px; display: flex; flex-direction: column; }
     .sidebar h2 { font-size: 20px; margin-bottom: 25px; color: #4db4ff; text-align: center; border-bottom: 1px solid #1a365d; padding-bottom: 15px; }
@@ -37,10 +50,10 @@
     /* Buttons & Inputs */
     .btn-delete { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
     .btn-delete:hover { background: #cc0000; }
-    .btn-primary { background: #0879e8; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .btn-primary { background: #0879e8; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
     .btn-primary:hover { background: #005bb5; }
     
-    .form-group { margin-bottom: 15px; }
+    .form-group { margin-bottom: 15px; text-align: left; }
     .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
 
@@ -54,6 +67,20 @@
   </style>
 </head>
 <body>
+
+  <!-- LOGIN MODAL -->
+  <div id="login-modal">
+    <div class="login-box">
+      <h2>🔒 Admin Login</h2>
+      <p>A2Z Cleaning Service</p>
+      <div class="form-group">
+        <label>Admin Password</label>
+        <input type="password" id="adminPassInput" placeholder="Enter password">
+      </div>
+      <button class="btn-primary" onclick="checkLogin()">Login</button>
+      <p id="loginErr" style="color:red; margin-top:10px; font-size:12px; display:none;">Incorrect Password!</p>
+    </div>
+  </div>
 
   <!-- SIDEBAR MENU -->
   <div class="sidebar">
@@ -72,7 +99,7 @@
   <div class="main-content">
     <div class="header-bar">
       <h3 id="page-title">Dashboard</h3>
-      <span>Welcome, Admin</span>
+      <button class="btn-delete" onclick="logout()">Logout</button>
     </div>
 
     <!-- 1. DASHBOARD -->
@@ -204,6 +231,29 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
   <script>
+    // DEFAULT PASSWORD SETUP
+    const ADMIN_PASS = "a2z1234"; // 🔑 আপনি আপনার ইচ্ছামতো পাসওয়ার্ড বদলাতে পারেন
+
+    function checkLogin() {
+      const pass = document.getElementById("adminPassInput").value;
+      if (pass === ADMIN_PASS) {
+        sessionStorage.setItem("isAdminLoggedIn", "true");
+        document.getElementById("login-modal").style.display = "none";
+      } else {
+        document.getElementById("loginErr").style.display = "block";
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem("isAdminLoggedIn");
+      location.reload();
+    }
+
+    // Auto Check Login Status
+    if (sessionStorage.getItem("isAdminLoggedIn") === "true") {
+      document.getElementById("login-modal").style.display = "none";
+    }
+
     const firebaseConfig = {
       apiKey: "AIzaSyDK1fnjgeDwb712_lDTwifRjH_tpbZrtaw",
       authDomain: "a2z-cleaning-service-5a568.firebaseapp.com",
@@ -216,7 +266,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Tab Navigation Switcher
     function showTab(tabId, element) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.nav-menu a').forEach(link => link.classList.remove('active'));
@@ -350,7 +399,6 @@
       });
     }
 
-    // Load initial settings
     db.ref("settings").once("value", (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -359,7 +407,6 @@
       }
     });
 
-    // Generic Delete function
     function deleteData(path) {
       if (confirm("Are you sure you want to delete this item?")) {
         db.ref(path).remove();
