@@ -1183,8 +1183,24 @@
   </div>
 
 
-  <!-- JAVASCRIPT LOGIC -->
+    <!-- FIREBASE SDK & LOGIC -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
   <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDK1fnjgeDwb712_lDTwifRjH_tpbZrtaw",
+      authDomain: "a2z-cleaning-service-5a568.firebaseapp.com",
+      projectId: "a2z-cleaning-service-5a568",
+      storageBucket: "a2z-cleaning-service-5a568.firebasestorage.app",
+      messagingSenderId: "896768770622",
+      appId: "1:896768770622:web:89e11df7906d4cbf26876f"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
     function toggleMenu() {
       document.getElementById("navLinks").classList.toggle("active");
@@ -1198,7 +1214,6 @@
     }
 
     function sendBooking(event) {
-
       event.preventDefault();
 
       const name = document.getElementById("customerName").value;
@@ -1210,7 +1225,22 @@
       const paymentMethod = document.getElementById("paymentMethod").value;
       const message = document.getElementById("message").value;
 
-      // Clean WhatsApp Message Formatting
+      const bookingData = {
+        name: name,
+        phone: phone,
+        service: service,
+        area: area,
+        date: date,
+        time: time,
+        paymentMethod: paymentMethod,
+        message: message,
+        createdAt: new Date().toLocaleString()
+      };
+
+      // 1. Save to Firebase Realtime Database
+      db.ref("bookings").push(bookingData);
+
+      // 2. WhatsApp Message Link
       const whatsappMessage =
         "Hello A2Z Cleaning Service,%0A%0A" +
         "I want to book a cleaning service.%0A%0A" +
@@ -1233,7 +1263,6 @@
         
         if (confirmPayment) {
           window.location.href = upiUrl;
-          
           setTimeout(() => {
             window.location.href = whatsappUrl;
           }, 3000);
@@ -1244,8 +1273,8 @@
         window.location.href = whatsappUrl;
       }
     }
-
   </script>
+  
 
 </body>
   </html>
