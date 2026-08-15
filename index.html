@@ -493,7 +493,7 @@
       display: none;
     }
 
-       /* MOBILE */
+    /* MOBILE */
     @media (max-width: 768px) {
 
       .navbar {
@@ -604,7 +604,7 @@
       }
     }
   </style>
-</head>
+  </head>
 
 <body>
   <!-- HEADER -->
@@ -656,7 +656,8 @@
         </a>
 
         <a href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20want%20to%20book%20a%20cleaning%20service."
-           class="btn btn-light">
+           id="heroWaBtn"
+           class="btn btn-light" target="_blank">
           💬 WhatsApp Us
         </a>
       </div>
@@ -665,7 +666,7 @@
   </section>
 
 
-  <!-- SERVICES -->
+  <!-- SERVICES (DYNAMIC) -->
   <section id="services">
 
     <div class="container">
@@ -678,68 +679,8 @@
         </p>
       </div>
 
-      <div class="services-grid">
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">🏠</div>
-            <h3>Home Cleaning</h3>
-            <p>Complete home deep cleaning for a fresh and hygienic home.</p>
-            <div class="price">From ₹1,499</div>
-          </div>
-          <a href="#booking" onclick="selectService('Home Cleaning')" class="card-btn">Book Now &rarr;</a>
-        </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">🏢</div>
-            <h3>Office Cleaning</h3>
-            <p>Professional cleaning for offices and commercial spaces.</p>
-            <div class="price">From ₹999</div>
-          </div>
-          <a href="#booking" onclick="selectService('Office Cleaning')" class="card-btn">Book Now &rarr;</a>
-        </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">🛁</div>
-            <h3>Bathroom Cleaning</h3>
-            <p>Deep scrubbing, tile, toilet and basin cleaning.</p>
-            <div class="price">From ₹499</div>
-          </div>
-          <a href="#booking" onclick="selectService('Bathroom Cleaning')" class="card-btn">Book Now &rarr;</a>
-        </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">🍳</div>
-            <h3>Kitchen Cleaning</h3>
-            <p>Degreasing, platform, sink and kitchen cleaning.</p>
-            <div class="price">From ₹999</div>
-          </div>
-          <a href="#booking" onclick="selectService('Kitchen Cleaning')" class="card-btn">Book Now &rarr;</a>
-        </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">🛋️</div>
-            <h3>Sofa Cleaning</h3>
-            <p>Professional sofa vacuum, shampoo and stain cleaning.</p>
-            <div class="price">From ₹199 / Seat</div>
-          </div>
-          <a href="#booking" onclick="selectService('Sofa Cleaning')" class="card-btn">Book Now &rarr;</a>
-        </div>
-
-        <div class="service-card">
-          <div>
-            <div class="service-icon">🪟</div>
-            <h3>Window / Glass Cleaning</h3>
-            <p>Crystal-clear window and glass cleaning service.</p>
-            <div class="price">From ₹299</div>
-          </div>
-          <a href="#booking" onclick="selectService('Window / Glass Cleaning')" class="card-btn">Book Now &rarr;</a>
-        </div>
-
+      <div class="services-grid" id="servicesGrid">
+        <!-- Dynamic Services will load here -->
       </div>
 
     </div>
@@ -747,75 +688,27 @@
   </section>
 
 
-  <!-- PRICING -->
+  <!-- PRICING (DYNAMIC) -->
   <section class="pricing-section" id="pricing">
 
     <div class="container">
 
       <div class="section-title">
         <small>Our Pricing</small>
-                <h2>Starting Prices</h2>
+        <h2>Starting Prices</h2>
         <p>Affordable cleaning services in Guwahati.</p>
       </div>
 
-      <div class="price-table">
-
-        <div class="price-row">
-          <span>Bathroom Deep Cleaning</span>
-          <strong>₹499+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>Kitchen Deep Cleaning</span>
-          <strong>₹999+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>1BHK Home Deep Cleaning</span>
-          <strong>₹1,499+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>2BHK Home Deep Cleaning</span>
-          <strong>₹1,999+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>3BHK Home Deep Cleaning</span>
-          <strong>₹2,499+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>Sofa Cleaning</span>
-          <strong>₹199 / Seat</strong>
-        </div>
-
-        <div class="price-row">
-          <span>Mattress Cleaning</span>
-          <strong>₹499+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>Carpet Cleaning</span>
-          <strong>₹399+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>Window / Glass Cleaning</span>
-          <strong>₹299+</strong>
-        </div>
-
-        <div class="price-row">
-          <span>Office Cleaning</span>
-          <strong>₹999+</strong>
-        </div>
-
+      <div class="price-table" id="pricingTable">
+        <!-- Dynamic Pricing Table will load here -->
       </div>
 
     </div>
 
   </section>
-    <!-- WHY CHOOSE US -->
+
+
+  <!-- WHY CHOOSE US -->
   <section>
 
     <div class="container">
@@ -858,7 +751,7 @@
   </section>
 
 
-  <!-- GALLERY -->
+  <!-- GALLERY (DYNAMIC) -->
   <section id="gallery">
 
     <div class="container">
@@ -869,14 +762,8 @@
         <p>Professional cleaning work by A2Z Cleaning Service.</p>
       </div>
 
-      <div class="gallery-grid">
-
-        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80" alt="Professional home cleaning">
-
-        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80" alt="Bathroom cleaning">
-
-        <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80" alt="Kitchen cleaning">
-
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Dynamic Gallery Images will load here -->
       </div>
 
     </div>
@@ -884,7 +771,7 @@
   </section>
 
 
-  <!-- REVIEWS -->
+  <!-- REVIEWS (DYNAMIC) -->
   <section class="reviews" id="reviews">
 
     <div class="container">
@@ -894,35 +781,8 @@
         <h2>What Our Customers Say</h2>
       </div>
 
-      <div class="review-grid">
-
-        <div class="review-card">
-          <div class="stars">★★★★★</div>
-          <p>
-            Very good cleaning service. The team was professional
-            and the work was excellent.
-          </p>
-          <strong>— Customer, Guwahati</strong>
-        </div>
-
-        <div class="review-card">
-          <div class="stars">★★★★★</div>
-          <p>
-            Bathroom cleaning was done very nicely.
-            Good service and reasonable price.
-          </p>
-          <strong>— Customer, Guwahati</strong>
-        </div>
-
-        <div class="review-card">
-          <div class="stars">★★★★★</div>
-          <p>
-            Professional team and good quality service.
-            Highly recommended.
-          </p>
-          <strong>— Customer, Guwahati</strong>
-        </div>
-
+      <div class="review-grid" id="reviewsGrid">
+        <!-- Dynamic Reviews will load here -->
       </div>
 
     </div>
@@ -1005,14 +865,6 @@
 
             <select id="service" required>
               <option value="">Choose a service</option>
-              <option value="Home Cleaning">Home Cleaning</option>
-              <option value="Office Cleaning">Office Cleaning</option>
-              <option value="Bathroom Cleaning">Bathroom Cleaning</option>
-              <option value="Kitchen Cleaning">Kitchen Cleaning</option>
-              <option value="Sofa Cleaning">Sofa Cleaning</option>
-              <option value="Window / Glass Cleaning">Window / Glass Cleaning</option>
-              <option value="Mattress Cleaning">Mattress Cleaning</option>
-              <option value="Carpet Cleaning">Carpet Cleaning</option>
             </select>
 
           </div>
@@ -1044,7 +896,7 @@
               <option value="">Select payment method</option>
               <option value="Cash on Delivery">Cash on Delivery</option>
               <option value="Debit/Credit Card">Debit / Credit Card</option>
-              <option value="UPI (9101616836@ptyes)">UPI (PhonePe / GPay / Paytm)</option>
+              <option value="UPI">UPI (PhonePe / GPay / Paytm)</option>
             </select>
           </div>
 
@@ -1079,21 +931,19 @@
 
       <div class="contact-grid">
 
-        <a class="contact-card" href="tel:+919101616836">
+        <a class="contact-card" id="contactCall" href="tel:+919101616836">
           <div class="icon">📞</div>
           <h3>Call Us</h3>
-          <p>9101616836</p>
+          <p id="contactPhoneText">9101616836</p>
         </a>
 
-        <a class="contact-card"
-           href="https://wa.me/919101616836">
+        <a class="contact-card" id="contactWa" href="https://wa.me/919101616836" target="_blank">
           <div class="icon">💬</div>
           <h3>WhatsApp</h3>
           <p>Chat with us</p>
         </a>
 
-        <a class="contact-card"
-           href="mailto:info@a2zcleaningservice.in">
+        <a class="contact-card" href="mailto:info@a2zcleaningservice.in">
           <div class="icon">📧</div>
           <h3>Email</h3>
           <p>info@a2zcleaningservice.in</p>
@@ -1121,17 +971,9 @@
 
         <br>
 
-        <p>
-          📍 Guwahati, Assam
-        </p>
-
-        <p>
-          📞 9101616836
-        </p>
-
-        <p>
-          📧 info@a2zcleaningservice.in
-        </p>
+        <p>📍 Guwahati, Assam</p>
+        <p id="footerPhone">📞 9101616836</p>
+        <p>📧 info@a2zcleaningservice.in</p>
       </div>
 
       <div>
@@ -1149,7 +991,7 @@
       <div>
         <h3>Services</h3>
 
-        <ul>
+        <ul id="footerServicesList">
           <li>Home Cleaning</li>
           <li>Office Cleaning</li>
           <li>Bathroom Cleaning</li>
@@ -1167,11 +1009,11 @@
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bar">
 
-    <a href="tel:+919101616836">
+    <a id="barCall" href="tel:+919101616836">
       📞<br>Call
     </a>
 
-    <a href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20a%20cleaning%20service.">
+    <a id="barWa" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20a%20cleaning%20service." target="_blank">
       💬<br>WhatsApp
     </a>
 
@@ -1182,7 +1024,7 @@
   </div>
 
 
-    <!-- FIREBASE SDK & LOGIC -->
+  <!-- FIREBASE SDK & DYNAMIC LOGIC -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
@@ -1201,6 +1043,10 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // Default Settings variables
+    let currentWhatsapp = "919101616836";
+    let currentUpi = "9101616836@ptyes";
+
     function toggleMenu() {
       document.getElementById("navLinks").classList.toggle("active");
     }
@@ -1212,6 +1058,142 @@
       }
     }
 
+    // Default Fallback Data if DB is empty
+    const defaultServices = [
+      { name: "Home Cleaning", price: "1,499", desc: "Complete home deep cleaning for a fresh and hygienic home.", icon: "🏠" },
+      { name: "Office Cleaning", price: "999", desc: "Professional cleaning for offices and commercial spaces.", icon: "🏢" },
+      { name: "Bathroom Cleaning", price: "499", desc: "Deep scrubbing, tile, toilet and basin cleaning.", icon: "🛁" },
+      { name: "Kitchen Cleaning", price: "999", desc: "Degreasing, platform, sink and kitchen cleaning.", icon: "🍳" },
+      { name: "Sofa Cleaning", price: "199 / Seat", desc: "Professional sofa vacuum, shampoo and stain cleaning.", icon: "🛋️" },
+      { name: "Window / Glass Cleaning", price: "299", desc: "Crystal-clear window and glass cleaning service.", icon: "🪟" }
+    ];
+
+    const defaultGallery = [
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80"
+    ];
+
+    const defaultReviews = [
+      { comment: "Very good cleaning service. The team was professional and the work was excellent.", name: "Customer, Guwahati" },
+      { comment: "Bathroom cleaning was done very nicely. Good service and reasonable price.", name: "Customer, Guwahati" },
+      { comment: "Professional team and good quality service. Highly recommended.", name: "Customer, Guwahati" }
+    ];
+
+    // 1. DYNAMIC SERVICES & PRICING SYNC
+    db.ref("services").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const servicesGrid = document.getElementById("servicesGrid");
+      const pricingTable = document.getElementById("pricingTable");
+      const serviceSelect = document.getElementById("service");
+
+      servicesGrid.innerHTML = "";
+      pricingTable.innerHTML = "";
+      serviceSelect.innerHTML = '<option value="">Choose a service</option>';
+
+      let items = [];
+      if (data) {
+        Object.keys(data).forEach(k => items.push(data[k]));
+      } else {
+        items = defaultServices;
+      }
+
+      items.forEach(item => {
+        const icon = item.icon || "🧹";
+        const desc = item.desc || "Professional cleaning service by A2Z Cleaning.";
+        const priceStr = item.price.toString().startsWith("₹") ? item.price : `₹${item.price}`;
+
+        // Add Service Card
+        servicesGrid.innerHTML += `
+          <div class="service-card">
+            <div>
+              <div class="service-icon">${icon}</div>
+              <h3>${item.name}</h3>
+              <p>${desc}</p>
+              <div class="price">From ${priceStr}</div>
+            </div>
+            <a href="#booking" onclick="selectService('${item.name}')" class="card-btn">Book Now &rarr;</a>
+          </div>
+        `;
+
+        // Add Price Row
+        pricingTable.innerHTML += `
+          <div class="price-row">
+            <span>${item.name}</span>
+            <strong>${priceStr}+</strong>
+          </div>
+        `;
+
+        // Add Form Select Option
+        serviceSelect.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+      });
+    });
+
+    // 2. DYNAMIC GALLERY SYNC
+    db.ref("gallery").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const galleryGrid = document.getElementById("galleryGrid");
+      galleryGrid.innerHTML = "";
+
+      let images = [];
+      if (data) {
+        Object.keys(data).forEach(k => images.push(data[k].url));
+      } else {
+        images = defaultGallery;
+      }
+
+      images.forEach(url => {
+        galleryGrid.innerHTML += `<img src="${url}" alt="A2Z Cleaning Service Work">`;
+      });
+    });
+
+    // 3. DYNAMIC REVIEWS SYNC
+    db.ref("reviews").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const reviewsGrid = document.getElementById("reviewsGrid");
+      reviewsGrid.innerHTML = "";
+
+      let reviews = [];
+      if (data) {
+        Object.keys(data).forEach(k => reviews.push(data[k]));
+      } else {
+        reviews = defaultReviews;
+      }
+
+      reviews.forEach(r => {
+        reviewsGrid.innerHTML += `
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>${r.comment}</p>
+            <strong>— ${r.name || 'Customer, Guwahati'}</strong>
+          </div>
+        `;
+      });
+    });
+
+    // 4. DYNAMIC SETTINGS (WhatsApp / UPI)
+    db.ref("settings").on("value", (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        if (data.whatsapp) {
+          currentWhatsapp = data.whatsapp.replace(/[^0-9]/g, '');
+          const cleanPhone = currentWhatsapp.length === 10 ? '91' + currentWhatsapp : currentWhatsapp;
+          
+          document.getElementById("heroWaBtn").href = `https://wa.me/${cleanPhone}?text=Hello%20A2Z%20Cleaning%20Service,%20I%20want%20to%20book%20a%20cleaning%20service.`;
+          document.getElementById("contactWa").href = `https://wa.me/${cleanPhone}`;
+          document.getElementById("contactCall").href = `tel:+${cleanPhone}`;
+          document.getElementById("contactPhoneText").innerText = data.whatsapp;
+          document.getElementById("footerPhone").innerText = `📞 ${data.whatsapp}`;
+          document.getElementById("barCall").href = `tel:+${cleanPhone}`;
+          document.getElementById("barWa").href = `https://wa.me/${cleanPhone}?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20a%20cleaning%20service.`;
+        }
+        if (data.upi) {
+          currentUpi = data.upi;
+        }
+      }
+    });
+
+    // 5. BOOKING SUBMISSION TO FIREBASE & WHATSAPP / UPI
     function sendBooking(event) {
       event.preventDefault();
 
@@ -1236,10 +1218,10 @@
         createdAt: new Date().toLocaleString()
       };
 
-      // 1. Save to Firebase Realtime Database
+      // Push Booking to Firebase Realtime Database
       db.ref("bookings").push(bookingData);
 
-      // 2. WhatsApp Message Link
+      // WhatsApp URL Construction
       const whatsappMessage =
         "Hello A2Z Cleaning Service,%0A%0A" +
         "I want to book a cleaning service.%0A%0A" +
@@ -1253,11 +1235,12 @@
         "- Payment Method: " + encodeURIComponent(paymentMethod) + "%0A" +
         "- Message: " + encodeURIComponent(message);
 
-      const whatsappUrl = "https://wa.me/919101616836?text=" + whatsappMessage;
+      const cleanPhone = currentWhatsapp.length === 10 ? '91' + currentWhatsapp : currentWhatsapp;
+      const whatsappUrl = "https://wa.me/" + cleanPhone + "?text=" + whatsappMessage;
 
       // UPI Logic
       if (paymentMethod.includes("UPI")) {
-        const upiUrl = `upi://pay?pa=9101616836@ptyes&pn=A2Z%20Cleaning%20Service&cu=INR`;
+        const upiUrl = `upi://pay?pa=${currentUpi}&pn=A2Z%20Cleaning%20Service&cu=INR`;
         const confirmPayment = confirm("আপনি কি এখনই UPI-এর মাধ্যমে পেমেন্ট করতে চান?");
         
         if (confirmPayment) {
@@ -1273,8 +1256,9 @@
       }
     }
   </script>
-  
 
 </body>
   </html>
-              
+  
+  
+  
