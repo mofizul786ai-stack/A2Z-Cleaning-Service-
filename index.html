@@ -869,10 +869,17 @@
 
           </div>
 
-          <div class="form-group">
-            <label>Area in Guwahati</label>
-            <input type="text" id="area" placeholder="Example: Fancy Bazar" required>
+                    <div class="form-group">
+            <label>Area in Guwahati / Address</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="area" placeholder="Example: Fancy Bazar or Detect Location" required>
+              <button type="button" onclick="getCurrentLocation()" style="white-space: nowrap; padding: 10px 14px; background: #28a745; color: white; border: none; border-radius: 9px; font-weight: bold; cursor: pointer;">
+                📍 Detect
+              </button>
+            </div>
+            <small id="locStatus" style="color: #657084; font-size: 12px; display: block; margin-top: 4px;"></small>
           </div>
+
 
           <div class="form-group">
             <label>Preferred Date</label>
@@ -1257,6 +1264,59 @@
         window.location.href = whatsappUrl;
       }
     }
+        // 6. GEOLOCATION FETCHING
+    function getCurrentLocation() {
+      const status = document.getElementById("locStatus");
+      const areaInput = document.getElementById("area");
+
+      if (!navigator.geolocation) {
+        status.innerText = "Geolocation is not supported by your browser.";
+        return;
+      }
+
+      status.innerText = "Locating your position...";
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.display_name) {
+                areaInput.value = data.display_name;
+                status.innerText = "📍 Location inserted successfully!";
+              } else {
+                areaInput.value = `https://maps.google.com/?q=${lat},${lon}`;
+                status.innerText = "📍 Google Maps location link inserted!";
+              }
+            })
+            .catch(() => {
+              areaInput.value = `https://maps.google.com/?q=${lat},${lon}`;
+              status.innerText = "📍 Google Maps location link inserted!";
+            });
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              status.innerText = "Permission denied. Please type address manually.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              status.innerText = "Location unavailable.";
+              break;
+            case error.TIMEOUT:
+              status.innerText = "Location request timed out.";
+              break;
+            default:
+              status.innerText = "Unable to retrieve location.";
+              break;
+          }
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+    
   </script>
 
 </body>
