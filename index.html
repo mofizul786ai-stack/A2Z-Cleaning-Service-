@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>A2Z Cleaning Service | Guwahati, Assam</title>
-  <meta name="description" content="A2Z Cleaning Service provides professional home, office, bathroom, kitchen, sofa and window cleaning services in Guwahati, Assam.">
+  <title>A2Z Cleaning & Home Services | Guwahati, Assam</title>
+  <meta name="description" content="A2Z provides professional home cleaning, electric, plumber, and repair services in Guwahati, Assam.">
 
   <style>
     * {
@@ -187,10 +187,10 @@
       color: #657084;
     }
 
-    /* SERVICES */
+    /* SERVICES (4 Categories Grid) */
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
     }
 
@@ -210,15 +210,22 @@
     }
 
     .service-icon {
-      width: 55px;
-      height: 55px;
-      border-radius: 15px;
+      width: 65px;
+      height: 65px;
+      border-radius: 12px;
       background: #e8f3ff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 27px;
       margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .service-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .service-card h3 {
@@ -493,21 +500,11 @@
       display: none;
     }
 
-    /* MOBILE */
+    /* MOBILE RESPONSIVE */
     @media (max-width: 768px) {
-
-      .navbar {
-        padding: 12px 15px;
-      }
-
-      .logo {
-        font-size: 18px;
-      }
-
-      .menu-btn {
-        display: block;
-      }
-
+      .navbar { padding: 12px 15px; }
+      .logo { font-size: 18px; }
+      .menu-btn { display: block; }
       .nav-links {
         display: none;
         position: absolute;
@@ -520,57 +517,22 @@
         gap: 15px;
         box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
-
-      .nav-links.active {
-        display: flex;
-      }
-
-      .hero {
-        min-height: 600px;
-      }
-
-      .hero-content {
-        padding: 40px 18px 80px;
-      }
-
-      .hero h1 {
-        font-size: 36px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
-
-      section {
-        padding: 55px 15px;
-      }
-
-      .section-title h2 {
-        font-size: 27px;
-      }
-
-      .services-grid,
-      .gallery-grid,
-      .review-grid,
-      .contact-grid {
+      .nav-links.active { display: flex; }
+      .hero { min-height: 600px; }
+      .hero-content { padding: 40px 18px 80px; }
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 16px; }
+      section { padding: 55px 15px; }
+      .section-title h2 { font-size: 27px; }
+      
+      .gallery-grid, .review-grid, .contact-grid {
         grid-template-columns: 1fr;
       }
-
-      .why-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .about-box {
-        grid-template-columns: 1fr;
-      }
-
-      .about-text h2 {
-        font-size: 27px;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
+      
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-box { grid-template-columns: 1fr; }
+      .about-text h2 { font-size: 27px; }
+      .footer-grid { grid-template-columns: 1fr; }
 
       .mobile-bar {
         position: fixed;
@@ -583,40 +545,27 @@
         background: white;
         box-shadow: 0 -3px 15px rgba(0,0,0,0.12);
       }
-
       .mobile-bar a {
         text-align: center;
         padding: 10px 5px;
         font-size: 12px;
         font-weight: 800;
       }
-
-      .mobile-bar a:nth-child(1) {
-        color: #0879e8;
-      }
-
-      .mobile-bar a:nth-child(2) {
-        color: #159447;
-      }
-
-      .mobile-bar a:nth-child(3) {
-        color: #0879e8;
-      }
+      .mobile-bar a:nth-child(1) { color: #0879e8; }
+      .mobile-bar a:nth-child(2) { color: #159447; }
+      .mobile-bar a:nth-child(3) { color: #0879e8; }
     }
   </style>
-  </head>
+</head>
 
 <body>
   <!-- HEADER -->
   <header>
     <nav class="navbar">
-
       <a href="#home" class="logo">
         A2Z <span>Cleaning Service</span>
       </a>
-
       <button class="menu-btn" onclick="toggleMenu()">☰</button>
-
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">Home</a></li>
         <li><a href="#services">Services</a></li>
@@ -627,700 +576,254 @@
         <li><a href="#contact">Contact</a></li>
         <li><a href="#booking">Booking</a></li>
       </ul>
-
     </nav>
   </header>
-
 
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-content">
-
-      <div class="hero-badge">
-        📍 Serving Guwahati, Assam
-      </div>
-
-      <h1>
-        Professional Cleaning Services
-        <span>in Guwahati</span>
-      </h1>
-
-      <p>
-        Reliable, affordable and professional cleaning services
-        for homes, offices and businesses.
-      </p>
-
+      <div class="hero-badge">📍 Serving Guwahati, Assam</div>
+      <h1>Professional Home & Repair Services <span>in Guwahati</span></h1>
+      <p>Reliable cleaning, electric, plumbing, and repair services at your doorstep.</p>
       <div class="buttons">
-        <a href="#booking" class="btn btn-primary">
-          📅 Book Now
-        </a>
-
-        <a href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20want%20to%20book%20a%20cleaning%20service."
-           id="heroWaBtn"
-           class="btn btn-light" target="_blank">
-          💬 WhatsApp Us
-        </a>
+        <a href="#booking" class="btn btn-primary">📅 Book Now</a>
+        <a href="https://wa.me/919101616836" id="heroWaBtn" class="btn btn-light" target="_blank">💬 WhatsApp Us</a>
       </div>
-
     </div>
   </section>
 
-
-  <!-- SERVICES (DYNAMIC) -->
+  <!-- SERVICES (4 Categories) -->
   <section id="services">
-
     <div class="container">
-
       <div class="section-title">
-        <small>Our Services</small>
-        <h2>Professional Cleaning Services</h2>
-        <p>
-          Quality cleaning solutions for homes, offices and commercial spaces.
-        </p>
+        <small>OUR SERVICES</small>
+        <h2>Professional Services</h2>
+        <p>Quality solutions for your home, repairs, and maintenance.</p>
       </div>
-
       <div class="services-grid" id="servicesGrid">
         <!-- Dynamic Services will load here -->
       </div>
-
     </div>
-
   </section>
 
-
-  <!-- PRICING (DYNAMIC) -->
+  <!-- PRICING -->
   <section class="pricing-section" id="pricing">
-
     <div class="container">
-
       <div class="section-title">
         <small>Our Pricing</small>
         <h2>Starting Prices</h2>
-        <p>Affordable cleaning services in Guwahati.</p>
+        <p>Affordable service charges in Guwahati.</p>
       </div>
-
       <div class="price-table" id="pricingTable">
         <!-- Dynamic Pricing Table will load here -->
       </div>
-
     </div>
-
   </section>
-
 
   <!-- WHY CHOOSE US -->
   <section>
-
     <div class="container">
-
       <div class="section-title">
         <small>Why Choose Us</small>
-        <h2>Why A2Z Cleaning Service?</h2>
+        <h2>Why A2Z Service?</h2>
       </div>
-
       <div class="why-grid">
-
         <div class="why-card">
-          <div class="icon">🧹</div>
-          <h3>Professional Team</h3>
-          <p>Trained cleaning professionals.</p>
+          <div class="icon">👨‍🔧</div>
+          <h3>Expert Professionals</h3>
+          <p>Trained and verified technicians.</p>
         </div>
-
         <div class="why-card">
           <div class="icon">💰</div>
           <h3>Affordable Price</h3>
           <p>Competitive local pricing.</p>
         </div>
-
         <div class="why-card">
           <div class="icon">⭐</div>
           <h3>Quality Service</h3>
-          <p>Quality-focused cleaning.</p>
+          <p>100% satisfaction guaranteed.</p>
         </div>
-
         <div class="why-card">
           <div class="icon">📍</div>
           <h3>Guwahati Service</h3>
-          <p>Serving customers across Guwahati.</p>
+          <p>Serving across Guwahati.</p>
         </div>
-
       </div>
-
     </div>
-
   </section>
 
-
-  <!-- GALLERY (DYNAMIC) -->
+  <!-- GALLERY -->
   <section id="gallery">
-
     <div class="container">
-
       <div class="section-title">
         <small>Our Work</small>
-        <h2>Cleaning Gallery</h2>
-        <p>Professional cleaning work by A2Z Cleaning Service.</p>
+        <h2>Service Gallery</h2>
       </div>
-
-      <div class="gallery-grid" id="galleryGrid">
-        <!-- Dynamic Gallery Images will load here -->
-      </div>
-
+      <div class="gallery-grid" id="galleryGrid"></div>
     </div>
-
   </section>
 
-
-  <!-- REVIEWS (DYNAMIC) -->
+  <!-- REVIEWS -->
   <section class="reviews" id="reviews">
-
     <div class="container">
-
       <div class="section-title">
         <small>Customer Reviews</small>
         <h2>What Our Customers Say</h2>
       </div>
-
-      <div class="review-grid" id="reviewsGrid">
-        <!-- Dynamic Reviews will load here -->
-      </div>
-
+      <div class="review-grid" id="reviewsGrid"></div>
     </div>
-
   </section>
-
 
   <!-- ABOUT -->
   <section id="about">
-
     <div class="container">
-
       <div class="about-box">
-
-        <img
-          src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=80"
-          alt="A2Z Cleaning Service"
-        >
-
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=80" alt="A2Z Service">
         <div class="about-text">
-
-          <small style="color:#0879e8;font-weight:bold;">
-            ABOUT A2Z CLEANING SERVICE
-          </small>
-
-          <h2>Making Guwahati Cleaner & Better</h2>
-
-          <p>
-            A2Z Cleaning Service provides reliable and professional
-            cleaning services for homes, offices and businesses in Guwahati.
-          </p>
-
-          <p>
-            Our goal is simple — provide quality cleaning,
-            transparent pricing and convenient booking for every customer.
-          </p>
-
-          <a href="#booking" class="btn btn-primary">
-            Book a Service
-          </a>
-
+          <small style="color:#0879e8;font-weight:bold;">ABOUT A2Z SERVICES</small>
+          <h2>Making Guwahati Better & Easier</h2>
+          <p>A2Z provides reliable and professional cleaning, electrical, plumbing, and repair services for homes and businesses.</p>
+          <a href="#booking" class="btn btn-primary">Book a Service</a>
         </div>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- BOOKING -->
   <section class="booking" id="booking">
-
     <div class="container">
-
       <div class="section-title">
         <small style="color:#58b7ff;">BOOKING</small>
-        <h2 style="color:white;">Book Your Cleaning Service</h2>
-        <p style="color:#cbd8e8;">
-          Fill the form and contact us on WhatsApp to confirm your booking.
-        </p>
+        <h2 style="color:white;">Book Your Service</h2>
+        <p style="color:#cbd8e8;">Fill the form and contact us on WhatsApp to confirm.</p>
       </div>
-
       <div class="booking-box">
-
         <form onsubmit="sendBooking(event)">
-
           <div class="form-group">
             <label>Your Name</label>
-            <input type="text" id="customerName" placeholder="Enter your name" required>
+            <input type="text" id="customerName" required>
           </div>
-
           <div class="form-group">
             <label>Phone Number</label>
-            <input type="tel" id="customerPhone" placeholder="Enter phone number" required>
+            <input type="tel" id="customerPhone" required>
           </div>
-
           <div class="form-group">
             <label>Select Service</label>
-
             <select id="service" required>
               <option value="">Choose a service</option>
             </select>
-
           </div>
-
-                    <div class="form-group">
-            <label>Area in Guwahati / Address</label>
-            <div style="display: flex; gap: 8px;">
-              <input type="text" id="area" placeholder="Example: Fancy Bazar or Detect Location" required>
-              <button type="button" onclick="getCurrentLocation()" style="white-space: nowrap; padding: 10px 14px; background: #28a745; color: white; border: none; border-radius: 9px; font-weight: bold; cursor: pointer;">
-                📍 Detect
-              </button>
-            </div>
-            <small id="locStatus" style="color: #657084; font-size: 12px; display: block; margin-top: 4px;"></small>
+          <div class="form-group">
+            <label>Area / Address</label>
+            <input type="text" id="area" placeholder="E.g., Fancy Bazar or Detect Location" required style="margin-bottom: 8px;">
+            <button type="button" onclick="getCurrentLocation()" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 9px; font-weight: bold; cursor: pointer;">
+              📍 Detect My Location
+            </button>
+            <small id="locStatus" style="color: #159447; font-size: 12px; display: block; margin-top: 6px; font-weight: bold;"></small>
           </div>
-
-
           <div class="form-group">
             <label>Preferred Date</label>
             <input type="date" id="date" required>
           </div>
-
           <div class="form-group">
             <label>Preferred Time</label>
             <select id="time" required>
               <option value="">Select time slot</option>
-              <option value="9:00 AM">05:00 PM</option>
               <option value="10:00 AM">10:00 AM</option>
               <option value="12:00 PM">12:00 PM</option>
               <option value="03:00 PM">03:00 PM</option>
               <option value="05:00 PM">05:00 PM</option>
-              
             </select>
           </div>
-
           <div class="form-group">
             <label>Payment Method</label>
             <select id="paymentMethod" required>
-              <option value="">Select payment method</option>
+              <option value="">Select payment</option>
               <option value="Cash on Delivery">Cash on Delivery</option>
-              <option value="Debit/Credit Card">Debit / Credit Card</option>
-              <option value="UPI">UPI (PhonePe / GPay / Paytm)</option>
+              <option value="UPI">UPI (PhonePe / GPay)</option>
             </select>
           </div>
-
           <div class="form-group">
             <label>Message</label>
-            <textarea id="message" placeholder="Tell us about your cleaning requirement"></textarea>
+            <textarea id="message" placeholder="Special requirements?"></textarea>
           </div>
-
-          <button class="booking-btn" type="submit">
-            📲 Send Booking on WhatsApp
-          </button>
-
+          <button class="booking-btn" type="submit">📲 Send Booking on WhatsApp</button>
         </form>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- CONTACT -->
   <section id="contact">
-
     <div class="container">
-
       <div class="section-title">
         <small>Contact Us</small>
         <h2>Get In Touch</h2>
-        <p>Contact A2Z Cleaning Service for your cleaning requirements.</p>
       </div>
-
       <div class="contact-grid">
-
         <a class="contact-card" id="contactCall" href="tel:+919101616836">
           <div class="icon">📞</div>
           <h3>Call Us</h3>
           <p id="contactPhoneText">9101616836</p>
         </a>
-
         <a class="contact-card" id="contactWa" href="https://wa.me/919101616836" target="_blank">
           <div class="icon">💬</div>
           <h3>WhatsApp</h3>
           <p>Chat with us</p>
         </a>
-
         <a class="contact-card" href="mailto:info@a2zcleaningservice.in">
           <div class="icon">📧</div>
           <h3>Email</h3>
           <p>info@a2zcleaningservice.in</p>
         </a>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- FOOTER -->
   <footer>
-
     <div class="footer-grid">
-
       <div>
-        <h3>A2Z Cleaning Service</h3>
-
-        <p>
-          Professional cleaning services in Guwahati, Assam.
-          Home, office, bathroom, kitchen, sofa and glass cleaning.
-        </p>
-
+        <h3>A2Z Service</h3>
+        <p>Professional home, electric, plumber, and repair services in Guwahati, Assam.</p>
         <br>
-
         <p>📍 Guwahati, Assam</p>
         <p id="footerPhone">📞 9101616836</p>
         <p>📧 info@a2zcleaningservice.in</p>
       </div>
-
       <div>
         <h3>Quick Links</h3>
-
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#gallery">Gallery</a></li>
           <li><a href="#booking">Booking</a></li>
         </ul>
       </div>
-
       <div>
         <h3>Services</h3>
-
-        <ul id="footerServicesList">
+        <ul>
           <li>Home Cleaning</li>
-          <li>Office Cleaning</li>
-          <li>Bathroom Cleaning</li>
-          <li>Kitchen Cleaning</li>
-          <li>Sofa Cleaning</li>
-          <li>Window Cleaning</li>
+          <li>Electric Service</li>
+          <li>Plumber Services</li>
+          <li>Repair Service</li>
         </ul>
       </div>
-
     </div>
-
   </footer>
 
-
-  <!-- MOBILE BOTTOM BAR -->
+  <!-- MOBILE BAR -->
   <div class="mobile-bar">
-
-    <a id="barCall" href="tel:+919101616836">
-      📞<br>Call
-    </a>
-
-    <a id="barWa" href="https://wa.me/919101616836?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20a%20cleaning%20service." target="_blank">
-      💬<br>WhatsApp
-    </a>
-
-    <a href="#booking">
-      📅<br>Book
-    </a>
-
+    <a id="barCall" href="tel:+919101616836">📞<br>Call</a>
+    <a id="barWa" href="https://wa.me/919101616836" target="_blank">💬<br>WhatsApp</a>
+    <a href="#booking">📅<br>Book</a>
   </div>
 
-
-  <!-- FIREBASE SDK & DYNAMIC LOGIC -->
+  <!-- FIREBASE & LOGIC -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
   <script>
-    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyDK1fnjgeDwb712_lDTwifRjH_tpbZrtaw",
       authDomain: "a2z-cleaning-service-5a568.firebaseapp.com",
-      projectId: "a2z-cleaning-service-5a568",
-      storageBucket: "a2z-cleaning-service-5a568.firebasestorage.app",
-      messagingSenderId: "896768770622",
-      appId: "1:896768770622:web:89e11df7906d4cbf26876f"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    // Default Settings variables
-    let currentWhatsapp = "919101616836";
-    let currentUpi = "9101616836@ptyes";
-
-    function toggleMenu() {
-      document.getElementById("navLinks").classList.toggle("active");
-    }
-
-    function selectService(serviceName) {
-      const serviceDropdown = document.getElementById("service");
-      if (serviceDropdown) {
-        serviceDropdown.value = serviceName;
-      }
-    }
-
-    // Default Fallback Data if DB is empty
-    const defaultServices = [
-      { name: "Home Cleaning", price: "1,499", desc: "Complete home deep cleaning for a fresh and hygienic home.", icon: "🏠" },
-      { name: "Office Cleaning", price: "999", desc: "Professional cleaning for offices and commercial spaces.", icon: "🏢" },
-      { name: "Bathroom Cleaning", price: "499", desc: "Deep scrubbing, tile, toilet and basin cleaning.", icon: "🛁" },
-      { name: "Kitchen Cleaning", price: "999", desc: "Degreasing, platform, sink and kitchen cleaning.", icon: "🍳" },
-      { name: "Sofa Cleaning", price: "199 / Seat", desc: "Professional sofa vacuum, shampoo and stain cleaning.", icon: "🛋️" },
-      { name: "Window / Glass Cleaning", price: "299", desc: "Crystal-clear window and glass cleaning service.", icon: "🪟" }
-    ];
-
-    const defaultGallery = [
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80"
-    ];
-
-    const defaultReviews = [
-      { comment: "Very good cleaning service. The team was professional and the work was excellent.", name: "Customer, Guwahati" },
-      { comment: "Bathroom cleaning was done very nicely. Good service and reasonable price.", name: "Customer, Guwahati" },
-      { comment: "Professional team and good quality service. Highly recommended.", name: "Customer, Guwahati" }
-    ];
-
-    // 1. DYNAMIC SERVICES & PRICING SYNC
-    db.ref("services").on("value", (snapshot) => {
-      const data = snapshot.val();
-      const servicesGrid = document.getElementById("servicesGrid");
-      const pricingTable = document.getElementById("pricingTable");
-      const serviceSelect = document.getElementById("service");
-
-      servicesGrid.innerHTML = "";
-      pricingTable.innerHTML = "";
-      serviceSelect.innerHTML = '<option value="">Choose a service</option>';
-
-      let items = [];
-      if (data) {
-        Object.keys(data).forEach(k => items.push(data[k]));
-      } else {
-        items = defaultServices;
-      }
-
-      items.forEach(item => {
-        const icon = item.icon || "🧹";
-        const desc = item.desc || "Professional cleaning service by A2Z Cleaning.";
-        const priceStr = item.price.toString().startsWith("₹") ? item.price : `₹${item.price}`;
-
-        // Add Service Card
-        servicesGrid.innerHTML += `
-          <div class="service-card">
-            <div>
-              <div class="service-icon">${icon}</div>
-              <h3>${item.name}</h3>
-              <p>${desc}</p>
-              <div class="price">From ${priceStr}</div>
-            </div>
-            <a href="#booking" onclick="selectService('${item.name}')" class="card-btn">Book Now &rarr;</a>
-          </div>
-        `;
-
-        // Add Price Row
-        pricingTable.innerHTML += `
-          <div class="price-row">
-            <span>${item.name}</span>
-            <strong>${priceStr}+</strong>
-          </div>
-        `;
-
-        // Add Form Select Option
-        serviceSelect.innerHTML += `<option value="${item.name}">${item.name}</option>`;
-      });
-    });
-
-    // 2. DYNAMIC GALLERY SYNC
-    db.ref("gallery").on("value", (snapshot) => {
-      const data = snapshot.val();
-      const galleryGrid = document.getElementById("galleryGrid");
-      galleryGrid.innerHTML = "";
-
-      let images = [];
-      if (data) {
-        Object.keys(data).forEach(k => images.push(data[k].url));
-      } else {
-        images = defaultGallery;
-      }
-
-      images.forEach(url => {
-        galleryGrid.innerHTML += `<img src="${url}" alt="A2Z Cleaning Service Work">`;
-      });
-    });
-
-    // 3. DYNAMIC REVIEWS SYNC
-    db.ref("reviews").on("value", (snapshot) => {
-      const data = snapshot.val();
-      const reviewsGrid = document.getElementById("reviewsGrid");
-      reviewsGrid.innerHTML = "";
-
-      let reviews = [];
-      if (data) {
-        Object.keys(data).forEach(k => reviews.push(data[k]));
-      } else {
-        reviews = defaultReviews;
-      }
-
-      reviews.forEach(r => {
-        reviewsGrid.innerHTML += `
-          <div class="review-card">
-            <div class="stars">★★★★★</div>
-            <p>${r.comment}</p>
-            <strong>— ${r.name || 'Customer, Guwahati'}</strong>
-          </div>
-        `;
-      });
-    });
-
-    // 4. DYNAMIC SETTINGS (WhatsApp / UPI)
-    db.ref("settings").on("value", (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        if (data.whatsapp) {
-          currentWhatsapp = data.whatsapp.replace(/[^0-9]/g, '');
-          const cleanPhone = currentWhatsapp.length === 10 ? '91' + currentWhatsapp : currentWhatsapp;
-          
-          document.getElementById("heroWaBtn").href = `https://wa.me/${cleanPhone}?text=Hello%20A2Z%20Cleaning%20Service,%20I%20want%20to%20book%20a%20cleaning%20service.`;
-          document.getElementById("contactWa").href = `https://wa.me/${cleanPhone}`;
-          document.getElementById("contactCall").href = `tel:+${cleanPhone}`;
-          document.getElementById("contactPhoneText").innerText = data.whatsapp;
-          document.getElementById("footerPhone").innerText = `📞 ${data.whatsapp}`;
-          document.getElementById("barCall").href = `tel:+${cleanPhone}`;
-          document.getElementById("barWa").href = `https://wa.me/${cleanPhone}?text=Hello%20A2Z%20Cleaning%20Service,%20I%20need%20a%20cleaning%20service.`;
-        }
-        if (data.upi) {
-          currentUpi = data.upi;
-        }
-      }
-    });
-
-    // 5. BOOKING SUBMISSION TO FIREBASE & WHATSAPP / UPI
-    function sendBooking(event) {
-      event.preventDefault();
-
-      const name = document.getElementById("customerName").value;
-      const phone = document.getElementById("customerPhone").value;
-      const service = document.getElementById("service").value;
-      const area = document.getElementById("area").value;
-      const date = document.getElementById("date").value;
-      const time = document.getElementById("time").value;
-      const paymentMethod = document.getElementById("paymentMethod").value;
-      const message = document.getElementById("message").value;
-
-      const bookingData = {
-        name: name,
-        phone: phone,
-        service: service,
-        area: area,
-        date: date,
-        time: time,
-        paymentMethod: paymentMethod,
-        message: message,
-        createdAt: new Date().toLocaleString()
-      };
-
-      // Push Booking to Firebase Realtime Database
-      db.ref("bookings").push(bookingData);
-
-      // WhatsApp URL Construction
-      const whatsappMessage =
-        "Hello A2Z Cleaning Service,%0A%0A" +
-        "I want to book a cleaning service.%0A%0A" +
-        "Booking Details:%0A" +
-        "- Name: " + encodeURIComponent(name) + "%0A" +
-        "- Phone: " + encodeURIComponent(phone) + "%0A" +
-        "- Service: " + encodeURIComponent(service) + "%0A" +
-        "- Area: " + encodeURIComponent(area) + "%0A" +
-        "- Preferred Date: " + encodeURIComponent(date) + "%0A" +
-        "- Preferred Time: " + encodeURIComponent(time) + "%0A" +
-        "- Payment Method: " + encodeURIComponent(paymentMethod) + "%0A" +
-        "- Message: " + encodeURIComponent(message);
-
-      const cleanPhone = currentWhatsapp.length === 10 ? '91' + currentWhatsapp : currentWhatsapp;
-      const whatsappUrl = "https://wa.me/" + cleanPhone + "?text=" + whatsappMessage;
-
-      // UPI Logic
-      if (paymentMethod.includes("UPI")) {
-        const upiUrl = `upi://pay?pa=${currentUpi}&pn=A2Z%20Cleaning%20Service&cu=INR`;
-        const confirmPayment = confirm("আপনি কি এখনই UPI-এর মাধ্যমে পেমেন্ট করতে চান?");
-        
-        if (confirmPayment) {
-          window.location.href = upiUrl;
-          setTimeout(() => {
-            window.location.href = whatsappUrl;
-          }, 3000);
-        } else {
-          window.location.href = whatsappUrl;
-        }
-      } else {
-        window.location.href = whatsappUrl;
-      }
-    }
-        // 6. GEOLOCATION FETCHING
-    function getCurrentLocation() {
-      const status = document.getElementById("locStatus");
-      const areaInput = document.getElementById("area");
-
-      if (!navigator.geolocation) {
-        status.innerText = "Geolocation is not supported by your browser.";
-        return;
-      }
-
-      status.innerText = "Locating your position...";
-
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-
-          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-            .then(res => res.json())
-            .then(data => {
-              if (data && data.display_name) {
-                areaInput.value = data.display_name;
-                status.innerText = "📍 Location inserted successfully!";
-              } else {
-                areaInput.value = `https://maps.google.com/?q=${lat},${lon}`;
-                status.innerText = "📍 Google Maps location link inserted!";
-              }
-            })
-            .catch(() => {
-              areaInput.value = `https://maps.google.com/?q=${lat},${lon}`;
-              status.innerText = "📍 Google Maps location link inserted!";
-            });
-        },
-        (error) => {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              status.innerText = "Permission denied. Please type address manually.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              status.innerText = "Location unavailable.";
-              break;
-            case error.TIMEOUT:
-              status.innerText = "Location request timed out.";
-              break;
-            default:
-              status.innerText = "Unable to retrieve location.";
-              break;
-          }
-        },
-        { enableHighAccuracy: true, timeout: 10000 }
-      );
-    }
-    
-  </script>
-
-</body>
-  </html>
-  
-  
-  
+      projectId: "a2z-cleaning-se
