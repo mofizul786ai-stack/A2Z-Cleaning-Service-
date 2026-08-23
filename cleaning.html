@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cleaning Services - A2Z Service Guwahati</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { background: #f8f9fa; color: #111; padding-bottom: 90px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; scroll-behavior: smooth; }
+    body { background: #f8f9fa; color: #111; padding-bottom: 110px; }
     
     header {
       position: sticky; top: 0; z-index: 1000; background: #fff;
@@ -28,7 +28,41 @@
     .price-box { display: flex; flex-direction: column; }
     .old-price { font-size: 12px; color: #888; text-decoration: line-through; }
     .new-price { font-size: 18px; font-weight: 800; color: #111; }
-    .add-btn { border: 1px solid #d3e4f5; background: #f4f9ff; color: #0879e8; padding: 8px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    
+    .add-btn {
+      border: 1px solid #d3e4f5; background: #f4f9ff; color: #0879e8;
+      padding: 8px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s;
+    }
+    .add-btn.added { background: #0879e8; color: #fff; }
+
+    /* FLOATING CART BAR */
+    .cart-bar {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 40px); max-width: 500px; background: #0879e8; color: white;
+      padding: 12px 20px; border-radius: 12px; display: none; justify-content: space-between;
+      align-items: center; z-index: 999; box-shadow: 0 4px 15px rgba(8, 121, 232, 0.4); cursor: pointer;
+    }
+    .cart-info { font-size: 14px; font-weight: 700; }
+    .cart-btn-text { font-size: 13px; font-weight: 600; }
+
+    /* MODAL OVERLAY & BOTTOM SHEET */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); z-index: 1001; display: none; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { display: block; opacity: 1; }
+
+    .bottom-sheet {
+      position: fixed; bottom: -100%; left: 0; width: 100%; background: #fff;
+      border-radius: 24px 24px 0 0; z-index: 1002; padding: 25px 20px 30px;
+      transition: bottom 0.4s ease; max-height: 80vh; overflow-y: auto;
+    }
+    .bottom-sheet.active { bottom: 0; }
+    .sheet-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; }
+    .sheet-close-btn { width: 100%; background: #0879e8; color: #fff; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; }
+
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
+    .cart-remove-btn { color: #d32f2f; font-size: 12px; border: none; background: none; cursor: pointer; }
 
     footer { background: #111827; color: #9ca3af; padding: 30px 20px; margin-top: 40px; font-size: 13px; text-align: center; }
   </style>
@@ -41,85 +75,137 @@
   </header>
 
   <div class="container">
-    <div class="services-grid">
-      
-      <!-- Sofa Cleaning -->
-      <div class="service-card">
-        <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=500&q=80" class="service-card-img" alt="Sofa Cleaning">
-        <div class="service-info">
-          <div class="service-title">Sofa Deep Cleaning</div>
-          <div class="service-desc">Professional shampooing & stain removal for fabric and leather sofas.</div>
-          <div class="price-row">
-            <div class="price-box">
-              <span class="old-price">₹1,200</span>
-              <span class="new-price">₹800</span>
-            </div>
-            <button class="add-btn" onclick="bookDirect('Sofa Deep Cleaning')">BOOK</button>
-          </div>
-        </div>
-      </div>
+    <div class="services-grid" id="cleaningServicesContainer"></div>
+  </div>
 
-      <!-- Full House Cleaning -->
-      <div class="service-card">
-        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" class="service-card-img" alt="Full House Cleaning">
-        <div class="service-info">
-          <div class="service-title">Full House Deep Cleaning</div>
-          <div class="service-desc">Complete home cleaning including kitchen, bathroom, floors & windows.</div>
-          <div class="price-row">
-            <div class="price-box">
-              <span class="old-price">₹4,500</span>
-              <span class="new-price">₹3,499</span>
-            </div>
-            <button class="add-btn" onclick="bookDirect('Full House Deep Cleaning')">BOOK</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bathroom Cleaning -->
-      <div class="service-card">
-        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" class="service-card-img" alt="Bathroom Cleaning">
-        <div class="service-info">
-          <div class="service-title">Bathroom Deep Cleaning</div>
-          <div class="service-desc">Tile scrubbing, hard water stain removal, and sanitization.</div>
-          <div class="price-row">
-            <div class="price-box">
-              <span class="old-price">₹799</span>
-              <span class="new-price">₹499</span>
-            </div>
-            <button class="add-btn" onclick="bookDirect('Bathroom Deep Cleaning')">BOOK</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Kitchen Cleaning -->
-      <div class="service-card">
-        <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=500&q=80" class="service-card-img" alt="Kitchen Cleaning">
-        <div class="service-info">
-          <div class="service-title">Kitchen Deep Cleaning</div>
-          <div class="service-desc">Oil & degreasing treatment for cabinets, chimney exterior, and tiles.</div>
-          <div class="price-row">
-            <div class="price-box">
-              <span class="old-price">₹1,499</span>
-              <span class="new-price">₹999</span>
-            </div>
-            <button class="add-btn" onclick="bookDirect('Kitchen Deep Cleaning')">BOOK</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <!-- FLOATING CART BAR -->
+  <div class="cart-bar" id="cartBar" onclick="openCartSheet()">
+    <div class="cart-info" id="cartBarText">0 Items | ₹0</div>
+    <div class="cart-btn-text">View Cart &#8594;</div>
   </div>
 
   <footer>
     &copy; 2026 A2Z Service. All rights reserved.
   </footer>
 
+  <!-- MODAL OVERLAY & BOTTOM SHEET -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeSheet()"></div>
+  <div class="bottom-sheet" id="bottomSheet">
+    <div class="sheet-title">Your Selected Services</div>
+    <div id="cartSheetContent"></div>
+    <button class="sheet-close-btn" onclick="goToHomeBooking()">Proceed to Order</button>
+  </div>
+
   <script>
-    function bookDirect(serviceName) {
-      const message = `Hello A2Z Service! I want to book: *${serviceName}*`;
-      window.location.href = `https://wa.me/919101616836?text=${message}`;
+    let cart = [];
+
+    const cleaningServices = [
+      { id: 101, title: "Sofa Deep Cleaning", oldPrice: "₹1,200", newPrice: "₹800", priceNum: 800, img: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=500&q=80", desc: "Professional shampooing & stain removal for fabric and leather sofas." },
+      { id: 102, title: "Full House Deep Cleaning", oldPrice: "₹4,500", newPrice: "₹3,499", priceNum: 3499, img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80", desc: "Complete home cleaning including kitchen, bathroom, floors & windows." },
+      { id: 103, title: "Bathroom Deep Cleaning", oldPrice: "₹799", newPrice: "₹499", priceNum: 499, img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80", desc: "Tile scrubbing, hard water stain removal, and sanitization." },
+      { id: 104, title: "Kitchen Deep Cleaning", oldPrice: "₹1,499", newPrice: "₹999", priceNum: 999, img: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=500&q=80", desc: "Oil & degreasing treatment for cabinets, chimney exterior, and tiles." }
+    ];
+
+    function renderServices() {
+      const container = document.getElementById("cleaningServicesContainer");
+      container.innerHTML = "";
+
+      cleaningServices.forEach(serv => {
+        const isAdded = cart.some(item => item.id === serv.id);
+        container.innerHTML += `
+          <div class="service-card">
+            <img src="${serv.img}" class="service-card-img" alt="${serv.title}">
+            <div class="service-info">
+              <div class="service-title">${serv.title}</div>
+              <div class="service-desc">${serv.desc}</div>
+              <div class="price-row">
+                <div class="price-box">
+                  <span class="old-price">${serv.oldPrice}</span>
+                  <span class="new-price">${serv.newPrice}</span>
+                </div>
+                <button class="add-btn ${isAdded ? 'added' : ''}" onclick="toggleCart(${serv.id})">
+                  ${isAdded ? 'ADDED' : 'ADD'}
+                </button>
+              </div>
+            </div>
+          </div>`;
+      });
     }
+
+    function toggleCart(id) {
+      const serv = cleaningServices.find(s => s.id === id);
+      const index = cart.findIndex(item => item.id === id);
+
+      if (index === -1) {
+        cart.push(serv);
+      } else {
+        cart.splice(index, 1);
+      }
+
+      updateCartUI();
+      renderServices();
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      updateCartUI();
+      renderServices();
+      openCartSheet();
+    }
+
+    function updateCartUI() {
+      const cartBar = document.getElementById("cartBar");
+      const cartBarText = document.getElementById("cartBarText");
+
+      if (cart.length > 0) {
+        const total = cart.reduce((sum, item) => sum + item.priceNum, 0);
+        cartBar.style.display = "flex";
+        cartBarText.innerText = `${cart.length} Service(s) | ₹${total}`;
+      } else {
+        cartBar.style.display = "none";
+      }
+    }
+
+    function openCartSheet() {
+      if (cart.length === 0) return;
+
+      let cartHTML = "<div>";
+      let total = 0;
+
+      cart.forEach(item => {
+        total += item.priceNum;
+        cartHTML += `
+          <div class="cart-item">
+            <div>
+              <div style="font-weight:600; font-size:14px;">${item.title}</div>
+              <div style="font-weight:700; font-size:14px;">₹${item.priceNum}</div>
+            </div>
+            <button class="cart-remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>`;
+      });
+
+      cartHTML += `<div style="display:flex; justify-content:space-between; margin-top:15px; font-weight:bold; font-size:16px;">
+                    <span>Total:</span>
+                    <span>₹${total}</span>
+                   </div></div>`;
+
+      document.getElementById("cartSheetContent").innerHTML = cartHTML;
+      document.getElementById("modalOverlay").classList.add("active");
+      document.getElementById("bottomSheet").classList.add("active");
+    }
+
+    function closeSheet() {
+      document.getElementById("modalOverlay").classList.remove("active");
+      document.getElementById("bottomSheet").classList.remove("active");
+    }
+
+    function goToHomeBooking() {
+      const selectedTitles = cart.map(item => item.title).join(", ");
+      const message = `Hello A2Z Service! I want to book: ${selectedTitles}`;
+      window.location.href = `https://wa.me/919101616836?text=${encodeURIComponent(message)}`;
+    }
+
+    renderServices();
   </script>
 </body>
-  </html>
-  
+</html>
