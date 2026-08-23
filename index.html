@@ -10,7 +10,7 @@
   <meta name="keywords" content="Cleaning service Guwahati, Sofa cleaning Guwahati, House cleaning, AC repair Guwahati, Plumber Guwahati, A2Z Service">
   <meta name="robots" content="index, follow">
   
-  <!-- OPEN GRAPH META TAGS (For Social Media Sharing) -->
+  <!-- OPEN GRAPH META TAGS -->
   <meta property="og:title" content="A2Z Cleaning & Home Services Guwahati">
   <meta property="og:description" content="Quality home cleaning, repairs, and maintenance services at your doorstep in Guwahati.">
   <meta property="og:type" content="website">
@@ -88,20 +88,14 @@
       gap: 5px;
     }
 
-    .call-btn {
-      background: #0879e8;
-    }
-
-    .whatsapp-btn {
-      background: #25D366;
-    }
+    .call-btn { background: #0879e8; }
+    .whatsapp-btn { background: #25D366; }
 
     .action-btn svg {
       width: 16px;
       height: 16px;
       fill: currentColor;
     }
-
 
     .container {
       max-width: 1000px;
@@ -289,12 +283,13 @@
       cursor: pointer;
     }
 
-    /* BOOKING FORM WITH DATE & TIME */
+    /* BOOKING FORM */
     .booking-section {
       background: #fff;
       padding: 30px 20px;
       margin-top: 30px;
       border-top: 1px solid #eee;
+      border-radius: 16px;
     }
     .form-group { margin-bottom: 15px; }
     .form-group label {
@@ -316,9 +311,7 @@
       display: flex;
       gap: 15px;
     }
-    .form-row .form-group {
-      flex: 1;
-    }
+    .form-row .form-group { flex: 1; }
     .submit-btn {
       width: 100%;
       background: #0879e8;
@@ -329,6 +322,46 @@
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
+    }
+
+    /* FOOTER SECTION */
+    footer {
+      background: #111827;
+      color: #9ca3af;
+      padding: 30px 20px;
+      margin-top: 40px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .footer-container {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+    }
+    .footer-col h3 {
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col a {
+      color: #9ca3af;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .footer-col a:hover { color: #0879e8; }
+    .footer-bottom {
+      max-width: 1000px;
+      margin: 25px auto 0;
+      padding-top: 15px;
+      border-top: 1px solid #1f2937;
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
     }
 
     /* BOTTOM NAV */
@@ -361,14 +394,10 @@
       stroke: #888;
       transition: 0.2s;
     }
-    .nav-item.active {
-      color: #0879e8;
-    }
-    .nav-item.active svg {
-      stroke: #0879e8;
-    }
+    .nav-item.active { color: #0879e8; }
+    .nav-item.active svg { stroke: #0879e8; }
 
-    /* BOTTOM SHEET MODAL FOR DESCRIPTION */
+    /* BOTTOM SHEET MODAL */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -381,7 +410,6 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    
     .modal-overlay.active {
       display: block;
       opacity: 1;
@@ -400,10 +428,7 @@
       box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
     }
 
-    .bottom-sheet.active {
-      bottom: 0;
-    }
-
+    .bottom-sheet.active { bottom: 0; }
     .sheet-drag-handle {
       width: 40px;
       height: 5px;
@@ -411,30 +436,20 @@
       border-radius: 10px;
       margin: 0 auto 20px;
     }
-
     .sheet-title {
       font-size: 18px;
       font-weight: 700;
       color: #111;
       margin-bottom: 15px;
     }
-
     .sheet-desc {
       font-size: 14px;
       color: #555;
       line-height: 1.6;
       margin-bottom: 20px;
     }
-    
-    .sheet-desc ul {
-      margin-left: 20px;
-      margin-top: 10px;
-    }
-    
-    .sheet-desc li {
-      margin-bottom: 5px;
-    }
-
+    .sheet-desc ul { margin-left: 20px; margin-top: 10px; }
+    .sheet-desc li { margin-bottom: 5px; }
     .sheet-close-btn {
       width: 100%;
       background: #f1f1f1;
@@ -450,18 +465,14 @@
 </head>
 <body>
 
-  <!-- HEADER WITH CALL & WHATSAPP BUTTONS -->
+  <!-- HEADER -->
   <header>
     <a href="#" class="logo">A2Z <span>Service</span></a>
-    
     <div class="header-actions">
-      <!-- Call Button -->
       <a href="tel:+919101616836" class="action-btn call-btn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 1.01-.63 1.01-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
         Call
       </a>
-      
-      <!-- WhatsApp Button -->
       <a href="https://wa.me/919101616836" class="action-btn whatsapp-btn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.01 2.01c-5.52 0-9.99 4.47-9.99 9.99 0 1.97.57 3.8 1.55 5.31L2 22l4.82-1.52c1.47.92 3.2 1.45 5.09 1.45 5.52 0 9.99-4.47 9.99-9.99 0-5.52-4.47-9.99-9.99-9.99z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.14 14.53c-.22-.11-1.32-.65-1.53-.73-.2-.07-.35-.11-.49.11-.15.22-.58.73-.71.88-.13.15-.26.16-.49.05-.22-.11-1.05-.39-1.8-1.05-.59-.51-.98-1.14-1.1-1.36-.11-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.36.07-.15.03-.28-.02-.39-.05-.11-.49-1.18-.67-1.62-.18-.43-.36-.37-.49-.38-.13-.01-.28-.01-.43-.01-.15 0-.39.05-.59.28-.2.22-.76.74-.76 1.8 0 1.06.78 2.08.89 2.23.11.15 1.52 2.32 3.68 3.26.51.22.92.35 1.23.45.52.17.99.14 1.37.09.43-.06 1.32-.54 1.51-1.06.18-.52.18-.97.13-1.06-.06-.09-.2-.14-.42-.25z" fill="currentColor"/></svg>
         WhatsApp
@@ -502,7 +513,7 @@
 
   </div>
 
-  <!-- BOOKING FORM WITH DATE & TIME -->
+  <!-- BOOKING FORM -->
   <div class="booking-section" id="booking">
     <div style="max-width: 600px; margin: auto;">
       <h2 style="margin-bottom: 20px;">Book a Service</h2>
@@ -545,6 +556,33 @@
     </div>
   </div>
 
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3 style="color: #0879e8;">A2Z Service</h3>
+        <p>Guwahati-র বিশ্বস্ত এবং প্রফেশনাল হোম ক্লিনিং ও মেরামত সেবা প্রদানকারী প্ল্যাটফর্ম।</p>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="cleaning.html">Cleaning Services</a></li>
+          <li><a href="#booking">Book Now</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Contact Us</h3>
+        <p>📍 Guwahati, Assam</p>
+        <p>📞 Phone: +91 9101616836</p>
+        <p>💬 WhatsApp: +91 9101616836</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 A2Z Service. All rights reserved.
+    </div>
+  </footer>
+
   <!-- BOTTOM NAVIGATION BAR -->
   <nav class="bottom-nav">
     <a href="#" class="nav-item active">
@@ -570,9 +608,7 @@
   <div class="bottom-sheet" id="bottomSheet">
     <div class="sheet-drag-handle"></div>
     <div class="sheet-title" id="sheetTitle">Service Title</div>
-    <div class="sheet-desc" id="sheetDesc">
-      Service description goes here...
-    </div>
+    <div class="sheet-desc" id="sheetDesc">Service description goes here...</div>
     <button class="sheet-close-btn" onclick="closeDetails()">Close</button>
   </div>
 
@@ -596,112 +632,32 @@
     }
     setInterval(nextSlide, 3500); 
 
-    // --- CATEGORIES DATA ---
+    // --- CATEGORIES DATA (With Links) ---
     const categories = [
-      { name: "Cleaning", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=150&q=80" },
-      { name: "Electrician", img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=150&q=80" },
-      { name: "Plumber", img: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=150&q=80" },
-      { name: "Repair", img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=150&q=80" }
+      { 
+        name: "Cleaning", 
+        link: "cleaning.html", 
+        img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=150&q=80" 
+      },
+      { 
+        name: "Electrician", 
+        link: "electrician.html", 
+        img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=150&q=80" 
+      },
+      { 
+        name: "Plumber", 
+        link: "plumber.html", 
+        img: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=150&q=80" 
+      },
+      { 
+        name: "Repair", 
+        link: "repair.html", 
+        img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=150&q=80" 
+      }
     ];
 
     const catContainer = document.getElementById("categoriesContainer");
     categories.forEach(cat => {
       catContainer.innerHTML += `
-        <div class="category-item" onclick="document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });">
-          <div class="category-img"><img src="${cat.img}" alt="${cat.name}"></div>
-          <div class="category-name">${cat.name}</div>
-        </div>`;
-    });
-
-    // --- SERVICES DATA (With Descriptions) ---
-    const servicesData = [
-      { 
-        title: "Sofa Deep Cleaning", 
-        time: "🕒 1 hr", 
-        oldPrice: "₹1,200", 
-        newPrice: "₹800", 
-        img: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=500&q=80",
-        desc: "Professional deep cleaning of your sofa to remove dust, stains, and allergens.<br><br><b>Includes:</b><ul><li>Dry vacuuming to remove surface dust</li><li>Shampooing & wet vacuuming</li><li>Tough stain removal</li><li>Fabric conditioning</li></ul>"
-      },
-      { 
-        title: "Home Deep Cleaning", 
-        time: "🕒 4 hrs", 
-        oldPrice: "₹4,500", 
-        newPrice: "₹3,499", 
-        img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80",
-        desc: "Complete deep cleaning for a fresh & hygienic home.<br><br><b>Includes:</b><ul><li>Floor scrubbing & mopping</li><li>Bathroom & kitchen deep cleaning</li><li>Fan & tube light cleaning</li><li>Cobweb removal</li></ul>"
-      },
-      { 
-        title: "AC Servicing", 
-        time: "🕒 1 hr", 
-        oldPrice: "₹899", 
-        newPrice: "₹629", 
-        img: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=500&q=80",
-        desc: "Improve cooling and extend the life of your AC with our thorough servicing.<br><br><b>Includes:</b><ul><li>Filter & cooling coil cleaning</li><li>Drain pipe unblocking</li><li>Gas pressure check</li><li>Overall performance inspection</li></ul>"
-      }
-    ];
-
-    const servContainer = document.getElementById("servicesContainer");
-    servicesData.forEach((serv, index) => {
-      servContainer.innerHTML += `
-        <div class="service-card">
-          <div class="time-tag">${serv.time}</div>
-          <img src="${serv.img}" alt="${serv.title}" class="service-card-img">
-          <div class="service-info">
-            <div class="service-title">${serv.title}</div>
-            <span class="view-details-link" onclick="openDetails(${index})">View Details</span>
-            <div class="price-row">
-              <div class="price-box">
-                <span class="old-price">${serv.oldPrice}</span>
-                <span class="new-price">${serv.newPrice}</span>
-                <span class="offer-text">Offer price</span>
-              </div>
-              <button class="add-btn" onclick="selectService('${serv.title}')">ADD</button>
-            </div>
-          </div>
-        </div>`;
-    });
-
-    // --- MODAL LOGIC ---
-    function openDetails(index) {
-      document.getElementById("sheetTitle").innerHTML = servicesData[index].title;
-      document.getElementById("sheetDesc").innerHTML = servicesData[index].desc;
-      
-      document.getElementById("modalOverlay").classList.add("active");
-      document.getElementById("bottomSheet").classList.add("active");
-    }
-
-    function closeDetails() {
-      document.getElementById("modalOverlay").classList.remove("active");
-      document.getElementById("bottomSheet").classList.remove("active");
-    }
-
-    // --- SELECT SERVICE & SCROLL TO FORM ---
-    function selectService(name) {
-      document.getElementById("selectedServiceName").value = name;
-      document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
-    }
-
-    // --- WHATSAPP ORDER SUBMISSION WITH DATE & TIME ---
-    function bookService(event) {
-      event.preventDefault();
-      const service = document.getElementById("selectedServiceName").value;
-      const date = document.getElementById("orderDate").value;
-      const timeSlot = document.getElementById("orderTime").value;
-      const name = document.getElementById("custName").value;
-      const phone = document.getElementById("custPhone").value;
-      const address = document.getElementById("custAddress").value;
-
-      const message = `Hello A2Z Service! I want to book a service:%0A%0A` +
-                      `📌 *Service:* ${service}%0A` +
-                      `📅 *Date:* ${date}%0A` +
-                      `⏰ *Time Slot:* ${timeSlot}%0A` +
-                      `👤 *Name:* ${name}%0A` +
-                      `📞 *Phone:* ${phone}%0A` +
-                      `📍 *Address:* ${address}`;
-
-      window.location.href = `https://wa.me/919101616836?text=${message}`;
-    }
-  </script>
-</body>
-</html>
+        <div class="category-item" onclick="window.location.href='${cat.link}'">
+          <div class="cate
