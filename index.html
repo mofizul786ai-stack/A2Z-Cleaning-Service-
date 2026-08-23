@@ -5,60 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO Meta Tags -->
-  <title>A2Z Service Guwahati - Professional Home Cleaning & Repair</title>
+  <title>A2Z Service Guwahati - Professional Home Services</title>
   <meta name="description" content="A2Z Cleaning Service provides professional home deep cleaning, sofa shampooing, bathroom sanitization, AC repair, and plumbing services in Guwahati at affordable prices.">
   <meta name="keywords" content="A2Z Cleaning Service, Cleaning service Guwahati, Sofa cleaning Guwahati, House deep cleaning Guwahati, AC repair Guwahati, Plumber Guwahati, Electrician Guwahati, Home maintenance Guwahati">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
-    body { background: #f8f9fa; color: #111; padding-bottom: 110px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; scroll-behavior: smooth; }
+    body { background: #f4f6f9; color: #1e293b; padding-bottom: 110px; }
 
     /* HEADER */
     header {
       position: sticky; top: 0; z-index: 1000; background: #ffffff;
-      padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
     }
-    .brand-logo { font-size: 20px; font-weight: 800; color: #0879e8; text-decoration: none; }
+    .brand-logo { font-size: 22px; font-weight: 800; color: #0879e8; text-decoration: none; letter-spacing: -0.5px; }
 
-    /* HERO SECTION */
+    /* HERO BANNER SECTION */
+    .hero-container { padding: 15px 16px 5px; }
     .hero {
-      background: linear-gradient(135deg, #0879e8, #05509e); color: white;
-      padding: 40px 20px; text-align: center; border-radius: 0 0 24px 24px;
+      background: linear-gradient(135deg, #0879e8 0%, #034ea2 100%); color: white;
+      padding: 28px 20px; text-align: left; border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(8, 121, 232, 0.25); position: relative; overflow: hidden;
     }
-    .hero h1 { font-size: 24px; margin-bottom: 10px; }
-    .hero p { font-size: 14px; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.5; }
+    .hero::after {
+      content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px;
+      background: rgba(255, 255, 255, 0.1); border-radius: 50%; pointer-events: none;
+    }
+    .hero h1 { font-size: 22px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+    .hero p { font-size: 13px; opacity: 0.9; max-width: 90%; line-height: 1.5; font-weight: 400; }
 
-    /* CONTAINER & CATEGORIES */
-    .container { max-width: 1000px; margin: auto; padding: 25px 20px; }
-    .section-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: #222; }
+    /* ADMIN OFFER BANNER SLIDER */
+    .offer-banner-wrap { padding: 15px 16px 0; display: none; }
+    .offer-banner-wrap img { width: 100%; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); object-fit: cover; }
+
+    /* CATEGORIES SECTION */
+    .container { max-width: 1000px; margin: auto; padding: 25px 16px; }
+    .section-title { font-size: 17px; font-weight: 800; margin-bottom: 16px; color: #0f172a; letter-spacing: -0.3px; }
 
     .category-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 35px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
     }
+    @media (min-width: 600px) {
+      .category-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
     .category-card {
-      background: white; padding: 20px 15px; border-radius: 16px; text-align: center;
-      text-decoration: none; color: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-      border: 1px solid #eee; transition: 0.2s;
+      background: #ffffff; padding: 22px 15px; border-radius: 18px; text-align: center;
+      text-decoration: none; color: #1e293b; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      border: 1px solid #f1f5f9; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .category-card:hover { transform: translateY(-3px); border-color: #0879e8; }
-    .category-icon { font-size: 30px; margin-bottom: 8px; display: block; }
-    .category-title { font-size: 14px; font-weight: 600; }
+    .category-card:active { transform: scale(0.97); }
+    .category-card:hover { border-color: #3b82f6; box-shadow: 0 8px 25px rgba(8, 121, 232, 0.12); }
+    
+    .category-icon-box {
+      width: 56px; height: 56px; background: #eff6ff; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+      font-size: 26px;
+    }
+    .category-title { font-size: 14px; font-weight: 700; color: #334155; }
 
     /* FLOATING CART BAR */
     .cart-bar {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      width: calc(100% - 40px); max-width: 500px; background: #0879e8; color: white;
-      padding: 12px 20px; border-radius: 12px; display: none; justify-content: space-between;
-      align-items: center; z-index: 999; box-shadow: 0 4px 15px rgba(8, 121, 232, 0.4); cursor: pointer;
+      width: calc(100% - 32px); max-width: 500px; background: #0879e8; color: white;
+      padding: 14px 20px; border-radius: 16px; display: none; justify-content: space-between;
+      align-items: center; z-index: 999; box-shadow: 0 8px 25px rgba(8, 121, 232, 0.4); cursor: pointer;
     }
     .cart-info { font-size: 14px; font-weight: 700; }
-    .cart-btn-text { font-size: 13px; font-weight: 600; }
+    .cart-btn-text { font-size: 13px; font-weight: 700; background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 8px; }
 
-    /* MODAL OVERLAY & BOTTOM SHEET */
+    /* BOTTOM SHEET */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5); z-index: 1001; display: none; opacity: 0; transition: opacity 0.3s ease;
+      background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px); z-index: 1001; display: none; opacity: 0; transition: opacity 0.3s ease;
     }
     .modal-overlay.active { display: block; opacity: 1; }
 
@@ -68,35 +88,34 @@
       transition: bottom 0.4s ease; max-height: 80vh; overflow-y: auto;
     }
     .bottom-sheet.active { bottom: 0; }
-    .sheet-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; }
-    .sheet-close-btn { width: 100%; background: #0879e8; color: #fff; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; }
+    .sheet-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; }
+    .sheet-close-btn { width: 100%; background: #0879e8; color: #fff; padding: 14px; border: none; border-radius: 14px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; }
 
-    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
-    .cart-remove-btn { color: #d32f2f; font-size: 12px; border: none; background: none; cursor: pointer; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+    .cart-remove-btn { color: #ef4444; font-size: 13px; border: none; background: none; font-weight: 600; cursor: pointer; }
 
-    /* FOOTER STYLES */
+    /* FOOTER */
     .site-footer {
-      background-color: #111827; color: #9ca3af; padding: 40px 20px 20px;
-      font-size: 14px; line-height: 1.6; margin-top: 50px;
+      background-color: #0f172a; color: #94a3b8; padding: 40px 20px 20px;
+      font-size: 14px; line-height: 1.6; margin-top: 40px; border-radius: 24px 24px 0 0;
     }
     .footer-container {
       max-width: 1000px; margin: 0 auto; display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px;
     }
     .footer-col h3 {
-      color: #ffffff; font-size: 16px; margin-bottom: 15px; position: relative; padding-bottom: 8px;
+      color: #ffffff; font-size: 16px; font-weight: 700; margin-bottom: 14px; position: relative; padding-bottom: 8px;
     }
     .footer-col h3::after {
-      content: ''; position: absolute; left: 0; bottom: 0; width: 30px; height: 2px; background-color: #0879e8;
+      content: ''; position: absolute; left: 0; bottom: 0; width: 28px; height: 3px; background-color: #0879e8; border-radius: 2px;
     }
-    .footer-col p { margin-bottom: 12px; }
     .footer-links { list-style: none; padding: 0; }
     .footer-links li { margin-bottom: 8px; }
-    .footer-links a { color: #9ca3af; text-decoration: none; transition: color 0.2s; }
+    .footer-links a { color: #94a3b8; text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: #0879e8; }
     .footer-bottom {
       max-width: 1000px; margin: 30px auto 0; padding-top: 20px;
-      border-top: 1px solid #1f2937; text-align: center; font-size: 13px; color: #6b7280;
+      border-top: 1px solid #1e293b; text-align: center; font-size: 12px; color: #64748b;
     }
   </style>
 </head>
@@ -107,30 +126,37 @@
     <a href="index.html" class="brand-logo">A2Z Service</a>
   </header>
 
-  <!-- HERO SECTION -->
-  <div class="hero">
-    <h1>A2Z Cleaning Service Guwahati</h1>
-    <p>Your trusted home care expert for deep cleaning, sofa shampooing, plumbing, electrical & appliance repair services at your doorstep.</p>
+  <!-- HERO BANNER -->
+  <div class="hero-container">
+    <div class="hero">
+      <h1>A2Z Cleaning Service Guwahati</h1>
+      <p>Your trusted home care expert for deep cleaning, sofa shampooing, plumbing & repair services.</p>
+    </div>
   </div>
 
-  <!-- MAIN SERVICES CATEGORIES -->
+  <!-- DYNAMIC ADMIN OFFER BANNER -->
+  <div class="offer-banner-wrap" id="offerBannerContainer">
+    <img id="offerBannerImg" alt="Offer Banner">
+  </div>
+
+  <!-- CATEGORIES -->
   <div class="container">
     <div class="section-title">Select a Category</div>
     <div class="category-grid">
       <a href="cleaning.html" class="category-card">
-        <span class="category-icon">🧹</span>
+        <div class="category-icon-box">🧹</div>
         <span class="category-title">Cleaning</span>
       </a>
       <a href="electrician.html" class="category-card">
-        <span class="category-icon">⚡</span>
+        <div class="category-icon-box">⚡</div>
         <span class="category-title">Electrician</span>
       </a>
       <a href="plumber.html" class="category-card">
-        <span class="category-icon">🔧</span>
+        <div class="category-icon-box">🔧</div>
         <span class="category-title">Plumber</span>
       </a>
       <a href="repair.html" class="category-card">
-        <span class="category-icon">🛠️</span>
+        <div class="category-icon-box">🛠️</div>
         <span class="category-title">Appliance Repair</span>
       </a>
     </div>
@@ -150,7 +176,7 @@
     <button class="sheet-close-btn" onclick="goToHomeBooking()">Proceed to Booking</button>
   </div>
 
-  <!-- FOOTER SECTION -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-col">
@@ -194,6 +220,14 @@
         cartBarText.innerText = `${cart.length} Service(s) | ₹${total}`;
       } else {
         cartBar.style.display = "none";
+      }
+    }
+
+    function loadOfferBanner() {
+      const banner = localStorage.getItem("a2z_offer_banner");
+      if (banner) {
+        document.getElementById("offerBannerImg").src = banner;
+        document.getElementById("offerBannerContainer").style.display = "block";
       }
     }
 
@@ -250,7 +284,10 @@
       window.location.href = `https://wa.me/919101616836?text=${encodeURIComponent(message)}`;
     }
 
-    document.addEventListener("DOMContentLoaded", updateCartUI);
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCartUI();
+      loadOfferBanner();
+    });
   </script>
 </body>
 </html>
