@@ -28,7 +28,7 @@
 
     .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; text-align: center; }
     .cat-card { background: white; border-radius: 12px; padding: 10px 4px; border: 1px solid #e2e8f0; text-decoration: none; color: inherit; }
-    .cat-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin: 0 auto 6px; display: block; }
+    .cat-img { width: 55px; height: 55px; border-radius: 12px; object-fit: cover; margin: 0 auto 6px; display: block; }
     .cat-name { font-size: 12px; font-weight: 600; }
 
     .service-card { background: white; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 16px; position: relative; }
@@ -136,6 +136,23 @@
   </nav>
 
   <script>
+    // LocalStorage থেকে অ্যাডমিনের পরিবর্তন করা ফটো লোড করার ফাংশন
+    function loadAdminPhotos() {
+      const banner = localStorage.getItem('img_banner');
+      const catCleaning = localStorage.getItem('img_cat_cleaning');
+      const catElectrician = localStorage.getItem('img_cat_electrician');
+      const catPlumber = localStorage.getItem('img_cat_plumber');
+      const catRepair = localStorage.getItem('img_cat_repair');
+      const serviceSofa = localStorage.getItem('img_service_sofa');
+
+      if (banner) document.getElementById('img_banner').src = banner;
+      if (catCleaning) document.getElementById('img_cat_cleaning').src = catCleaning;
+      if (catElectrician) document.getElementById('img_cat_electrician').src = catElectrician;
+      if (catPlumber) document.getElementById('img_cat_plumber').src = catPlumber;
+      if (catRepair) document.getElementById('img_cat_repair').src = catRepair;
+      if (serviceSofa) document.getElementById('img_service_sofa').src = serviceSofa;
+    }
+
     function addToCart(title, priceNum) {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       cart.push({ id: Date.now(), title: title, priceNum: priceNum });
@@ -165,8 +182,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+      loadAdminPhotos();
       updateCartBar();
     });
   </script>
 </body>
-</html>
+  </html>
+  
