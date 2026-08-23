@@ -1,418 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel | A2Z Cleaning Service</title>
+  <title>A2Z Service - Admin Panel</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background: #f4f7fc; color: #172033; display: flex; min-height: 100vh; }
-    
-    /* Login Modal Overlay */
-    #login-modal {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(7, 31, 61, 0.95); display: flex;
-      justify-content: center; align-items: center; z-index: 9999;
-    }
-    .login-box {
-      background: white; padding: 30px; border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 90%; max-width: 380px; text-align: center;
-    }
-    .login-box h2 { color: #071f3d; margin-bottom: 10px; }
-    .login-box p { color: #666; font-size: 14px; margin-bottom: 20px; }
-
-    /* Sidebar Styling */
-    .sidebar { width: 260px; background: #071f3d; color: white; padding: 20px; display: flex; flex-direction: column; }
-    .sidebar h2 { font-size: 20px; margin-bottom: 25px; color: #4db4ff; text-align: center; border-bottom: 1px solid #1a365d; padding-bottom: 15px; }
-    .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .nav-menu li a { color: #b8c5d4; text-decoration: none; padding: 12px 15px; display: block; border-radius: 8px; font-weight: 600; transition: 0.3s; }
-    .nav-menu li a:hover, .nav-menu li a.active { background: #0879e8; color: white; }
-    
-    /* Main Content Area */
-    .main-content { flex: 1; padding: 30px; overflow-y: auto; }
-    .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: white; padding: 15px 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
-    
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    
-    /* Dashboard Stats */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
-    .stat-card { background: white; padding: 20px; border-radius: 12px; border-left: 5px solid #0879e8; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .stat-card h4 { color: #657084; font-size: 14px; margin-bottom: 8px; }
-    .stat-card h2 { font-size: 28px; color: #0879e8; }
-    
-    /* Table Styling */
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-    table th, table td { padding: 12px; border: 1px solid #edf0f4; text-align: left; font-size: 14px; }
-    table th { background: #f8fafc; }
-    
-    /* Buttons & Inputs */
-    .btn-delete { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
-    .btn-delete:hover { background: #cc0000; }
-    .btn-primary { background: #0879e8; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
-    .btn-primary:hover { background: #005bb5; }
-    
-    .form-group { margin-bottom: 15px; text-align: left; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-
-    .item-list { list-style: none; margin-top: 15px; }
-    .item-list li { background: #f8fafc; padding: 10px 15px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
-
-    @media (max-width: 768px) { 
-      body { flex-direction: column; } 
-      .sidebar { width: 100%; } 
-    }
+    body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; }
+    .card { background: white; padding: 20px; border-radius: 12px; max-width: 600px; margin: 0 auto 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    h2 { color: #0879e8; margin-bottom: 15px; font-size: 18px; }
+    input, select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    button { background: #0879e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN MODAL -->
-  <div id="login-modal">
-    <div class="login-box">
-      <h2>🔒 Admin Login</h2>
-      <p>A2Z Cleaning Service</p>
-      <div class="form-group">
-        <label>Admin Password</label>
-        <input type="password" id="adminPassInput" placeholder="Enter password">
-      </div>
-      <button class="btn-primary" onclick="checkLogin()">Login</button>
-      <p id="loginErr" style="color:red; margin-top:10px; font-size:12px; display:none;">Incorrect Password!</p>
-    </div>
+  <div class="card">
+    <h2>1. Payment Options Setup</h2>
+    <label>UPI ID (e.g. 9101616836@ybl)</label>
+    <input type="text" id="adminUpi" placeholder="Enter UPI ID">
+    <label>UPI QR Image URL</label>
+    <input type="text" id="adminQr" placeholder="Enter QR Code Image Link">
+    <button onclick="savePaymentSettings()">Save Payment Options</button>
   </div>
 
-  <!-- SIDEBAR MENU -->
-  <div class="sidebar">
-    <h2>⚙️ Admin Panel</h2>
-    <ul class="nav-menu">
-      <li><a href="#" class="active" onclick="showTab('dashboard', this)">📊 Dashboard</a></li>
-      <li><a href="#" onclick="showTab('services', this)">🧹 Services & Prices</a></li>
-      <li><a href="#" onclick="showTab('gallery', this)">🖼️ Gallery</a></li>
-      <li><a href="#" onclick="showTab('reviews', this)">⭐ Reviews</a></li>
-      <li><a href="#" onclick="showTab('bookings', this)">📋 Bookings</a></li>
-      <li><a href="#" onclick="showTab('settings', this)">⚙️ Website Settings</a></li>
-    </ul>
+  <div class="card">
+    <h2>2. Add New Service Item</h2>
+    <input type="text" id="sTitle" placeholder="Service Title">
+    <input type="number" id="sPrice" placeholder="New Price (₹)">
+    <input type="number" id="sOldPrice" placeholder="Old Price (₹)">
+    <input type="text" id="sImg" placeholder="Image URL">
+    <select id="sCat">
+      <option value="cleaning">Cleaning</option>
+      <option value="electrician">Electrician</option>
+      <option value="plumber">Plumber</option>
+      <option value="repair">Repair</option>
+    </select>
+    <button onclick="addNewService()">Add Service to Site</button>
   </div>
-
-  <!-- MAIN CONTENT AREA -->
-  <div class="main-content">
-    <div class="header-bar">
-      <h3 id="page-title">Dashboard</h3>
-      <button class="btn-delete" onclick="logout()">Logout</button>
-    </div>
-
-    <!-- 1. DASHBOARD -->
-    <div id="dashboard" class="tab-content active">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <h4>Total Live Bookings</h4>
-          <h2 id="total-booking-count">0</h2>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Live System Status</h3>
-        <p style="margin-top:10px; color:#666;">Connected to Firebase Realtime Database.</p>
-      </div>
-    </div>
-
-    <!-- 2. SERVICES & PRICES -->
-    <div id="services" class="tab-content">
-      <div class="card">
-        <h3>Add New Service & Price</h3>
-        <br>
-        <div class="form-group">
-          <label>Service Title</label>
-          <input type="text" id="serviceName" placeholder="e.g. Sofa Cleaning">
-        </div>
-        <div class="form-group">
-          <label>Price (₹)</label>
-          <input type="number" id="servicePrice" placeholder="e.g. 799">
-        </div>
-        <button class="btn-primary" onclick="addService()">Add Service</button>
-      </div>
-
-      <div class="card">
-        <h3>Active Services List</h3>
-        <ul id="services-list-container" class="item-list">
-          <li>Loading services...</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 3. GALLERY -->
-    <div id="gallery" class="tab-content">
-      <div class="card">
-        <h3>Work Gallery</h3>
-        <div class="form-group">
-          <label>Image URL</label>
-          <input type="text" id="galleryUrl" placeholder="https://example.com/photo.jpg">
-        </div>
-        <button class="btn-primary" onclick="addGalleryImage()">Add Photo</button>
-      </div>
-      <div class="card">
-        <h3>Current Images</h3>
-        <ul id="gallery-list-container" class="item-list">
-          <li>Loading images...</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 4. REVIEWS -->
-    <div id="reviews" class="tab-content">
-      <div class="card">
-        <h3>Add Customer Review</h3>
-        <div class="form-group">
-          <label>Customer Name</label>
-          <input type="text" id="revName" placeholder="Customer Name">
-        </div>
-        <div class="form-group">
-          <label>Review Comment</label>
-          <textarea id="revComment" placeholder="Write feedback..."></textarea>
-        </div>
-        <button class="btn-primary" onclick="addReview()">Add Review</button>
-      </div>
-      <div class="card">
-        <h3>All Reviews</h3>
-        <ul id="reviews-list-container" class="item-list">
-          <li>Loading reviews...</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 5. BOOKINGS -->
-    <div id="bookings" class="tab-content">
-      <div class="card">
-        <h3>Live Booking Requests</h3>
-        <br>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Service</th>
-                <th>Area</th>
-                <th>Date / Slot</th>
-                <th>Payment</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="booking-list">
-              <tr><td colspan="8">Loading bookings...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6. WEBSITE SETTINGS -->
-    <div id="settings" class="tab-content">
-      <div class="card">
-        <h3>Website Settings</h3>
-        <br>
-        <div class="form-group">
-          <label>WhatsApp Number</label>
-          <input type="text" id="setWhatsapp" value="9101616836">
-        </div>
-        <div class="form-group">
-          <label>UPI ID for Payments</label>
-          <input type="text" id="setUpi" value="9101616836@ptyes">
-        </div>
-        <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- FIREBASE SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
   <script>
-    // DEFAULT PASSWORD SETUP
-    const ADMIN_PASS = "a2z1234"; // 🔑 আপনি আপনার ইচ্ছামতো পাসওয়ার্ড বদলাতে পারেন
-
-    function checkLogin() {
-      const pass = document.getElementById("adminPassInput").value;
-      if (pass === ADMIN_PASS) {
-        sessionStorage.setItem("isAdminLoggedIn", "true");
-        document.getElementById("login-modal").style.display = "none";
-      } else {
-        document.getElementById("loginErr").style.display = "block";
-      }
+    function savePaymentSettings() {
+      const upi = document.getElementById("adminUpi").value;
+      const qr = document.getElementById("adminQr").value;
+      localStorage.setItem("a2z_payment_upi", upi);
+      localStorage.setItem("a2z_payment_qr", qr);
+      alert("Payment Settings Saved!");
     }
 
-    function logout() {
-      sessionStorage.removeItem("isAdminLoggedIn");
-      location.reload();
-    }
+    function addNewService() {
+      const newServ = {
+        id: Date.now(),
+        title: document.getElementById("sTitle").value,
+        priceNum: parseInt(document.getElementById("sPrice").value),
+        oldPrice: "₹" + document.getElementById("sOldPrice").value,
+        newPrice: "₹" + document.getElementById("sPrice").value,
+        img: document.getElementById("sImg").value,
+        category: document.getElementById("sCat").value
+      };
 
-    // Auto Check Login Status
-    if (sessionStorage.getItem("isAdminLoggedIn") === "true") {
-      document.getElementById("login-modal").style.display = "none";
-    }
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDK1fnjgeDwb712_lDTwifRjH_tpbZrtaw",
-      authDomain: "a2z-cleaning-service-5a568.firebaseapp.com",
-      projectId: "a2z-cleaning-service-5a568",
-      storageBucket: "a2z-cleaning-service-5a568.firebasestorage.app",
-      messagingSenderId: "896768770622",
-      appId: "1:896768770622:web:89e11df7906d4cbf26876f"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    function showTab(tabId, element) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.nav-menu a').forEach(link => link.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      element.classList.add('active');
-      document.getElementById('page-title').innerText = element.innerText;
-    }
-
-    // 1. LIVE BOOKINGS
-    db.ref("bookings").on("value", (snapshot) => {
-      const data = snapshot.val();
-      const tbody = document.getElementById("booking-list");
-      tbody.innerHTML = "";
-
-      if (!data) {
-        tbody.innerHTML = "<tr><td colspan='8'>No bookings found yet.</td></tr>";
-        document.getElementById("total-booking-count").innerText = "0";
-        return;
-      }
-
-      const keys = Object.keys(data).reverse();
-      document.getElementById("total-booking-count").innerText = keys.length;
-
-      keys.forEach((key) => {
-        const item = data[key];
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${item.createdAt || 'N/A'}</td>
-          <td><strong>${item.name}</strong></td>
-          <td><a href="tel:${item.phone}">${item.phone}</a></td>
-          <td>${item.service}</td>
-          <td>${item.area}</td>
-          <td>${item.date} (${item.time})</td>
-          <td>${item.paymentMethod}</td>
-          <td><button class="btn-delete" onclick="deleteData('bookings/${key}')">Delete</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    });
-
-    // 2. SERVICES & PRICES
-    function addService() {
-      const name = document.getElementById("serviceName").value;
-      const price = document.getElementById("servicePrice").value;
-      if (!name || !price) return alert("Please enter name and price");
-      
-      db.ref("services").push({ name, price }, () => {
-        document.getElementById("serviceName").value = "";
-        document.getElementById("servicePrice").value = "";
-        alert("Service added successfully!");
-      });
-    }
-
-    db.ref("services").on("value", (snapshot) => {
-      const data = snapshot.val();
-      const container = document.getElementById("services-list-container");
-      container.innerHTML = "";
-      if (!data) return container.innerHTML = "<li>No services added.</li>";
-
-      Object.keys(data).forEach(key => {
-        const item = data[key];
-        const li = document.createElement("li");
-        li.innerHTML = `<span><strong>${item.name}</strong> - ₹${item.price}</span> 
-          <button class="btn-delete" onclick="deleteData('services/${key}')">Delete</button>`;
-        container.appendChild(li);
-      });
-    });
-
-    // 3. GALLERY
-    function addGalleryImage() {
-      const url = document.getElementById("galleryUrl").value;
-      if (!url) return alert("Enter image URL");
-
-      db.ref("gallery").push({ url }, () => {
-        document.getElementById("galleryUrl").value = "";
-        alert("Image added!");
-      });
-    }
-
-    db.ref("gallery").on("value", (snapshot) => {
-      const data = snapshot.val();
-      const container = document.getElementById("gallery-list-container");
-      container.innerHTML = "";
-      if (!data) return container.innerHTML = "<li>No images added.</li>";
-
-      Object.keys(data).forEach(key => {
-        const item = data[key];
-        const li = document.createElement("li");
-        li.innerHTML = `<span>${item.url}</span> 
-          <button class="btn-delete" onclick="deleteData('gallery/${key}')">Delete</button>`;
-        container.appendChild(li);
-      });
-    });
-
-    // 4. REVIEWS
-    function addReview() {
-      const name = document.getElementById("revName").value;
-      const comment = document.getElementById("revComment").value;
-      if (!name || !comment) return alert("Fill all fields");
-
-      db.ref("reviews").push({ name, comment }, () => {
-        document.getElementById("revName").value = "";
-        document.getElementById("revComment").value = "";
-        alert("Review added!");
-      });
-    }
-
-    db.ref("reviews").on("value", (snapshot) => {
-      const data = snapshot.val();
-      const container = document.getElementById("reviews-list-container");
-      container.innerHTML = "";
-      if (!data) return container.innerHTML = "<li>No reviews found.</li>";
-
-      Object.keys(data).forEach(key => {
-        const item = data[key];
-        const li = document.createElement("li");
-        li.innerHTML = `<span><strong>${item.name}:</strong> ${item.comment}</span> 
-          <button class="btn-delete" onclick="deleteData('reviews/${key}')">Delete</button>`;
-        container.appendChild(li);
-      });
-    });
-
-    // 5. WEBSITE SETTINGS
-    function saveSettings() {
-      const whatsapp = document.getElementById("setWhatsapp").value;
-      const upi = document.getElementById("setUpi").value;
-
-      db.ref("settings").set({ whatsapp, upi }, (error) => {
-        if (error) alert("Error saving settings!");
-        else alert("Settings saved successfully!");
-      });
-    }
-
-    db.ref("settings").once("value", (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        if(data.whatsapp) document.getElementById("setWhatsapp").value = data.whatsapp;
-        if(data.upi) document.getElementById("setUpi").value = data.upi;
-      }
-    });
-
-    function deleteData(path) {
-      if (confirm("Are you sure you want to delete this item?")) {
-        db.ref(path).remove();
-      }
+      let customServices = JSON.parse(localStorage.getItem("a2z_custom_services")) || [];
+      customServices.push(newServ);
+      localStorage.setItem("a2z_custom_services", JSON.stringify(customServices));
+      alert("New Service Added Successfully!");
     }
   </script>
 </body>
-  </html>
-  
+</html>
