@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full House Deep Cleaning Details - A2Z Service</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 90px; }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100; background: #ffffff;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .btn-back { text-decoration: none; font-size: 20px; color: #0f172a; font-weight: bold; }
+    .page-title { font-size: 18px; font-weight: 800; color: #0879e8; }
+
+    .container { padding: 16px; max-width: 500px; margin: 0 auto; }
+
+    /* BANNER IMAGE */
+    .hero-img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* DETAILS CARD */
+    .details-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      margin-bottom: 20px;
+    }
+
+    .title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .service-title { font-size: 20px; font-weight: 800; color: #0f172a; }
+    .time-badge { background: #f1f5f9; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; color: #475569; }
+
+    .rating-price { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .price { font-size: 22px; font-weight: 800; color: #0879e8; }
+    .rating { font-size: 14px; font-weight: 700; color: #f59e0b; background: #fffbe6; padding: 2px 8px; border-radius: 6px; }
+
+    .section-header { font-size: 15px; font-weight: 800; color: #0f172a; margin: 16px 0 8px; }
+    .feature-list { list-style: none; }
+    .feature-list li { font-size: 13.5px; color: #475569; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .feature-list li::before { content: "✓"; color: #16a34a; font-weight: bold; }
+
+    /* ADD BUTTON */
+    .btn-add-main {
+      width: 100%;
+      background: #0879e8;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* FLOATING CART BAR */
+    #cartBar { 
+      position: fixed; 
+      bottom: 20px; 
+      left: 16px; 
+      right: 16px; 
+      max-width: 468px; 
+      margin: 0 auto; 
+      background: #0879e8; 
+      color: white; 
+      padding: 12px 18px; 
+      border-radius: 12px; 
+      display: none; 
+      justify-content: space-between; 
+      align-items: center; 
+      z-index: 99; 
+      box-shadow: 0 4px 12px rgba(8, 121, 232, 0.3); 
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="cleaning.html" class="btn-back">←</a>
+    <h1 class="page-title">Service Details</h1>
+  </header>
+
+  <div class="container">
+    <img id="img_details" class="hero-img" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800" alt="Full House Cleaning">
+
+    <div class="details-card">
+      <div class="title-row">
+        <h2 class="service-title">Full House Deep Cleaning</h2>
+        <span class="time-badge">⏱️ 3 hrs</span>
+      </div>
+
+      <div class="rating-price">
+        <span class="price">₹3,499</span>
+        <span class="rating">⭐ 4.9 (120+ Bookings)</span>
+      </div>
+
+      <div class="section-header">What's Included:</div>
+      <ul class="feature-list">
+        <li>Deep cleaning of Bedrooms, Living Room & Balconies</li>
+        <li>Kitchen degreasing, cabinet & appliance surface cleaning</li>
+        <li>Bathroom deep scrubbing, tile stain removal & sanitization</li>
+        <li>Floor mopping, vacuuming & cobweb removal</li>
+        <li>Window glass & frame wiping</li>
+      </ul>
+
+      <div class="section-header">Equipment & Chemicals:</div>
+      <p style="font-size: 13px; color: #64748b; line-height: 1.5;">
+        Professional grade mechanised equipment and eco-friendly, non-toxic cleaning agents included.
+      </p>
+
+      <button class="btn-add-main" onclick="addToCart('Full House Deep Cleaning', 3499)">Book Now • ₹3,499</button>
+    </div>
+  </div>
+
+  <!-- FLOATING CART BAR -->
+  <div id="cartBar">
+    <div>
+      <span id="cartCount" style="font-weight: 800; font-size: 14px;">0 Items</span>
+      <span style="margin: 0 6px;">|</span>
+      <span id="cartPrice" style="font-size: 14px;">₹0</span>
+    </div>
+    <a href="checkout.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 13px;">View Cart →</a>
+  </div>
+
+  <script>
+    function loadAdminPhoto() {
+      const houseImg = localStorage.getItem('img_service_house');
+      if (houseImg) document.getElementById('img_details').src = houseImg;
+    }
+
+    function addToCart(title, priceNum) {
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      cart.push({ id: Date.now(), title: title, priceNum: priceNum });
+      localStorage.setItem('a2z_cart', JSON.stringify(cart));
+      updateCartBar();
+    }
+
+    function updateCartBar() {
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      const bar = document.getElementById('cartBar');
+      if (cart.length > 0) {
+        const total = cart.reduce((sum, item) => sum + item.priceNum, 0);
+        document.getElementById('cartCount').innerText = `${cart.length} Item${cart.length > 1 ? 's' : ''}`;
+        document.getElementById('cartPrice').innerText = `₹${total}`;
+        bar.style.display = 'flex';
+      } else {
+        bar.style.display = 'none';
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      loadAdminPhoto();
+      updateCartBar();
+    });
+  </script>
+</body>
+</html>
