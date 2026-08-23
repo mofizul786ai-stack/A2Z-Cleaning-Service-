@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders - A2Z Service</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 80px; }
+
+    header {
+      position: sticky; top: 0; z-index: 100; background: #ffffff;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .header-title { font-size: 18px; font-weight: 800; }
+
+    .container { padding: 16px; }
+
+    .order-card {
+      background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px;
+      border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .order-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; color: #64748b; }
+    .order-status { background: #dcfce7; color: #15803d; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; }
+    
+    .service-name { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .price-tag { font-weight: 800; color: #0879e8; font-size: 15px; }
+
+    .btn-cancel {
+      margin-top: 10px; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3;
+      padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%;
+    }
+
+    .empty-msg { text-align: center; color: #64748b; margin-top: 50px; font-size: 14px; }
+
+    /* BOTTOM NAV BAR */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #f1f5f9; z-index: 1000; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 500; }
+    .nav-item.active { color: #0879e8; }
+    .nav-icon { font-size: 20px; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title">My Orders</div>
+  </header>
+
+  <div class="container" id="ordersList">
+    <!-- Dynamic Content -->
+  </div>
+
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span><span>Home</span></a>
+    <a href="orders.html" class="nav-item active"><span class="nav-icon">📋</span><span>Orders</span></a>
+    <a href="#" class="nav-item"><span class="nav-icon">🔲</span><span>Categories</span></a>
+    <a href="#" class="nav-item"><span class="nav-icon">👤</span><span>Profile</span></a>
+  </nav>
+
+  <script>
+    function loadOrders() {
+      const cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      const container = document.getElementById('ordersList');
+
+      if (cart.length === 0) {
+        container.innerHTML = '<div class="empty-msg">No active orders found.</div>';
+        return;
+      }
+
+      container.innerHTML = cart.map((item, index) => `
+        <div class="order-card">
+          <div class="order-header">
+            <span>Booking ID: #${item.id.toString().slice(-6)}</span>
+            <span class="order-status">Confirmed</span>
+          </div>
+          <div class="service-name">${item.title}</div>
+          <div class="price-tag">₹${item.priceNum}</div>
+          <button class="btn-cancel" onclick="cancelOrder(${index})">Cancel Booking</button>
+        </div>
+      `).join('');
+    }
+
+    function cancelOrder(index) {
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('a2z_cart', JSON.stringify(cart));
+      loadOrders();
+    }
+
+    document.addEventListener("DOMContentLoaded", loadOrders);
+  </script>
+</body>
+</html>
