@@ -638,4 +638,70 @@
         newPrice: "₹629", 
         img: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=500&q=80",
         desc: "Improve cooling and extend the life of your AC with our thorough servicing.<br><br><b>Includes:</b><ul><li>Filter & cooling coil cleaning</li><li>Drain pipe unblocking</li><li>Gas pressure check</li><li>Overall performance inspection</li></ul>"
+      }
+    ];
+
+    const servContainer = document.getElementById("servicesContainer");
+    servicesData.forEach((serv, index) => {
+      servContainer.innerHTML += `
+        <div class="service-card">
+          <div class="time-tag">${serv.time}</div>
+          <img src="${serv.img}" alt="${serv.title}" class="service-card-img">
+          <div class="service-info">
+            <div class="service-title">${serv.title}</div>
+            <span class="view-details-link" onclick="openDetails(${index})">View Details</span>
+            <div class="price-row">
+              <div class="price-box">
+                <span class="old-price">${serv.oldPrice}</span>
+                <span class="new-price">${serv.newPrice}</span>
+                <span class="offer-text">Offer price</span>
+              </div>
+              <button class="add-btn" onclick="selectService('${serv.title}')">ADD</button>
+            </div>
+          </div>
+        </div>`;
+    });
+
+    // --- MODAL LOGIC ---
+    function openDetails(index) {
+      document.getElementById("sheetTitle").innerHTML = servicesData[index].title;
+      document.getElementById("sheetDesc").innerHTML = servicesData[index].desc;
       
+      document.getElementById("modalOverlay").classList.add("active");
+      document.getElementById("bottomSheet").classList.add("active");
+    }
+
+    function closeDetails() {
+      document.getElementById("modalOverlay").classList.remove("active");
+      document.getElementById("bottomSheet").classList.remove("active");
+    }
+
+    // --- SELECT SERVICE & SCROLL TO FORM ---
+    function selectService(name) {
+      document.getElementById("selectedServiceName").value = name;
+      document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // --- WHATSAPP ORDER SUBMISSION WITH DATE & TIME ---
+    function bookService(event) {
+      event.preventDefault();
+      const service = document.getElementById("selectedServiceName").value;
+      const date = document.getElementById("orderDate").value;
+      const timeSlot = document.getElementById("orderTime").value;
+      const name = document.getElementById("custName").value;
+      const phone = document.getElementById("custPhone").value;
+      const address = document.getElementById("custAddress").value;
+
+      const message = `Hello A2Z Service! I want to book a service:%0A%0A` +
+                      `📌 *Service:* ${service}%0A` +
+                      `📅 *Date:* ${date}%0A` +
+                      `⏰ *Time Slot:* ${timeSlot}%0A` +
+                      `👤 *Name:* ${name}%0A` +
+                      `📞 *Phone:* ${phone}%0A` +
+                      `📍 *Address:* ${address}`;
+
+      window.location.href = `https://wa.me/919101616836?text=${message}`;
+    }
+  </script>
+</body>
+</html>
