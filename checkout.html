@@ -3,93 +3,220 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Orders - A2Z Service</title>
+  <title>Checkout & Booking - A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding-bottom: 80px; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
     header {
       position: sticky; top: 0; z-index: 100; background: #ffffff;
       padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
     }
-    .header-title { font-size: 18px; font-weight: 800; }
+    .back-btn { text-decoration: none; color: #0879e8; font-weight: 700; font-size: 14px; }
+    .header-title { font-size: 17px; font-weight: 800; }
 
-    .container { padding: 16px; }
+    .container { padding: 16px; max-width: 500px; margin: 0 auto; }
 
-    .order-card {
-      background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px;
-      border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-    }
-    .order-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; color: #64748b; }
-    .order-status { background: #dcfce7; color: #15803d; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; }
+    .card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; border: 1px solid #e2e8f0; }
+    .card-title { font-size: 15px; font-weight: 800; margin-bottom: 12px; color: #0f172a; }
+
+    .form-group { margin-bottom: 12px; }
+    label { font-size: 12px; font-weight: 700; color: #64748b; display: block; margin-bottom: 4px; }
+    input, select { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none; }
     
-    .service-name { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-    .price-tag { font-weight: 800; color: #0879e8; font-size: 15px; }
+    .row { display: flex; gap: 10px; }
+    .row .form-group { flex: 1; }
 
-    .btn-cancel {
-      margin-top: 10px; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3;
-      padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%;
+    /* PAYMENT OPTIONS */
+    .pay-option {
+      display: flex; align-items: center; padding: 12px; border: 1px solid #cbd5e1;
+      border-radius: 10px; margin-bottom: 8px; cursor: pointer; background: #fff;
     }
+    .pay-option input { width: auto; margin-right: 12px; }
+    .pay-title { font-size: 14px; font-weight: 700; }
+    .pay-sub { font-size: 11px; color: #64748b; }
 
-    .empty-msg { text-align: center; color: #64748b; margin-top: 50px; font-size: 14px; }
-
-    /* BOTTOM NAV BAR */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #f1f5f9; z-index: 1000; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 500; }
-    .nav-item.active { color: #0879e8; }
-    .nav-icon { font-size: 20px; margin-bottom: 2px; }
+    .btn-book {
+      background: #0879e8; color: white; border: none; padding: 14px; border-radius: 12px;
+      font-size: 16px; font-weight: 800; width: 100%; cursor: pointer; margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="header-title">My Orders</div>
+    <a href="index.html" class="back-btn">← Back</a>
+    <div class="header-title">Booking Details</div>
+    <div style="width: 40px;"></div>
   </header>
 
-  <div class="container" id="ordersList">
-    <!-- Dynamic Content -->
+  <div class="container">
+    
+    <!-- ORDER SUMMARY -->
+    <div class="card">
+      <div class="card-title">Order Summary</div>
+      <div id="summaryItems"></div>
+      <hr style="margin: 10px 0; border: none; border-top: 1px solid #f1f5f9;">
+      <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 16px;">
+        <span>Total Amount:</span>
+        <span id="totalPrice" style="color: #0879e8;">₹0</span>
+      </div>
+    </div>
+
+    <!-- CUSTOMER & ADDRESS DETAILS -->
+    <div class="card">
+      <div class="card-title">Customer & Location</div>
+      
+      <div class="form-group">
+        <label>FULL NAME</label>
+        <input type="text" id="custName" placeholder="Enter full name">
+      </div>
+
+      <div class="form-group">
+        <label>PHONE NUMBER</label>
+        <input type="tel" id="custPhone" placeholder="Enter mobile number">
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>HOUSE / FLAT NO.</label>
+          <input type="text" id="houseNo" placeholder="House/Flat No.">
+        </div>
+        <div class="form-group">
+          <label>AREA / LOCALITY</label>
+          <input type="text" id="locality" placeholder="Area Name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>FULL ADDRESS & LANDMARK</label>
+        <input type="text" id="fullAddr" placeholder="Street, City, Landmark">
+      </div>
+    </div>
+
+    <!-- DATE & TIME SCHEDULE -->
+    <div class="card">
+      <div class="card-title">Schedule Service</div>
+      
+      <div class="row">
+        <div class="form-group">
+          <label>SELECT DATE</label>
+          <input type="date" id="bookDate">
+        </div>
+
+        <div class="form-group">
+          <label>SELECT TIME</label>
+          <select id="bookTime">
+            <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+            <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+            <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+            <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT OPTIONS -->
+    <div class="card">
+      <div class="card-title">Payment Method</div>
+
+      <label class="pay-option">
+        <input type="radio" name="payment" value="cod" checked>
+        <div>
+          <div class="pay-title">💵 Cash on Delivery</div>
+          <div class="pay-sub">Pay cash to service technician after work completes</div>
+        </div>
+      </label>
+
+      <label class="pay-option">
+        <input type="radio" name="payment" value="upi">
+        <div>
+          <div class="pay-title">📱 Pay Online (UPI / GPay / PhonePe)</div>
+          <div class="pay-sub">Pay instantly via UPI App or QR Code</div>
+        </div>
+      </label>
+    </div>
+
+    <button class="btn-book" onclick="confirmBooking()">Confirm Order 🚀</button>
+
   </div>
 
-  <!-- BOTTOM NAVIGATION BAR -->
-  <nav class="bottom-nav">
-    <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span><span>Home</span></a>
-    <a href="orders.html" class="nav-item active"><span class="nav-icon">📋</span><span>Orders</span></a>
-    <a href="#" class="nav-item"><span class="nav-icon">🔲</span><span>Categories</span></a>
-    <a href="#" class="nav-item"><span class="nav-icon">👤</span><span>Profile</span></a>
-  </nav>
-
   <script>
-    function loadOrders() {
+    function loadSummary() {
       const cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
-      const container = document.getElementById('ordersList');
+      const summaryBox = document.getElementById('summaryItems');
+      const totalBox = document.getElementById('totalPrice');
 
       if (cart.length === 0) {
-        container.innerHTML = '<div class="empty-msg">No active orders found.</div>';
+        summaryBox.innerHTML = '<div style="color:#64748b;">No items in cart</div>';
         return;
       }
 
-      container.innerHTML = cart.map((item, index) => `
-        <div class="order-card">
-          <div class="order-header">
-            <span>Booking ID: #${item.id.toString().slice(-6)}</span>
-            <span class="order-status">Confirmed</span>
-          </div>
-          <div class="service-name">${item.title}</div>
-          <div class="price-tag">₹${item.priceNum}</div>
-          <button class="btn-cancel" onclick="cancelOrder(${index})">Cancel Booking</button>
-        </div>
-      `).join('');
+      let total = 0;
+      summaryBox.innerHTML = cart.map(item => {
+        total += item.priceNum;
+        return `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:14px;">
+                  <span>${item.title}</span>
+                  <b>₹${item.priceNum}</b>
+                </div>`;
+      }).join('');
+
+      totalBox.innerText = '₹' + total;
     }
 
-    function cancelOrder(index) {
-      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
-      cart.splice(index, 1);
-      localStorage.setItem('a2z_cart', JSON.stringify(cart));
-      loadOrders();
+    function confirmBooking() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const houseNo = document.getElementById('houseNo').value.trim();
+      const locality = document.getElementById('locality').value.trim();
+      const fullAddr = document.getElementById('fullAddr').value.trim();
+      const date = document.getElementById('bookDate').value;
+      const time = document.getElementById('bookTime').value;
+      const payMethod = document.querySelector('input[name="payment"]:checked').value;
+      const cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+
+      if (!name || !phone || !houseNo || !locality || !fullAddr || !date) {
+        alert("Please fill in all customer details, address, and date!");
+        return;
+      }
+
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + item.priceNum, 0);
+
+      // Save order info locally
+      const orderData = {
+        id: Date.now(),
+        items: cart,
+        total: total,
+        customer: { name, phone, address: `${houseNo}, ${locality}, ${fullAddr}` },
+        schedule: { date, time },
+        payment: payMethod === 'upi' ? 'Paid via UPI' : 'Cash on Delivery',
+        status: 'Confirmed'
+      };
+
+      let allOrders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
+      allOrders.push(orderData);
+      localStorage.setItem('a2z_orders', JSON.stringify(allOrders));
+
+      // Clear Cart
+      localStorage.removeItem('a2z_cart');
+
+      if (payMethod === 'upi') {
+        // Direct UPI payment trigger
+        const upiUrl = `upi://pay?pa=9101616836@ybl&pn=A2Z%20Service&am=${total}&cu=INR`;
+        window.location.href = upiUrl;
+      } else {
+        alert("Booking Confirmed Successfully!");
+        window.location.href = "orders.html";
+      }
     }
 
-    document.addEventListener("DOMContentLoaded", loadOrders);
+    document.addEventListener("DOMContentLoaded", loadSummary);
   </script>
 </body>
 </html>
