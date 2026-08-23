@@ -3,160 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A2Z Service Guwahati</title>
+  <title>A2Z Service - Home Cleaning & Repairs</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #ffffff; color: #0f172a; padding-bottom: 120px; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 70px; }
 
-    /* HEADER */
     header {
       position: sticky; top: 0; z-index: 100; background: #ffffff;
       padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .brand { font-size: 20px; font-weight: 800; color: #0879e8; }
-    .header-btns { display: flex; gap: 8px; }
-    .btn-call { background: #0879e8; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 13px; text-decoration: none; }
-    .btn-wa { background: #25d366; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 13px; text-decoration: none; }
+    .brand { font-size: 20px; font-weight: 800; color: #0879e8; text-decoration: none; }
+    .header-actions { display: flex; gap: 8px; }
+    .btn-action { text-decoration: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+    .btn-call { background: #0879e8; color: white; }
+    .btn-wa { background: #25d366; color: white; }
 
-    /* TOP BANNER */
-    .hero-slider { padding: 12px 16px 0; }
-    .hero-banner-img { width: 100%; height: 180px; border-radius: 20px; object-fit: cover; }
+    .container { padding: 16px; max-width: 500px; margin: 0 auto; }
 
-    /* CATEGORIES */
-    .section-box { padding: 20px 16px 10px; }
-    .section-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; color: #0f172a; }
-    .category-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
-    .category-scroll::-webkit-scrollbar { display: none; }
-    .category-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; min-width: 75px; }
-    .category-img { width: 72px; height: 72px; border-radius: 20px; object-fit: cover; background: #f1f5f9; margin-bottom: 6px; }
-    .category-label { font-size: 12px; font-weight: 500; color: #334155; text-align: center; }
+    .banner { width: 100%; border-radius: 16px; margin-bottom: 20px; height: 160px; object-fit: cover; display: block; }
 
-    /* MOST BOOKED SERVICES */
-    .badge-hot { background: #ffe4e6; color: #e11d48; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 6px; margin-left: 6px; }
-    .service-card { background: white; border-radius: 20px; overflow: hidden; position: relative; margin-top: 10px; border: 1px solid #f1f5f9; }
-    .service-card img { width: 100%; height: 180px; object-fit: cover; border-top-left-radius: 20px; border-top-right-radius: 20px; display: block; }
-    .time-tag { position: absolute; top: 12px; left: 12px; background: rgba(255, 255, 255, 0.9); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; z-index: 2; }
+    .section-title { font-size: 18px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .badge-hot { background: #fee2e2; color: #ef4444; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+
+    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; text-align: center; }
+    .cat-card { background: white; border-radius: 12px; padding: 10px 4px; border: 1px solid #e2e8f0; text-decoration: none; color: inherit; }
+    .cat-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin: 0 auto 6px; display: block; }
+    .cat-name { font-size: 12px; font-weight: 600; }
+
+    .service-card { background: white; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 16px; position: relative; }
+    .service-img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .time-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.9); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+    .service-details { padding: 12px 16px; }
+    .service-title { font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .view-link { font-size: 12px; color: #0879e8; text-decoration: none; font-weight: 700; display: inline-block; margin-bottom: 10px; }
+    
+    .service-footer { display: flex; justify-content: space-between; align-items: center; }
+    .service-price { font-size: 16px; font-weight: 800; }
+    .btn-add { background: #e0f2fe; color: #0879e8; border: 1px solid #0879e8; padding: 6px 16px; border-radius: 8px; font-weight: 800; font-size: 13px; cursor: pointer; }
 
     /* FLOATING CART BAR */
-    #cartBar {
-      display: none; position: fixed; bottom: 65px; left: 16px; right: 16px;
-      background: #0879e8; color: white; padding: 12px 16px; border-radius: 12px;
-      justify-content: space-between; align-items: center;
-      box-shadow: 0 4px 15px rgba(8,121,232,0.3); z-index: 999;
-    }
+    #cartBar { position: fixed; bottom: 65px; left: 16px; right: 16px; max-width: 468px; margin: 0 auto; background: #0879e8; color: white; padding: 12px 16px; border-radius: 12px; display: none; justify-content: space-between; align-items: center; z-index: 99; box-shadow: 0 4px 12px rgba(8, 121, 232, 0.3); }
 
     /* BOTTOM NAV BAR */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #f1f5f9; z-index: 1000; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #f1f5f9; z-index: 100; }
     .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 500; }
     .nav-item.active { color: #0879e8; }
-    .nav-icon { font-size: 20px; margin-bottom: 2px; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
-    <div class="brand">A2Z Service</div>
-    <div class="header-btns">
-      <a href="tel:+919101616836" class="btn-call">📞 Call</a>
-      <a href="https://wa.me/919101616836" class="btn-wa">💬 WhatsApp</a>
+    <a href="index.html" class="brand">A2Z Service</a>
+    <div class="header-actions">
+      <a href="tel:+919101616836" class="btn-action btn-call">📞 Call</a>
+      <a href="https://wa.me/919101616836" class="btn-action btn-wa">💬 WhatsApp</a>
     </div>
   </header>
 
-  <!-- TOP HERO BANNER -->
-  <div class="hero-slider">
-    <img id="img_banner" class="hero-banner-img" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800" alt="Banner">
-  </div>
+  <div class="container">
+    <img id="img_banner" class="banner" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800" alt="Banner">
 
-  <!-- CATEGORIES -->
-  <div class="section-box">
     <div class="section-title">What are you looking for?</div>
-    <div class="category-scroll">
-      <a href="cleaning.html" class="category-item">
-        <img id="img_cat_cleaning" class="category-img" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200" alt="Cleaning">
-        <span class="category-label">Cleaning</span>
-      </a>
-      <a href="electrician.html" class="category-item">
-        <img id="img_cat_electrician" class="category-img" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=200" alt="Electrician">
-        <span class="category-label">Electrician</span>
-      </a>
-      <a href="plumber.html" class="category-item">
-        <img id="img_cat_plumber" class="category-img" src="https://images.unsplash.com/photo-1505798577917-a65157d3320a?w=200" alt="Plumber">
-        <span class="category-label">Plumber</span>
-      </a>
-      <a href="repair.html" class="category-item">
-        <img id="img_cat_repair" class="category-img" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=200" alt="Repair">
-        <span class="category-label">Repair</span>
-      </a>
+    <div class="categories-grid">
+      <a href="#" class="cat-card"><img id="img_cat_cleaning" class="cat-img" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200"><div class="cat-name">Cleaning</div></a>
+      <a href="#" class="cat-card"><img id="img_cat_electrician" class="cat-img" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=200"><div class="cat-name">Electrician</div></a>
+      <a href="#" class="cat-card"><img id="img_cat_plumber" class="cat-img" src="https://images.unsplash.com/photo-1505798577917-a65157d3320a?w=200"><div class="cat-name">Plumber</div></a>
+      <a href="#" class="cat-card"><img id="img_cat_repair" class="cat-img" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=200"><div class="cat-name">Repair</div></a>
     </div>
-  </div>
 
-  <!-- MOST BOOKED SERVICES -->
-  <div class="section-box">
     <div class="section-title">Most Booked Services <span class="badge-hot">HOT</span></div>
     
     <div class="service-card">
-      <span class="time-tag">⏱️ 1 hr</span>
-      
-      <!-- IMAGE CLICK -> DETAILS PAGE -->
-      <a href="sofa-cleaning-details.html">
-        <img id="img_service_sofa" src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800" alt="Sofa Cleaning">
-      </a>
-      
-      <div style="padding: 12px;">
-        <!-- TITLE & DETAILS LINK -->
-        <a href="sofa-cleaning-details.html" style="text-decoration: none; color: inherit;">
-          <div style="font-size: 15px; font-weight: 700; color: #0f172a;">Sofa Deep Cleaning</div>
-          <div style="font-size: 12px; color: #0879e8; font-weight: 600; margin-top: 2px;">View Details →</div>
-        </a>
-
-        <!-- PRICE & ADD BUTTON -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-          <div style="font-size: 14px; font-weight: 700; color: #0f172a;">
-            ₹800 <span style="font-size: 11px; color: #64748b; font-weight: normal;">• ⭐ 4.8</span>
-          </div>
-          
-          <button onclick="addToCart('Sofa Deep Cleaning', 800)" style="background: #eff6ff; color: #0879e8; border: 1px solid #0879e8; padding: 6px 16px; border-radius: 8px; font-weight: 700; cursor: pointer;">
-            ADD +
-          </button>
+      <div class="time-badge">⏱️ 1 hr</div>
+      <img id="img_service_sofa" class="service-img" src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800">
+      <div class="service-details">
+        <div class="service-title">Sofa Deep Cleaning</div>
+        <a href="sofa-cleaning-details.html" class="view-link">View Details →</a>
+        <div class="service-footer">
+          <div class="service-price">₹800 <span style="font-size: 12px; color: #64748b; font-weight: 400;">• ⭐ 4.8</span></div>
+          <button class="btn-add" onclick="addToCart('Sofa Deep Cleaning', 800)">ADD +</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- FLOATING CART STRIP -->
+  <!-- FOOTER SECTION -->
+  <footer style="background: #ffffff; padding: 30px 16px 100px; text-align: center; border-top: 1px solid #e2e8f0; margin-top: 30px;">
+    <div style="font-size: 22px; font-weight: 900; color: #16a34a; margin-bottom: 4px;">A2Z Cleaning Service</div>
+    <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Request A Callback</div>
+
+    <form onsubmit="handleCallback(event)" style="max-width: 350px; margin: 0 auto 24px; display: flex; flex-direction: column; gap: 10px;">
+      <input type="text" id="cbName" placeholder="Your Full Name" required style="padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none;">
+      <input type="tel" id="cbPhone" placeholder="Contact Number" required style="padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none;">
+      <button type="submit" style="background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;">Submit</button>
+    </form>
+
+    <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">Our Services</div>
+    <p style="font-size: 13px; color: #475569; line-height: 1.6; max-width: 400px; margin: 0 auto 20px;">
+      • Home Cleaning • Deep Cleaning • Office & Commercial Cleaning • Bathroom & Kitchen Cleaning • Sofa & Carpet Cleaning • Post-Construction Cleaning
+    </p>
+
+    <div style="font-size: 18px; font-weight: 800; color: #2563eb; margin-bottom: 8px;">Get In Touch</div>
+    <a href="tel:+919101616836" style="font-size: 16px; font-weight: 700; color: #16a34a; text-decoration: none; display: block; margin-bottom: 4px;">+91 9101616836</a>
+    <a href="mailto:info@a2zcleaningservice.in" style="font-size: 14px; color: #475569; text-decoration: none; display: block; margin-bottom: 12px;">info@a2zcleaningservice.in</a>
+
+    <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">Business Hours:</div>
+    <p style="font-size: 13px; color: #475569; margin-bottom: 20px;">8:00 AM – 6:00 PM 7 Days a Week</p>
+
+    <div style="font-size: 14px; font-weight: 800; color: #16a34a; margin-bottom: 6px;">Service Area</div>
+    <p style="font-size: 12px; color: #475569; line-height: 1.6; max-width: 420px; margin: 0 auto;">
+      Guwahati City • Hajo • Pan Bajar • Fancy Bazar • Dispur • Beltola • Six Mile • Ganeshguri • Paltan Bazaar • Zoo Road • Maligaon
+    </p>
+  </footer>
+
+  <!-- FLOATING CART BAR -->
   <div id="cartBar">
     <div>
-      <span id="cartCount" style="font-weight: 800; font-size: 14px;">1 Item</span>
+      <span id="cartCount" style="font-weight: 800; font-size: 14px;">0 Items</span>
       <span style="margin: 0 6px;">|</span>
-      <span id="cartPrice" style="font-size: 14px;">₹800</span>
+      <span id="cartPrice" style="font-size: 14px;">₹0</span>
     </div>
     <a href="checkout.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 13px;">View Cart →</a>
   </div>
 
   <!-- BOTTOM NAVIGATION BAR -->
   <nav class="bottom-nav">
-    <a href="index.html" class="nav-item active"><span class="nav-icon">🏠</span><span>Home</span></a>
-    <a href="orders.html" class="nav-item"><span class="nav-icon">📋</span><span>Orders</span></a>
-    <a href="#" class="nav-item"><span class="nav-icon">🔲</span><span>Categories</span></a>
-    <a href="#" class="nav-item"><span class="nav-icon">👤</span><span>Profile</span></a>
+    <a href="index.html" class="nav-item active"><span>🏠</span><span>Home</span></a>
+    <a href="orders.html" class="nav-item"><span>📋</span><span>Orders</span></a>
+    <a href="#" class="nav-item"><span>🔳</span><span>Categories</span></a>
+    <a href="#" class="nav-item"><span>👤</span><span>Profile</span></a>
   </nav>
 
   <script>
-    // Load dynamic photos from Admin Panel
-    function loadAdminPhotos() {
-      const keys = ['img_banner', 'img_cat_cleaning', 'img_cat_electrician', 'img_cat_plumber', 'img_cat_repair', 'img_service_sofa'];
-      keys.forEach(key => {
-        const saved = localStorage.getItem(key);
-        if (saved) {
-          const el = document.getElementById(key);
-          if (el) el.src = saved;
-        }
-      });
-    }
-
-    // Add to Cart Logic
     function addToCart(title, priceNum) {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       cart.push({ id: Date.now(), title: title, priceNum: priceNum });
@@ -164,11 +143,9 @@
       updateCartBar();
     }
 
-    // Floating Cart Update
     function updateCartBar() {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       const bar = document.getElementById('cartBar');
-      
       if (cart.length > 0) {
         const total = cart.reduce((sum, item) => sum + item.priceNum, 0);
         document.getElementById('cartCount').innerText = `${cart.length} Item${cart.length > 1 ? 's' : ''}`;
@@ -179,52 +156,6 @@
       }
     }
 
-      <!-- FOOTER SECTION -->
-  <footer style="background: #f8fafc; padding: 30px 16px 100px; text-align: center; border-top: 1px solid #e2e8f0; margin-top: 30px;">
-    
-    <!-- LOGO & BRAND -->
-    <div style="font-size: 22px; font-weight: 900; color: #16a34a; margin-bottom: 4px;">
-      A2Z Cleaning Service
-    </div>
-    <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">
-      Request A Callback
-    </div>
-
-    <!-- CALLBACK FORM -->
-    <form onsubmit="handleCallback(event)" style="max-width: 350px; margin: 0 auto 24px; display: flex; flex-direction: column; gap: 10px;">
-      <input type="text" id="cbName" placeholder="Your Full Name" required style="padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none;">
-      <input type="tel" id="cbPhone" placeholder="Contact Number" required style="padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none;">
-      <button type="submit" style="background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;">Submit</button>
-    </form>
-
-    <!-- OUR SERVICES -->
-    <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">Our Services</div>
-    <p style="font-size: 13px; color: #475569; line-height: 1.6; max-width: 400px; margin: 0 auto 20px;">
-      • Home Cleaning • Deep Cleaning • Office & Commercial Cleaning • Bathroom & Kitchen Cleaning • Sofa & Carpet Cleaning • Post-Construction Cleaning
-    </p>
-
-    <!-- GET IN TOUCH -->
-    <div style="font-size: 18px; font-weight: 800; color: #2563eb; margin-bottom: 8px;">Get In Touch</div>
-    <a href="tel:+919101616836" style="font-size: 16px; font-weight: 700; color: #16a34a; text-decoration: none; display: block; margin-bottom: 4px;">+91 9101616836</a>
-    <a href="mailto:info@a2zcleaningservice.in" style="font-size: 14px; color: #475569; text-decoration: none; display: block; margin-bottom: 12px;">info@a2zcleaningservice.in</a>
-
-    <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">Business Hours:</div>
-    <p style="font-size: 13px; color: #475569; margin-bottom: 20px;">8:00 AM – 6:00 PM 7 Days a Week</p>
-
-    <!-- SERVICE AREAS -->
-    <div style="font-size: 14px; font-weight: 800; color: #16a34a; margin-bottom: 6px;">Service Area</div>
-    <p style="font-size: 12px; color: #475569; line-height: 1.6; max-width: 420px; margin: 0 auto;">
-      Guwahati City • Hajo • Pan Bajar • Fancy Bazar • Dispur • Beltola • Six Mile • Ganeshguri • Paltan Bazaar • Zoo Road • Maligaon
-    </p>
-
-  </footer>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      loadAdminPhotos();
-      updateCartBar();
-    });
-
     function handleCallback(e) {
       e.preventDefault();
       const name = document.getElementById('cbName').value;
@@ -232,6 +163,10 @@
       alert(`Thank you ${name}! We will call you back shortly on ${phone}.`);
       e.target.reset();
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      updateCartBar();
+    });
   </script>
 </body>
 </html>
