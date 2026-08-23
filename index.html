@@ -4,18 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- SEO META TAGS -->
   <title>A2Z Cleaning Service Guwahati - Professional Home & Deep Cleaning</title>
   <meta name="description" content="Best professional cleaning and home repair services in Guwahati. Book Sofa Cleaning, House Deep Cleaning, AC Repair, Electrical & Plumbing services at affordable prices.">
   <meta name="keywords" content="Cleaning service Guwahati, Sofa cleaning Guwahati, House cleaning, AC repair Guwahati, Plumber Guwahati, A2Z Service">
   <meta name="robots" content="index, follow">
   
-  <!-- OPEN GRAPH META TAGS -->
   <meta property="og:title" content="A2Z Cleaning & Home Services Guwahati">
   <meta property="og:description" content="Quality home cleaning, repairs, and maintenance services at your doorstep in Guwahati.">
   <meta property="og:type" content="website">
   
-  <!-- SCHEMA.ORG LOCAL BUSINESS SEO MARKUP -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,7 +42,7 @@
     body {
       background: #f8f9fa;
       color: #111;
-      padding-bottom: 90px; 
+      padding-bottom: 110px; 
     }
 
     /* HEADER */
@@ -69,7 +66,6 @@
     }
     .logo span { color: #111; }
 
-    /* HEADER CONTACT BUTTONS */
     .header-actions {
       display: flex;
       gap: 10px;
@@ -281,7 +277,34 @@
       font-weight: 700;
       font-size: 14px;
       cursor: pointer;
+      transition: 0.2s;
     }
+    .add-btn.added {
+      background: #0879e8;
+      color: #fff;
+    }
+
+    /* FLOATING CART BAR */
+    .cart-bar {
+      position: fixed;
+      bottom: 75px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 500px;
+      background: #0879e8;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      box-shadow: 0 4px 15px rgba(8, 121, 232, 0.4);
+      cursor: pointer;
+    }
+    .cart-info { font-size: 14px; font-weight: 700; }
+    .cart-btn-text { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
     /* BOOKING FORM */
     .booking-section {
@@ -299,7 +322,7 @@
       font-weight: 600;
       color: #333;
     }
-    .form-group input, .form-group select {
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
       padding: 14px;
       border: 1px solid #ddd;
@@ -307,10 +330,7 @@
       font-size: 15px;
       background: #fff;
     }
-    .form-row {
-      display: flex;
-      gap: 15px;
-    }
+    .form-row { display: flex; gap: 15px; }
     .form-row .form-group { flex: 1; }
     .submit-btn {
       width: 100%;
@@ -340,19 +360,10 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 25px;
     }
-    .footer-col h3 {
-      color: #fff;
-      font-size: 16px;
-      margin-bottom: 12px;
-      font-weight: 700;
-    }
+    .footer-col h3 { color: #fff; font-size: 16px; margin-bottom: 12px; font-weight: 700; }
     .footer-col ul { list-style: none; }
     .footer-col ul li { margin-bottom: 8px; }
-    .footer-col a {
-      color: #9ca3af;
-      text-decoration: none;
-      transition: 0.2s;
-    }
+    .footer-col a { color: #9ca3af; text-decoration: none; transition: 0.2s; }
     .footer-col a:hover { color: #0879e8; }
     .footer-bottom {
       max-width: 1000px;
@@ -388,16 +399,11 @@
       font-weight: 600;
       gap: 5px;
     }
-    .nav-item svg {
-      width: 22px;
-      height: 22px;
-      stroke: #888;
-      transition: 0.2s;
-    }
+    .nav-item svg { width: 22px; height: 22px; stroke: #888; transition: 0.2s; }
     .nav-item.active { color: #0879e8; }
     .nav-item.active svg { stroke: #0879e8; }
 
-    /* BOTTOM SHEET MODAL */
+    /* MODAL OVERLAY & BOTTOM SHEET */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -410,10 +416,7 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    .modal-overlay.active {
-      display: block;
-      opacity: 1;
-    }
+    .modal-overlay.active { display: block; opacity: 1; }
 
     .bottom-sheet {
       position: fixed;
@@ -426,41 +429,26 @@
       padding: 25px 20px 30px;
       transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+      max-height: 80vh;
+      overflow-y: auto;
     }
-
     .bottom-sheet.active { bottom: 0; }
-    .sheet-drag-handle {
-      width: 40px;
-      height: 5px;
-      background: #ddd;
-      border-radius: 10px;
-      margin: 0 auto 20px;
+    .sheet-drag-handle { width: 40px; height: 5px; background: #ddd; border-radius: 10px; margin: 0 auto 20px; }
+    .sheet-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 15px; }
+    .sheet-desc { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px; }
+    .sheet-close-btn { width: 100%; background: #f1f1f1; color: #333; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; }
+
+    /* CART SHEET LIST */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
     }
-    .sheet-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 15px;
-    }
-    .sheet-desc {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .sheet-desc ul { margin-left: 20px; margin-top: 10px; }
-    .sheet-desc li { margin-bottom: 5px; }
-    .sheet-close-btn {
-      width: 100%;
-      background: #f1f1f1;
-      color: #333;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+    .cart-item-title { font-size: 14px; font-weight: 600; }
+    .cart-item-price { font-size: 14px; font-weight: 700; color: #111; }
+    .cart-remove-btn { color: #d32f2f; font-size: 12px; cursor: pointer; border: none; background: none; margin-left: 10px; }
   </style>
 </head>
 <body>
@@ -481,7 +469,6 @@
   </header>
 
   <div class="container">
-    
     <!-- PROMO BANNER -->
     <div class="banner-container">
       <div class="banner-track" id="bannerTrack">
@@ -510,17 +497,22 @@
       <span class="hot-badge">HOT</span>
     </div>
     <div class="services-grid" id="servicesContainer"></div>
+  </div>
 
+  <!-- FLOATING CART BAR -->
+  <div class="cart-bar" id="cartBar" onclick="openCartSheet()">
+    <div class="cart-info" id="cartBarText">0 Items | ₹0</div>
+    <div class="cart-btn-text">View Cart &#8594;</div>
   </div>
 
   <!-- BOOKING FORM -->
   <div class="booking-section" id="booking">
     <div style="max-width: 600px; margin: auto;">
-      <h2 style="margin-bottom: 20px;">Book a Service</h2>
+      <h2 style="margin-bottom: 20px;">Book Your Services</h2>
       <form onsubmit="bookService(event)">
         <div class="form-group">
-          <label>Selected Service</label>
-          <input type="text" id="selectedServiceName" readonly style="background:#f5f5f5;" placeholder="Select a service above" required>
+          <label>Selected Services</label>
+          <textarea id="selectedServiceName" readonly style="background:#f5f5f5;" rows="3" placeholder="Click ADD on services above to include them in cart" required></textarea>
         </div>
         
         <div class="form-row">
@@ -603,13 +595,13 @@
     </a>
   </nav>
 
-  <!-- BOTTOM SHEET MODAL -->
-  <div class="modal-overlay" id="modalOverlay" onclick="closeDetails()"></div>
+  <!-- MODAL OVERLAY & BOTTOM SHEET -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeSheet()"></div>
   <div class="bottom-sheet" id="bottomSheet">
     <div class="sheet-drag-handle"></div>
-    <div class="sheet-title" id="sheetTitle">Service Title</div>
-    <div class="sheet-desc" id="sheetDesc">Service description goes here...</div>
-    <button class="sheet-close-btn" onclick="closeDetails()">Close</button>
+    <div class="sheet-title" id="sheetTitle">Sheet Title</div>
+    <div class="sheet-desc" id="sheetDesc">Sheet Content</div>
+    <button class="sheet-close-btn" id="sheetActionBtn" onclick="closeSheet()">Close</button>
   </div>
 
   <!-- JAVASCRIPT LOGIC -->
@@ -617,6 +609,9 @@
     // Set minimum date selector to TODAY
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('orderDate').setAttribute('min', today);
+
+    // --- CART SYSTEM STATE ---
+    let cart = [];
 
     // --- BANNER SLIDER LOGIC ---
     let currentSlide = 0;
@@ -632,28 +627,12 @@
     }
     setInterval(nextSlide, 3500); 
 
-    // --- CATEGORIES DATA (With Links) ---
+    // --- CATEGORIES DATA ---
     const categories = [
-      { 
-        name: "Cleaning", 
-        link: "cleaning.html", 
-        img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=150&q=80" 
-      },
-      { 
-        name: "Electrician", 
-        link: "electrician.html", 
-        img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=150&q=80" 
-      },
-      { 
-        name: "Plumber", 
-        link: "plumber.html", 
-        img: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=150&q=80" 
-      },
-      { 
-        name: "Repair", 
-        link: "repair.html", 
-        img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=150&q=80" 
-      }
+      { name: "Cleaning", link: "cleaning.html", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=150&q=80" },
+      { name: "Electrician", link: "electrician.html", img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=150&q=80" },
+      { name: "Plumber", link: "plumber.html", img: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=150&q=80" },
+      { name: "Repair", link: "repair.html", img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=150&q=80" }
     ];
 
     const catContainer = document.getElementById("categoriesContainer");
@@ -665,87 +644,176 @@
         </div>`;
     });
 
-    // --- SERVICES DATA (With Descriptions) ---
+    // --- SERVICES DATA ---
     const servicesData = [
       { 
+        id: 1,
         title: "Sofa Deep Cleaning", 
         time: "🕒 1 hr", 
         oldPrice: "₹1,200", 
+        priceNum: 800,
         newPrice: "₹800", 
         img: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=500&q=80",
-        desc: "Professional deep cleaning of your sofa to remove dust, stains, and allergens.<br><br><b>Includes:</b><ul><li>Dry vacuuming to remove surface dust</li><li>Shampooing & wet vacuuming</li><li>Tough stain removal</li><li>Fabric conditioning</li></ul>"
+        desc: "Professional deep cleaning of your sofa to remove dust, stains, and allergens.<br><br><b>Includes:</b><ul><li>Dry vacuuming</li><li>Shampooing & wet vacuuming</li><li>Stain removal</li></ul>"
       },
       { 
+        id: 2,
         title: "Home Deep Cleaning", 
         time: "🕒 4 hrs", 
         oldPrice: "₹4,500", 
+        priceNum: 3499,
         newPrice: "₹3,499", 
         img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80",
-        desc: "Complete deep cleaning for a fresh & hygienic home.<br><br><b>Includes:</b><ul><li>Floor scrubbing & mopping</li><li>Bathroom & kitchen deep cleaning</li><li>Fan & tube light cleaning</li><li>Cobweb removal</li></ul>"
+        desc: "Complete deep cleaning for a fresh & hygienic home.<br><br><b>Includes:</b><ul><li>Floor scrubbing</li><li>Bathroom & kitchen deep cleaning</li><li>Fan & window cleaning</li></ul>"
       },
       { 
+        id: 3,
         title: "AC Servicing", 
         time: "🕒 1 hr", 
         oldPrice: "₹899", 
+        priceNum: 629,
         newPrice: "₹629", 
         img: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=500&q=80",
-        desc: "Improve cooling and extend the life of your AC with our thorough servicing.<br><br><b>Includes:</b><ul><li>Filter & cooling coil cleaning</li><li>Drain pipe unblocking</li><li>Gas pressure check</li><li>Overall performance inspection</li></ul>"
+        desc: "Improve cooling and extend the life of your AC.<br><br><b>Includes:</b><ul><li>Filter & cooling coil cleaning</li><li>Drain pipe unblocking</li><li>Gas pressure check</li></ul>"
       }
     ];
 
-    const servContainer = document.getElementById("servicesContainer");
-    servicesData.forEach((serv, index) => {
-      servContainer.innerHTML += `
-        <div class="service-card">
-          <div class="time-tag">${serv.time}</div>
-          <img src="${serv.img}" alt="${serv.title}" class="service-card-img">
-          <div class="service-info">
-            <div class="service-title">${serv.title}</div>
-            <span class="view-details-link" onclick="openDetails(${index})">View Details</span>
-            <div class="price-row">
-              <div class="price-box">
-                <span class="old-price">${serv.oldPrice}</span>
-                <span class="new-price">${serv.newPrice}</span>
-                <span class="offer-text">Offer price</span>
-              </div>
-              <button class="add-btn" onclick="selectService('${serv.title}')">ADD</button>
-            </div>
-          </div>
-        </div>`;
-    });
-
-    // --- MODAL LOGIC ---
-    function openDetails(index) {
-      document.getElementById("sheetTitle").innerHTML = servicesData[index].title;
-      document.getElementById("sheetDesc").innerHTML = servicesData[index].desc;
+    function renderServices() {
+      const servContainer = document.getElementById("servicesContainer");
+      servContainer.innerHTML = "";
       
+      servicesData.forEach((serv, index) => {
+        const isAdded = cart.some(item => item.id === serv.id);
+        servContainer.innerHTML += `
+          <div class="service-card">
+            <div class="time-tag">${serv.time}</div>
+            <img src="${serv.img}" alt="${serv.title}" class="service-card-img">
+            <div class="service-info">
+              <div class="service-title">${serv.title}</div>
+              <span class="view-details-link" onclick="openDetails(${index})">View Details</span>
+              <div class="price-row">
+                <div class="price-box">
+                  <span class="old-price">${serv.oldPrice}</span>
+                  <span class="new-price">${serv.newPrice}</span>
+                  <span class="offer-text">Offer price</span>
+                </div>
+                <button class="add-btn ${isAdded ? 'added' : ''}" onclick="toggleCart(${serv.id})">
+                  ${isAdded ? 'ADDED' : 'ADD'}
+                </button>
+              </div>
+            </div>
+          </div>`;
+      });
+    }
+
+    // --- CART LOGIC ---
+    function toggleCart(serviceId) {
+      const service = servicesData.find(s => s.id === serviceId);
+      const index = cart.findIndex(item => item.id === serviceId);
+
+      if (index === -1) {
+        cart.push(service);
+      } else {
+        cart.splice(index, 1);
+      }
+
+      updateCartUI();
+      renderServices();
+    }
+
+    function removeFromCart(serviceId) {
+      cart = cart.filter(item => item.id !== serviceId);
+      updateCartUI();
+      renderServices();
+      openCartSheet(); // refresh sheet view
+    }
+
+    function updateCartUI() {
+      const cartBar = document.getElementById("cartBar");
+      const cartBarText = document.getElementById("cartBarText");
+      const selectedInput = document.getElementById("selectedServiceName");
+
+      if (cart.length > 0) {
+        const total = cart.reduce((sum, item) => sum + item.priceNum, 0);
+        cartBar.style.display = "flex";
+        cartBarText.innerText = `${cart.length} Service(s) | ₹${total}`;
+        
+        // Populate text in form
+        selectedInput.value = cart.map(item => `${item.title} (₹${item.priceNum})`).join("\n");
+      } else {
+        cartBar.style.display = "none";
+        selectedInput.value = "";
+      }
+    }
+
+    // --- MODAL & SHEET FUNCTIONS ---
+    function openDetails(index) {
+      document.getElementById("sheetTitle").innerText = servicesData[index].title;
+      document.getElementById("sheetDesc").innerHTML = servicesData[index].desc;
+      document.getElementById("sheetActionBtn").innerText = "Close";
+      document.getElementById("sheetActionBtn").onclick = closeSheet;
+
       document.getElementById("modalOverlay").classList.add("active");
       document.getElementById("bottomSheet").classList.add("active");
     }
 
-    function closeDetails() {
+    function openCartSheet() {
+      if (cart.length === 0) return;
+
+      let cartHTML = "<div>";
+      let total = 0;
+
+      cart.forEach(item => {
+        total += item.priceNum;
+        cartHTML += `
+          <div class="cart-item">
+            <div>
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">₹${item.priceNum}</div>
+            </div>
+            <button class="cart-remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>`;
+      });
+
+      cartHTML += `<div style="display:flex; justify-between; margin-top:15px; font-weight:bold; font-size:16px;">
+                    <span>Total Amount:</span>
+                    <span>₹${total}</span>
+                   </div></div>`;
+
+      document.getElementById("sheetTitle").innerText = "Your Cart";
+      document.getElementById("sheetDesc").innerHTML = cartHTML;
+      document.getElementById("sheetActionBtn").innerText = "Proceed to Booking";
+      document.getElementById("sheetActionBtn").onclick = function() {
+        closeSheet();
+        document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
+      };
+
+      document.getElementById("modalOverlay").classList.add("active");
+      document.getElementById("bottomSheet").classList.add("active");
+    }
+
+    function closeSheet() {
       document.getElementById("modalOverlay").classList.remove("active");
       document.getElementById("bottomSheet").classList.remove("active");
     }
 
-    // --- SELECT SERVICE & SCROLL TO FORM ---
-    function selectService(name) {
-      document.getElementById("selectedServiceName").value = name;
-      document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
-    }
-
-    // --- WHATSAPP ORDER SUBMISSION WITH DATE & TIME ---
+    // --- WHATSAPP ORDER SUBMISSION ---
     function bookService(event) {
       event.preventDefault();
-      const service = document.getElementById("selectedServiceName").value;
+      const services = document.getElementById("selectedServiceName").value;
       const date = document.getElementById("orderDate").value;
       const timeSlot = document.getElementById("orderTime").value;
       const name = document.getElementById("custName").value;
       const phone = document.getElementById("custPhone").value;
       const address = document.getElementById("custAddress").value;
 
-      const message = `Hello A2Z Service! I want to book a service:%0A%0A` +
-                      `📌 *Service:* ${service}%0A` +
+      if (!services.trim()) {
+        alert("Please select at least one service!");
+        return;
+      }
+
+      const message = `Hello A2Z Service! I want to book the following services:%0A%0A` +
+                      `📌 *Selected Services:*%0A${encodeURIComponent(services)}%0A%0A` +
                       `📅 *Date:* ${date}%0A` +
                       `⏰ *Time Slot:* ${timeSlot}%0A` +
                       `👤 *Name:* ${name}%0A` +
@@ -754,6 +822,9 @@
 
       window.location.href = `https://wa.me/919101616836?text=${message}`;
     }
+
+    // Initial Render
+    renderServices();
   </script>
 </body>
 </html>
