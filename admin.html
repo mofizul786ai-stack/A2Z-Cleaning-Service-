@@ -1,66 +1,76 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>A2Z Service - Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A2Z Admin - Photo Manager</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; }
-    .card { background: white; padding: 20px; border-radius: 12px; max-width: 600px; margin: 0 auto 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    h2 { color: #0879e8; margin-bottom: 15px; font-size: 18px; }
-    input, select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; }
-    button { background: #0879e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    body { font-family: -apple-system, sans-serif; background: #f8fafc; padding: 20px; color: #1e293b; }
+    .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: 0 auto 15px; }
+    h2 { font-size: 18px; margin-bottom: 15px; color: #0879e8; }
+    .upload-group { margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
+    label { font-size: 14px; font-weight: 600; display: block; margin-bottom: 6px; }
+    input[type="file"] { font-size: 13px; }
+    .btn-reset { background: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; margin-top: 10px; }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h2>1. Payment Options Setup</h2>
-    <label>UPI ID (e.g. 9101616836@ybl)</label>
-    <input type="text" id="adminUpi" placeholder="Enter UPI ID">
-    <label>UPI QR Image URL</label>
-    <input type="text" id="adminQr" placeholder="Enter QR Code Image Link">
-    <button onclick="savePaymentSettings()">Save Payment Options</button>
-  </div>
+    <h2>Photo Manager (A2Z Service)</h2>
+    
+    <div class="upload-group">
+      <label>1. Main Top Banner Photo:</label>
+      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_banner')">
+    </div>
 
-  <div class="card">
-    <h2>2. Add New Service Item</h2>
-    <input type="text" id="sTitle" placeholder="Service Title">
-    <input type="number" id="sPrice" placeholder="New Price (₹)">
-    <input type="number" id="sOldPrice" placeholder="Old Price (₹)">
-    <input type="text" id="sImg" placeholder="Image URL">
-    <select id="sCat">
-      <option value="cleaning">Cleaning</option>
-      <option value="electrician">Electrician</option>
-      <option value="plumber">Plumber</option>
-      <option value="repair">Repair</option>
-    </select>
-    <button onclick="addNewService()">Add Service to Site</button>
+    <div class="upload-group">
+      <label>2. Cleaning Category Photo:</label>
+      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_cleaning')">
+    </div>
+
+    <div class="upload-group">
+      <label>3. Electrician Category Photo:</label>
+      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_electrician')">
+    </div>
+
+    <div class="upload-group">
+      <label>4. Plumber Category Photo:</label>
+      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_plumber')">
+    </div>
+
+    <div class="upload-group">
+      <label>5. Repair Category Photo:</label>
+      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_repair')">
+    </div>
+
+    <div class="upload-group">
+      <label>6. Sofa Deep Cleaning Photo:</label>
+      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_service_sofa')">
+    </div>
+
+    <button class="btn-reset" onclick="resetAllPhotos()">Reset All Original Photos</button>
   </div>
 
   <script>
-    function savePaymentSettings() {
-      const upi = document.getElementById("adminUpi").value;
-      const qr = document.getElementById("adminQr").value;
-      localStorage.setItem("a2z_payment_upi", upi);
-      localStorage.setItem("a2z_payment_qr", qr);
-      alert("Payment Settings Saved!");
+    function uploadImage(event, key) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          localStorage.setItem(key, e.target.result);
+          alert("Photo Updated Successfully!");
+        };
+        reader.readAsDataURL(file);
+      }
     }
 
-    function addNewService() {
-      const newServ = {
-        id: Date.now(),
-        title: document.getElementById("sTitle").value,
-        priceNum: parseInt(document.getElementById("sPrice").value),
-        oldPrice: "₹" + document.getElementById("sOldPrice").value,
-        newPrice: "₹" + document.getElementById("sPrice").value,
-        img: document.getElementById("sImg").value,
-        category: document.getElementById("sCat").value
-      };
-
-      let customServices = JSON.parse(localStorage.getItem("a2z_custom_services")) || [];
-      customServices.push(newServ);
-      localStorage.setItem("a2z_custom_services", JSON.stringify(customServices));
-      alert("New Service Added Successfully!");
+    function resetAllPhotos() {
+      if (confirm("Are you sure you want to reset all photos to default?")) {
+        const keys = ['img_banner', 'img_cat_cleaning', 'img_cat_electrician', 'img_cat_plumber', 'img_cat_repair', 'img_service_sofa'];
+        keys.forEach(key => localStorage.removeItem(key));
+        alert("All photos reset!");
+      }
     }
   </script>
 </body>
