@@ -875,7 +875,8 @@
       pricingTable.innerHTML = "";
       serviceSelect.innerHTML = '<option value="">Choose a service</option>';
 
-      let items = data ? Object.values(data) : defaultServices;
+      // ফায়ারবেসের পুরনো ডাটা ইগনোর করে সরাসরি নতুন ৪টি সার্ভিস দেখানোর কমান্ড:
+      let items = defaultServices; 
 
       items.forEach(item => {
         const iconData = item.icon || "🧹";
@@ -904,6 +905,7 @@
         serviceSelect.innerHTML += `<option value="${item.name}">${item.name}</option>`;
       });
     });
+    
 
     // DYNAMIC GALLERY
     db.ref("gallery").on("value", (snapshot) => {
