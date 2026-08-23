@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders - A2Z Service</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 80px; }
+
+    header {
+      position: sticky; top: 0; z-index: 100; background: #ffffff;
+      padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .brand { font-size: 18px; font-weight: 800; color: #0879e8; }
+    
+    .container { padding: 16px; max-width: 500px; margin: 0 auto; }
+
+    .order-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; border: 1px solid #e2e8f0; }
+    .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #cbd5e1; }
+    .order-id { font-size: 12px; font-weight: 700; color: #64748b; }
+    .status-badge { background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; }
+
+    .item-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+    .info-box { background: #f1f5f9; padding: 10px; border-radius: 8px; font-size: 12px; margin-top: 10px; color: #334155; }
+
+    /* BOTTOM NAV BAR */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #f1f5f9; z-index: 1000; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 500; }
+    .nav-item.active { color: #0879e8; }
+    .nav-icon { font-size: 20px; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">My Bookings</div>
+    <a href="index.html" style="text-decoration: none; color: #0879e8; font-weight: 700; font-size: 14px;">+ New Booking</a>
+  </header>
+
+  <div class="container" id="ordersList">
+    <!-- Orders will load dynamically -->
+  </div>
+
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span><span>Home</span></a>
+    <a href="orders.html" class="nav-item active"><span class="nav-icon">📋</span><span>Orders</span></a>
+    <a href="#" class="nav-item"><span class="nav-icon">👤</span><span>Profile</span></a>
+  </nav>
+
+  <script>
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
+      const container = document.getElementById('ordersList');
+
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; margin-top: 50px; color: #64748b;">
+            <h3>No Bookings Found</h3>
+            <p style="font-size: 13px; margin-top: 6px;">You haven't placed any bookings yet.</p>
+            <a href="index.html" style="display: inline-block; margin-top: 15px; background: #0879e8; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 14px;">Book Now</a>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = orders.reverse().map(order => {
+        const itemsHtml = order.items.map(item => `
+          <div class="item-row">
+            <span>${item.title}</span>
+            <b>₹${item.priceNum}</b>
+          </div>
+        `).join('');
+
+        return `
+          <div class="order-card">
+            <div class="order-header">
+              <span class="order-id">ORDER #${order.id.toString().slice(-6)}</span>
+              <span class="status-badge">${order.status}</span>
+            </div>
+            
+            ${itemsHtml}
+
+            <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; margin-top: 8px; color: #0879e8;">
+              <span>Total Paid/Due:</span>
+              <span>₹${order.total}</span>
+            </div>
+
+            <div class="info-box">
+              <div><b>Name:</b> ${order.customer.name} (${order.customer.phone})</div>
+              <div><b>Address:</b> ${order.customer.address}</div>
+              <div><b>Schedule:</b> 📅 ${order.schedule.date} | ⏰ ${order.schedule.time}</div>
+              <div><b>Payment:</b> ${order.payment}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.addEventListener("DOMContentLoaded", loadOrders);
+  </script>
+</body>
+</html>
