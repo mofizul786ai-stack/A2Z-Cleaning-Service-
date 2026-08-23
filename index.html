@@ -826,4 +826,194 @@
     const firebaseConfig = {
       apiKey: "AIzaSyDK1fnjgeDwb712_lDTwifRjH_tpbZrtaw",
       authDomain: "a2z-cleaning-service-5a568.firebaseapp.com",
-      projectId: "a2z-cleaning-se
+      projectId: "a2z-cleaning-service-5a568",
+      storageBucket: "a2z-cleaning-service-5a568.firebasestorage.app",
+      messagingSenderId: "896768770622",
+      appId: "1:896768770622:web:89e11df7906d4cbf26876f"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let currentWhatsapp = "919101616836";
+    let currentUpi = "9101616836@ptyes";
+
+    function toggleMenu() { document.getElementById("navLinks").classList.toggle("active"); }
+
+    function selectService(serviceName) {
+      document.getElementById("service").value = serviceName;
+    }
+
+    // New 4 Categories with Custom Image Links (আপনি এখানে আপনার পছন্দমতো ছবির লিঙ্ক বসাতে পারবেন)
+    const defaultServices = [
+      { name: "Home Cleaning", price: "499", desc: "Complete home deep cleaning for a fresh look.", icon: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=300&q=80" },
+      { name: "Electric Service", price: "299", desc: "Wiring, fan, switch board repair and installation.", icon: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=300&q=80" },
+      { name: "Plumber Services", price: "299", desc: "Pipe leakage, tap fitting, and bathroom plumbing.", icon: "https://images.unsplash.com/photo-1542013936-69f0eed2b716?auto=format&fit=crop&w=300&q=80" },
+      { name: "Repair Service", price: "399", desc: "Home appliances and general repair solutions.", icon: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=300&q=80" }
+    ];
+
+    const defaultGallery = [
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1542013936-69f0eed2b716?auto=format&fit=crop&w=800&q=80"
+    ];
+
+    const defaultReviews = [
+      { comment: "Very good electrical service. Technician was on time.", name: "Customer, Guwahati" },
+      { comment: "Plumbing work was done neatly. Reasonable price.", name: "Customer, Guwahati" },
+      { comment: "Professional team and good quality service.", name: "Customer, Guwahati" }
+    ];
+
+    // DYNAMIC SERVICES
+    db.ref("services").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const servicesGrid = document.getElementById("servicesGrid");
+      const pricingTable = document.getElementById("pricingTable");
+      const serviceSelect = document.getElementById("service");
+
+      servicesGrid.innerHTML = "";
+      pricingTable.innerHTML = "";
+      serviceSelect.innerHTML = '<option value="">Choose a service</option>';
+
+      let items = data ? Object.values(data) : defaultServices;
+
+      items.forEach(item => {
+        const iconData = item.icon || "🧹";
+        const iconHtml = iconData.startsWith('http') ? `<img src="${iconData}" alt="${item.name}">` : iconData;
+        const priceStr = item.price.toString().startsWith("₹") ? item.price : `₹${item.price}`;
+
+        servicesGrid.innerHTML += `
+          <div class="service-card">
+            <div>
+              <div class="service-icon">${iconHtml}</div>
+              <h3>${item.name}</h3>
+              <p>${item.desc || "Professional service."}</p>
+              <div class="price">From ${priceStr}</div>
+            </div>
+            <a href="#booking" onclick="selectService('${item.name}')" class="card-btn">Book Now &rarr;</a>
+          </div>
+        `;
+
+        pricingTable.innerHTML += `
+          <div class="price-row">
+            <span>${item.name}</span>
+            <strong>${priceStr}+</strong>
+          </div>
+        `;
+
+        serviceSelect.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+      });
+    });
+
+    // DYNAMIC GALLERY
+    db.ref("gallery").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const galleryGrid = document.getElementById("galleryGrid");
+      galleryGrid.innerHTML = "";
+      let images = data ? Object.values(data).map(i => i.url) : defaultGallery;
+      images.forEach(url => {
+        galleryGrid.innerHTML += `<img src="${url}" alt="Work">`;
+      });
+    });
+
+    // DYNAMIC REVIEWS
+    db.ref("reviews").on("value", (snapshot) => {
+      const data = snapshot.val();
+      const reviewsGrid = document.getElementById("reviewsGrid");
+      reviewsGrid.innerHTML = "";
+      let reviews = data ? Object.values(data) : defaultReviews;
+      reviews.forEach(r => {
+        reviewsGrid.innerHTML += `
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>${r.comment}</p>
+            <strong>— ${r.name || 'Customer, Guwahati'}</strong>
+          </div>
+        `;
+      });
+    });
+
+    // SETTINGS
+    db.ref("settings").on("value", (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        if (data.whatsapp) {
+          currentWhatsapp = data.whatsapp.replace(/[^0-9]/g, '');
+          const cleanPhone = currentWhatsapp.length === 10 ? '91' + currentWhatsapp : currentWhatsapp;
+          
+          document.getElementById("heroWaBtn").href = `https://wa.me/${cleanPhone}`;
+          document.getElementById("contactWa").href = `https://wa.me/${cleanPhone}`;
+          document.getElementById("contactCall").href = `tel:+${cleanPhone}`;
+          document.getElementById("contactPhoneText").innerText = data.whatsapp;
+          document.getElementById("footerPhone").innerText = `📞 ${data.whatsapp}`;
+          document.getElementById("barCall").href = `tel:+${cleanPhone}`;
+          document.getElementById("barWa").href = `https://wa.me/${cleanPhone}`;
+        }
+        if (data.upi) currentUpi = data.upi;
+      }
+    });
+
+    // BOOKING
+    function sendBooking(event) {
+      event.preventDefault();
+      const name = document.getElementById("customerName").value;
+      const phone = document.getElementById("customerPhone").value;
+      const service = document.getElementById("service").value;
+      const area = document.getElementById("area").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const paymentMethod = document.getElementById("paymentMethod").value;
+      const message = document.getElementById("message").value;
+
+      db.ref("bookings").push({ name, phone, service, area, date, time, paymentMethod, message, createdAt: new Date().toLocaleString() });
+
+      const whatsappMessage = `Hello A2Z Service,%0A%0AI want to book:%0A- Name: ${encodeURIComponent(name)}%0A- Phone: ${encodeURIComponent(phone)}%0A- Service: ${encodeURIComponent(service)}%0A- Area: ${encodeURIComponent(area)}%0A- Date: ${encodeURIComponent(date)}%0A- Time: ${encodeURIComponent(time)}%0A- Payment: ${encodeURIComponent(paymentMethod)}`;
+      
+      const cleanPhone = currentWhatsapp.length === 10 ? '91' + currentWhatsapp : currentWhatsapp;
+      const whatsappUrl = "https://wa.me/" + cleanPhone + "?text=" + whatsappMessage;
+
+      if (paymentMethod.includes("UPI")) {
+        if (confirm("আপনি কি এখনই UPI-এর মাধ্যমে পেমেন্ট করতে চান?")) {
+          window.location.href = `upi://pay?pa=${currentUpi}&pn=A2Z%20Service&cu=INR`;
+          setTimeout(() => { window.location.href = whatsappUrl; }, 3000);
+          return;
+        }
+      }
+      window.location.href = whatsappUrl;
+    }
+
+    // LOCATION
+    function getCurrentLocation() {
+      const status = document.getElementById("locStatus");
+      const areaInput = document.getElementById("area");
+
+      if (!navigator.geolocation) {
+        status.innerText = "Geolocation support unavailable.";
+        return;
+      }
+      status.innerText = "Locating exact GPS position...";
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const acc = Math.round(position.coords.accuracy);
+
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            .then(res => res.json())
+            .then(data => {
+              areaInput.value = (data && data.display_name) ? data.display_name : `https://maps.google.com/?q=${lat},${lon}`;
+              status.innerText = `📍 Location detected (Accuracy: ~${acc}m)`;
+            })
+            .catch(() => {
+              areaInput.value = `https://maps.google.com/?q=${lat},${lon}`;
+              status.innerText = `📍 Map link inserted (Accuracy: ~${acc}m)`;
+            });
+        },
+        () => { status.innerText = "GPS error. Please type address manually."; },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
+    }
+  </script>
+</body>
+</html>
