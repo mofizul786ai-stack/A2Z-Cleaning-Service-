@@ -6,17 +6,17 @@
   <title>Checkout - A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 40px; }
+    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 50px; }
+
+    .container { max-width: 500px; margin: 0 auto; }
 
     header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .btn-back { text-decoration: none; font-size: 20px; color: #0f172a; font-weight: bold; }
     .page-title { font-size: 18px; font-weight: 800; color: #0879e8; }
     
-    /* CLEAR ALL BUTTON */
     .btn-clear-all { background: #fee2e2; color: #ef4444; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-    .container { max-width: 500px; margin: 0 auto; }
-
+    /* CART ITEM LIST */
     .cart-item {
       background: white; border-radius: 12px; padding: 14px;
       margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
@@ -25,7 +25,6 @@
     .item-info { font-weight: 700; font-size: 14px; }
     .item-price { color: #0879e8; font-weight: 800; font-size: 15px; margin-top: 4px; }
     
-    /* DELETE ITEM BUTTON */
     .btn-remove {
       background: #f1f5f9; color: #ef4444; border: none;
       width: 32px; height: 32px; border-radius: 8px;
@@ -35,8 +34,30 @@
     .empty-msg { text-align: center; padding: 40px 0; color: #64748b; font-weight: 600; }
     
     .total-box {
-      background: white; border-radius: 12px; padding: 16px; margin-top: 20px;
+      background: white; border-radius: 12px; padding: 16px; margin: 16px 0;
       border: 1px solid #e2e8f0; display: flex; justify-content: space-between; font-weight: 800; font-size: 16px;
+    }
+
+    /* ADDRESS FORM SECTION */
+    .address-card {
+      background: white; border-radius: 16px; padding: 18px;
+      border: 1px solid #e2e8f0; margin-top: 10px;
+    }
+    .card-title { font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 14px; }
+    
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 4px; }
+    .form-control {
+      width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;
+      font-size: 14px; outline: none; background: #f8fafc;
+    }
+    .form-control:focus { border-color: #0879e8; background: #ffffff; }
+
+    /* PLACE ORDER BUTTON */
+    .btn-submit-order {
+      width: 100%; background: #16a34a; color: white; border: none;
+      padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 800;
+      cursor: pointer; margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 8px;
     }
   </style>
 </head>
@@ -55,6 +76,30 @@
       <span>Total Amount:</span>
       <span id="totalPrice" style="color: #0879e8;">₹0</span>
     </div>
+
+    <!-- ADDRESS & CONTACT DETAILS FORM -->
+    <div id="addressSection" class="address-card" style="display: none;">
+      <div class="card-title">Delivery & Contact Address</div>
+      <form onsubmit="processOrder(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="custName" class="form-control" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="custPhone" class="form-control" placeholder="Enter mobile number" required>
+        </div>
+
+        <div class="form-group">
+          <label>Full Service Address</label>
+          <textarea id="custAddress" class="form-control" rows="3" placeholder="House/Flat No, Area, Landmark" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-order">💬 Order via WhatsApp</button>
+      </form>
+    </div>
+
   </div>
 
   <script>
@@ -62,10 +107,12 @@
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       const listContainer = document.getElementById('cartList');
       const totalBox = document.getElementById('totalBox');
+      const addressSection = document.getElementById('addressSection');
       
       if (cart.length === 0) {
         listContainer.innerHTML = `<div class="empty-msg">Your cart is empty!</div>`;
         totalBox.style.display = 'none';
+        addressSection.style.display = 'none';
         return;
       }
 
@@ -88,9 +135,9 @@
       listContainer.innerHTML = html;
       document.getElementById('totalPrice').innerText = `₹${total}`;
       totalBox.style.display = 'flex';
+      addressSection.style.display = 'block';
     }
 
-    // single item delete function
     function removeItem(index) {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       cart.splice(index, 1);
@@ -98,7 +145,6 @@
       renderCart();
     }
 
-    // all items delete function
     function clearAllCart() {
       if(confirm("Are you sure you want to clear all items?")) {
         localStorage.removeItem('a2z_cart');
@@ -106,7 +152,29 @@
       }
     }
 
+    function processOrder(e) {
+      e.preventDefault();
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      if(cart.length === 0) return;
+
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+      const address = document.getElementById('custAddress').value;
+
+      let itemsList = cart.map(i => `• ${i.title} (₹${i.priceNum})`).join('\n');
+      let total = cart.reduce((sum, item) => sum + item.priceNum, 0);
+
+      let waMessage = `*NEW SERVICE ORDER*\n\n*Customer Details:*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*Ordered Services:*\n${itemsList}\n\n*Total Amount:* ₹${total}`;
+
+      // Clear Cart after placing order
+      localStorage.removeItem('a2z_cart');
+      
+      // Redirect to WhatsApp
+      window.location.href = `https://wa.me/919101616836?text=${encodeURIComponent(waMessage)}`;
+    }
+
     document.addEventListener("DOMContentLoaded", renderCart);
   </script>
 </body>
-</html>
+            </html>
+            
