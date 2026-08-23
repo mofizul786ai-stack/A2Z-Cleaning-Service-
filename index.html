@@ -54,7 +54,7 @@
       top: 0;
       z-index: 1000;
       background: #ffffff;
-      padding: 12px 20px; /* Adjusted padding */
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -89,11 +89,11 @@
     }
 
     .call-btn {
-      background: #0879e8; /* Blue for call */
+      background: #0879e8;
     }
 
     .whatsapp-btn {
-      background: #25D366; /* Green for WhatsApp */
+      background: #25D366;
     }
 
     .action-btn svg {
@@ -245,7 +245,14 @@
       font-size: 16px;
       font-weight: 600;
       color: #222;
-      margin-bottom: 6px;
+      margin-bottom: 2px;
+    }
+    .view-details-link {
+      font-size: 12px;
+      color: #0879e8;
+      text-decoration: underline;
+      cursor: pointer;
+      display: inline-block;
     }
     .price-row {
       display: flex;
@@ -359,6 +366,85 @@
     }
     .nav-item.active svg {
       stroke: #0879e8;
+    }
+
+    /* BOTTOM SHEET MODAL FOR DESCRIPTION */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .bottom-sheet {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-radius: 24px 24px 0 0;
+      z-index: 1002;
+      padding: 25px 20px 30px;
+      transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+
+    .bottom-sheet.active {
+      bottom: 0;
+    }
+
+    .sheet-drag-handle {
+      width: 40px;
+      height: 5px;
+      background: #ddd;
+      border-radius: 10px;
+      margin: 0 auto 20px;
+    }
+
+    .sheet-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 15px;
+    }
+
+    .sheet-desc {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .sheet-desc ul {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+    
+    .sheet-desc li {
+      margin-bottom: 5px;
+    }
+
+    .sheet-close-btn {
+      width: 100%;
+      background: #f1f1f1;
+      color: #333;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -479,6 +565,17 @@
     </a>
   </nav>
 
+  <!-- BOTTOM SHEET MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeDetails()"></div>
+  <div class="bottom-sheet" id="bottomSheet">
+    <div class="sheet-drag-handle"></div>
+    <div class="sheet-title" id="sheetTitle">Service Title</div>
+    <div class="sheet-desc" id="sheetDesc">
+      Service description goes here...
+    </div>
+    <button class="sheet-close-btn" onclick="closeDetails()">Close</button>
+  </div>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // Set minimum date selector to TODAY
@@ -516,58 +613,29 @@
         </div>`;
     });
 
-    // --- SERVICES DATA ---
+    // --- SERVICES DATA (With Descriptions) ---
     const servicesData = [
-      { title: "Sofa Deep Cleaning", time: "🕒 1 hr", oldPrice: "₹1,200", newPrice: "₹800", img: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=500&q=80" },
-      { title: "Home Deep Cleaning", time: "🕒 4 hrs", oldPrice: "₹4,500", newPrice: "₹3,499", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" },
-      { title: "AC Servicing", time: "🕒 1 hr", oldPrice: "₹899", newPrice: "₹629", img: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=500&q=80" }
-    ];
-
-    const servContainer = document.getElementById("servicesContainer");
-    servicesData.forEach(serv => {
-      servContainer.innerHTML += `
-        <div class="service-card">
-          <div class="time-tag">${serv.time}</div>
-          <img src="${serv.img}" alt="${serv.title}" class="service-card-img">
-          <div class="service-info">
-            <div class="service-title">${serv.title}</div>
-            <div class="price-row">
-              <div class="price-box">
-                <span class="old-price">${serv.oldPrice}</span>
-                <span class="new-price">${serv.newPrice}</span>
-                <span class="offer-text">Offer price</span>
-              </div>
-              <button class="add-btn" onclick="selectService('${serv.title}')">ADD</button>
-            </div>
-          </div>
-        </div>`;
-    });
-
-    function selectService(name) {
-      document.getElementById("selectedServiceName").value = name;
-      document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
-    }
-
-    // --- WHATSAPP ORDER SUBMISSION WITH DATE & TIME ---
-    function bookService(event) {
-      event.preventDefault();
-      const service = document.getElementById("selectedServiceName").value;
-      const date = document.getElementById("orderDate").value;
-      const timeSlot = document.getElementById("orderTime").value;
-      const name = document.getElementById("custName").value;
-      const phone = document.getElementById("custPhone").value;
-      const address = document.getElementById("custAddress").value;
-
-      const message = `Hello A2Z Service! I want to book a service:%0A%0A` +
-                      `📌 *Service:* ${service}%0A` +
-                      `📅 *Date:* ${date}%0A` +
-                      `⏰ *Time Slot:* ${timeSlot}%0A` +
-                      `👤 *Name:* ${name}%0A` +
-                      `📞 *Phone:* ${phone}%0A` +
-                      `📍 *Address:* ${address}`;
-
-      window.location.href = `https://wa.me/919101616836?text=${message}`;
-    }
-  </script>
-</body>
-</html>
+      { 
+        title: "Sofa Deep Cleaning", 
+        time: "🕒 1 hr", 
+        oldPrice: "₹1,200", 
+        newPrice: "₹800", 
+        img: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=500&q=80",
+        desc: "Professional deep cleaning of your sofa to remove dust, stains, and allergens.<br><br><b>Includes:</b><ul><li>Dry vacuuming to remove surface dust</li><li>Shampooing & wet vacuuming</li><li>Tough stain removal</li><li>Fabric conditioning</li></ul>"
+      },
+      { 
+        title: "Home Deep Cleaning", 
+        time: "🕒 4 hrs", 
+        oldPrice: "₹4,500", 
+        newPrice: "₹3,499", 
+        img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80",
+        desc: "Complete deep cleaning for a fresh & hygienic home.<br><br><b>Includes:</b><ul><li>Floor scrubbing & mopping</li><li>Bathroom & kitchen deep cleaning</li><li>Fan & tube light cleaning</li><li>Cobweb removal</li></ul>"
+      },
+      { 
+        title: "AC Servicing", 
+        time: "🕒 1 hr", 
+        oldPrice: "₹899", 
+        newPrice: "₹629", 
+        img: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=500&q=80",
+        desc: "Improve cooling and extend the life of your AC with our thorough servicing.<br><br><b>Includes:</b><ul><li>Filter & cooling coil cleaning</li><li>Drain pipe unblocking</li><li>Gas pressure check</li><li>Overall performance inspection</li></ul>"
+      
