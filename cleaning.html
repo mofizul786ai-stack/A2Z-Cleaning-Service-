@@ -6,7 +6,7 @@
   <title>Cleaning Services - A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding-bottom: 80px; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 90px; }
 
     /* HEADER */
     header {
@@ -19,35 +19,56 @@
 
     .container { padding: 16px; max-width: 500px; margin: 0 auto; }
 
-    /* SERVICE CARD (EXACT MATCH FOR CATEGORY PAGE IMAGE) */
+    /* PROFESSIONAL SERVICE CARD */
     .service-card { 
+      position: relative;
       background: #ffffff; 
       border-radius: 20px; 
       overflow: hidden; 
       border: 1px solid #e2e8f0; 
       margin-bottom: 20px; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .service-img { width: 100%; height: 210px; object-fit: cover; display: block; }
-    .service-details { padding: 18px 16px; }
-    .service-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
-    .service-desc { font-size: 13.5px; color: #64748b; margin-bottom: 16px; line-height: 1.45; }
 
-    .service-footer { display: flex; justify-content: space-between; align-items: flex-end; }
-    .price-group { display: flex; flex-direction: column; }
-    .old-price { font-size: 13px; color: #94a3b8; text-decoration: line-through; margin-bottom: 2px; }
-    .current-price { font-size: 20px; font-weight: 800; color: #0f172a; }
+    /* TIME BADGE OVER IMAGE */
+    .time-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(4px);
+      padding: 4px 10px; border-radius: 6px;
+      font-size: 12px; font-weight: 700; color: #0f172a;
+      display: flex; align-items: center; gap: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .service-img { width: 100%; height: 210px; object-fit: cover; display: block; }
+    .service-details { padding: 16px; }
+    .service-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    
+    /* VIEW DETAILS LINK */
+    .view-link { 
+      font-size: 13px; font-weight: 700; color: #0879e8; 
+      text-decoration: none; display: inline-block; margin-bottom: 16px; 
+    }
+
+    .service-footer { display: flex; justify-content: space-between; align-items: center; }
+    
+    .price-rating { font-size: 17px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px; }
+    .rating-star { font-size: 13px; font-weight: 600; color: #64748b; }
 
     /* LIGHT BLUE ADD BUTTON */
     .btn-add { 
       background: #f0f7ff; 
       color: #0879e8; 
       border: 1px solid #bfdbfe; 
-      padding: 9px 26px; 
+      padding: 8px 22px; 
       border-radius: 10px; 
       font-weight: 800; 
-      font-size: 13.5px; 
+      font-size: 13px; 
       cursor: pointer; 
+      transition: all 0.2s ease;
+    }
+    .btn-add:active {
+      transform: scale(0.95);
     }
 
     /* FLOATING CART BAR */
@@ -81,32 +102,32 @@
 
     <!-- ITEM 1 -->
     <div class="service-card">
+      <div class="time-badge">⏱️ 1 hr</div>
       <img id="img_cat_sofa" class="service-img" src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800" alt="Sofa Cleaning">
       <div class="service-details">
         <div class="service-title">Sofa Deep Cleaning</div>
-        <div class="service-desc">Professional shampooing & stain removal for fabric and leather sofas.</div>
+        <a href="sofa-cleaning-details.html" class="view-link">View Details →</a>
         <div class="service-footer">
-          <div class="price-group">
-            <span class="old-price">₹1,200</span>
-            <span class="current-price">₹800</span>
+          <div class="price-rating">
+            ₹800 <span class="rating-star">• ⭐ 4.8</span>
           </div>
-          <button class="btn-add" onclick="addToCart('Sofa Deep Cleaning', 800)">ADD</button>
+          <button class="btn-add" onclick="addToCart('Sofa Deep Cleaning', 800)">ADD +</button>
         </div>
       </div>
     </div>
 
     <!-- ITEM 2 -->
     <div class="service-card">
+      <div class="time-badge">⏱️ 3 hrs</div>
       <img id="img_cat_house" class="service-img" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800" alt="Full House Cleaning">
       <div class="service-details">
         <div class="service-title">Full House Deep Cleaning</div>
-        <div class="service-desc">Complete home cleaning including kitchen, bathroom, floors & windows.</div>
+        <a href="house-cleaning-details.html" class="view-link">View Details →</a>
         <div class="service-footer">
-          <div class="price-group">
-            <span class="old-price">₹4,500</span>
-            <span class="current-price">₹3,499</span>
+          <div class="price-rating">
+            ₹3,499 <span class="rating-star">• ⭐ 4.9</span>
           </div>
-          <button class="btn-add" onclick="addToCart('Full House Deep Cleaning', 3499)">ADD</button>
+          <button class="btn-add" onclick="addToCart('Full House Deep Cleaning', 3499)">ADD +</button>
         </div>
       </div>
     </div>
