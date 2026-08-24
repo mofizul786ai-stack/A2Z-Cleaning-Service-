@@ -3,416 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A2Z Admin Dashboard</title>
+  <title>Admin Dashboard - A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f1f5f9; color: #0f172a; padding: 16px; padding-bottom: 60px; }
-    .container { max-width: 600px; margin: 0 auto; }
+    body { background: #f1f5f9; color: #0f172a; padding: 16px; padding-bottom: 40px; }
 
-    header { 
-      display: flex; justify-content: space-between; align-items: center; 
-      margin-bottom: 16px; background: white; padding: 16px; border-radius: 16px;
-      border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    .container { max-width: 500px; margin: 0 auto; }
+
+    /* HEADER DASHBOARD CARD */
+    .dashboard-card {
+      background: #ffffff; border-radius: 20px; padding: 16px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03); margin-bottom: 16px;
     }
-    .page-title { font-size: 18px; font-weight: 800; color: #0879e8; }
-    .btn-exit { text-decoration: none; font-size: 13px; font-weight: 700; color: #ef4444; background: #fee2e2; padding: 6px 12px; border-radius: 8px; }
+    .dash-title { font-size: 20px; font-weight: 800; color: #0879e8; }
+    .btn-exit {
+      background: #fef2f2; color: #ef4444; border: 1px solid #fecaca;
+      padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 14px;
+      text-decoration: none; cursor: pointer;
+    }
 
-    .admin-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+    /* TABS SCROLLABLE MENU */
+    .tabs-wrapper { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 4px; }
+    .tabs-wrapper::-webkit-scrollbar { display: none; }
+    
     .tab-btn {
-      background: white; border: 1px solid #cbd5e1; padding: 10px 16px; border-radius: 10px;
-      font-weight: 700; font-size: 13px; cursor: pointer; color: #475569; white-space: nowrap;
+      background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px;
+      padding: 10px 16px; font-size: 14px; font-weight: 700; color: #334155;
+      white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 6px;
     }
-    .tab-btn.active { background: #0879e8; color: white; border-color: #0879e8; }
+    .tab-btn.active { background: #0879e8; color: #ffffff; border-color: #0879e8; }
 
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    .admin-card {
-      background: white; border-radius: 16px; padding: 18px;
-      margin-bottom: 14px; border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-    }
-    .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
-    .order-id { font-size: 15px; font-weight: 800; color: #0f172a; }
+    /* ORDER CARDS & EMPTY STATE */
+    .empty-state { text-align: center; color: #94a3b8; padding: 60px 20px; font-size: 15px; font-weight: 500; }
     
-    .badge-status { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
-    .status-pending { background: #fef3c7; color: #d97706; }
-    .status-confirmed { background: #dcfce7; color: #15803d; }
-    .status-completed { background: #e0f2fe; color: #0369a1; }
-
-    .info-row { font-size: 13px; color: #334155; margin-bottom: 6px; line-height: 1.4; }
-    .info-row b { color: #0f172a; }
-
-    .order-total { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e2e8f0; font-weight: 800; font-size: 15px; color: #0879e8; }
-
-    .action-box { display: flex; gap: 6px; margin-top: 14px; }
-    .btn-action {
-      flex: 1; padding: 8px 4px; border: none; border-radius: 8px; font-weight: 700;
-      font-size: 11px; cursor: pointer; text-align: center;
+    .order-card {
+      background: #ffffff; border-radius: 16px; padding: 16px;
+      border: 1px solid #e2e8f0; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
-    .btn-pending { background: #fef9c3; color: #d97706; border: 1px solid #fde68a; }
-    .btn-confirm { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-    .btn-complete { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
-    .btn-delete { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 4px; }
-    .form-control {
-      width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #cbd5e1;
-      font-size: 13px; outline: none; background: #f8fafc;
-    }
+    .order-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px; }
+    .order-id { font-size: 14px; font-weight: 800; color: #0f172a; }
     
-    .btn-save {
-      background: #16a34a; color: white; border: none; width: 100%; padding: 12px;
-      border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 10px;
-    }
+    .status-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 8px; }
+    .status-pending { background: #fef9c3; color: #854d0e; }
+    .status-confirmed { background: #dcfce7; color: #166534; }
 
-    .item-preview-card {
-      display: flex; align-items: center; justify-content: space-between;
-      background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 10px; margin-bottom: 8px;
-    }
-    .item-preview-left { display: flex; align-items: center; gap: 10px; }
-    .item-thumb { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; background: #cbd5e1; }
-    .item-info h4 { font-size: 13px; font-weight: 700; color: #0f172a; }
-    .item-info p { font-size: 12px; color: #64748b; }
-    .btn-del-item { background: #fee2e2; color: #dc2626; border: none; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+    .order-info { font-size: 13px; color: #475569; margin-bottom: 4px; line-height: 1.4; }
+    .order-info strong { color: #0f172a; }
 
-    .empty-msg { text-align: center; padding: 20px 0; color: #64748b; font-weight: 600; font-size: 13px; }
+    .service-box { background: #f8fafc; border-radius: 10px; padding: 10px; margin: 10px 0; font-size: 13px; }
+    .service-item { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 4px; color: #334155; }
+    .service-item:last-child { margin-bottom: 0; }
+
+    .btn-confirm {
+      width: 100%; background: #16a34a; color: white; border: none;
+      padding: 10px; border-radius: 10px; font-size: 14px; font-weight: 800;
+      cursor: pointer; margin-top: 8px;
+    }
+    .btn-confirm:hover { background: #15803d; }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <header>
-      <h1 class="page-title">Admin Dashboard</h1>
+    
+    <!-- DASHBOARD HEADER -->
+    <div class="dashboard-card">
+      <div class="dash-title">Admin Dashboard</div>
       <a href="index.html" class="btn-exit">Exit App</a>
-    </header>
-
-    <div class="admin-tabs">
-      <button class="tab-btn active" onclick="switchTab('ordersTab', this)">📋 Orders</button>
-      <button class="tab-btn" onclick="switchTab('categoriesTab', this)">🔳 Categories</button>
-      <button class="tab-btn" onclick="switchTab('servicesTab', this)">🛠️ Services</button>
-      <button class="tab-btn" onclick="switchTab('bannersTab', this)">🖼️ Settings</button>
     </div>
 
-    <!-- TAB 1: ORDERS -->
-    <div id="ordersTab" class="tab-content active">
-      <div id="adminOrders"></div>
+    <!-- TAB BUTTONS -->
+    <div class="tabs-wrapper">
+      <button class="tab-btn active" onclick="switchTab('orders', this)">📋 Orders</button>
+      <button class="tab-btn" onclick="switchTab('categories', this)">🔲 Categories</button>
+      <button class="tab-btn" onclick="switchTab('services', this)">🛠️ Services</button>
+      <button class="tab-btn" onclick="switchTab('sliders', this)">🖼️ Sliders</button>
     </div>
 
-    <!-- TAB 2: CATEGORIES -->
-    <div id="categoriesTab" class="tab-content">
-      <div class="admin-card">
-        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Add New Category</h3>
-        <div class="form-group">
-          <label>Category Title</label>
-          <input type="text" id="catTitle" class="form-control" placeholder="e.g. Cleaning, Electrician">
-        </div>
-        <div class="form-group">
-          <label>Category Icon/Photo</label>
-          <input type="file" id="catImgFile" class="form-control" accept="image/*">
-        </div>
-        <button class="btn-save" onclick="addCategory()">Add Category</button>
-      </div>
-
-      <div class="admin-card">
-        <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 10px;">All Categories</h3>
-        <div id="categoriesListContainer"></div>
-      </div>
+    <!-- TAB CONTENTS -->
+    <div id="tab-orders">
+      <div id="adminOrdersContainer"></div>
     </div>
 
-    <!-- TAB 3: SERVICES -->
-    <div id="servicesTab" class="tab-content">
-      <div class="admin-card">
-        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Add Most Booked Service</h3>
-        <div class="form-group">
-          <label>Service Name</label>
-          <input type="text" id="srvName" class="form-control" placeholder="e.g. Sofa Cleaning">
-        </div>
-        <div class="form-group">
-          <label>Price (₹)</label>
-          <input type="number" id="srvPrice" class="form-control" placeholder="800">
-        </div>
-        <div class="form-group">
-          <label>Duration / Time (e.g. 1 hr)</label>
-          <input type="text" id="srvTime" class="form-control" placeholder="1 hr">
-        </div>
-        <div class="form-group">
-          <label>Service Photo from Gallery</label>
-          <input type="file" id="srvImgFile" class="form-control" accept="image/*">
-        </div>
-        <button class="btn-save" onclick="addNewService()">Add Service</button>
-      </div>
-
-      <div class="admin-card">
-        <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 10px;">All Services</h3>
-        <div id="servicesListContainer"></div>
-      </div>
+    <div id="tab-categories" style="display: none;">
+      <div class="empty-state">Category Management Section</div>
     </div>
 
-    <!-- TAB 4: APP SETTINGS -->
-    <div id="bannersTab" class="tab-content">
-      <div class="admin-card">
-        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">App & Banner Settings</h3>
-        <div class="form-group">
-          <label>Call Phone Number</label>
-          <input type="text" id="appCallNum" class="form-control" value="9101616836">
-        </div>
-        <div class="form-group">
-          <label>WhatsApp Contact Number (with Country Code)</label>
-          <input type="text" id="appWaNum" class="form-control" value="919101616836">
-        </div>
-        <div class="form-group">
-          <label>Banner Photo from Gallery</label>
-          <input type="file" id="bannerFile" class="form-control" accept="image/*">
-        </div>
-        <div id="bannerPreviewBox" style="margin-top: 10px; margin-bottom: 10px;"></div>
-        <button class="btn-save" onclick="saveAppConfig()">Save Settings</button>
-      </div>
+    <div id="tab-services" style="display: none;">
+      <div class="empty-state">Services Management Section</div>
+    </div>
+
+    <div id="tab-sliders" style="display: none;">
+      <div class="empty-state">Sliders Management Section</div>
     </div>
 
   </div>
 
   <script>
-    function switchTab(tabId, btn) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      btn.classList.add('active');
+    // TAB SWITCHING FUNCTION
+    function switchTab(tabName, btnEl) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+
+      document.getElementById('tab-orders').style.display = 'none';
+      document.getElementById('tab-categories').style.display = 'none';
+      document.getElementById('tab-services').style.display = 'none';
+      document.getElementById('tab-sliders').style.display = 'none';
+
+      document.getElementById('tab-' + tabName).style.display = 'block';
     }
 
-    /* --- ORDERS MANAGEMENT --- */
-    function renderAdminOrders() {
-      let orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
-      const container = document.getElementById('adminOrders');
+    // LOAD & DISPLAY ORDERS
+    function loadAdminOrders() {
+      const container = document.getElementById('adminOrdersContainer');
+      let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
+
       if (orders.length === 0) {
-        container.innerHTML = `<div class="empty-msg">No orders received yet!</div>`;
+        container.innerHTML = `<div class="empty-state">No orders received yet!</div>`;
         return;
       }
+
       let html = '';
-      [...orders].reverse().forEach((order, reverseIndex) => {
-        let actualIndex = orders.length - 1 - reverseIndex;
-        let itemsList = order.items ? order.items.map(i => i.title).join(', ') : 'Service Order';
-        let status = order.status || 'Pending';
-        let statusClass = 'status-pending';
-        if (status === 'Confirmed') statusClass = 'status-confirmed';
-        if (status === 'Completed') statusClass = 'status-completed';
-
-        html += `
-          <div class="admin-card">
-            <div class="order-header">
-              <span class="order-id">ID: ${order.orderId || 'A2Z'}</span>
-              <span class="badge-status ${statusClass}">${status}</span>
+      // Latest orders first
+      orders.slice().reverse().forEach((order, index) => {
+        let actualIndex = orders.length - 1 - index;
+        let isConfirmed = order.status === "Confirmed";
+        
+        let itemsHtml = '';
+        let total = 0;
+        order.items.forEach(item => {
+          total += item.priceNum;
+          itemsHtml += `
+            <div class="service-item">
+              <span>• ${item.title}</span>
+              <span>₹${item.priceNum}</span>
             </div>
-            <div class="info-row">👤 <b>Customer:</b> ${order.customerName || 'N/A'}</div>
-            <div class="info-row">📞 <b>Phone:</b> ${order.phone || 'N/A'}</div>
-            <div class="info-row">📍 <b>Address:</b> ${order.address || 'N/A'}</div>
-            <div class="info-row">📦 <b>Services:</b> ${itemsList}</div>
-            <div class="info-row">📅 <b>Booking:</b> ${order.bookingDate || 'N/A'} (${order.bookingTime || 'N/A'})</div>
-            <div class="order-total">
-              <span>Total Price:</span>
-              <span>₹${order.totalAmount || 0}</span>
-            </div>
-            <div class="action-box">
-              <button class="btn-action btn-pending" onclick="changeStatus(${actualIndex}, 'Pending')">Pending</button>
-              <button class="btn-action btn-confirm" onclick="changeStatus(${actualIndex}, 'Confirmed')">Confirm</button>
-              <button class="btn-action btn-complete" onclick="changeStatus(${actualIndex}, 'Completed')">Complete</button>
-              <button class="btn-action btn-delete" onclick="removeOrder(${actualIndex})">Delete</button>
-            </div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }
-
-    function changeStatus(index, newStatus) {
-      let orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
-      orders[index].status = newStatus;
-      localStorage.setItem('a2z_orders', JSON.stringify(orders));
-      renderAdminOrders();
-    }
-
-    function removeOrder(index) {
-      if(confirm("Delete this order?")) {
-        let orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
-        orders.splice(index, 1);
-        localStorage.setItem('a2z_orders', JSON.stringify(orders));
-        renderAdminOrders();
-      }
-    }
-
-    /* --- CATEGORIES MANAGEMENT --- */
-    function addCategory() {
-      let title = document.getElementById('catTitle').value;
-      let fileInput = document.getElementById('catImgFile');
-
-      if (!title) { alert("Enter category title!"); return; }
-
-      if (fileInput.files && fileInput.files[0]) {
-        let reader = new FileReader();
-        reader.onload = function(e) {
-          saveCategoryToList(title, e.target.result);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-      } else {
-        saveCategoryToList(title, '');
-      }
-    }
-
-    function saveCategoryToList(title, image) {
-      let categories = JSON.parse(localStorage.getItem('a2z_categories_list')) || [];
-      categories.push({ title, image });
-      localStorage.setItem('a2z_categories_list', JSON.stringify(categories));
-      
-      document.getElementById('catTitle').value = '';
-      document.getElementById('catImgFile').value = '';
-      loadCategoriesList();
-      alert("Category added successfully!");
-    }
-
-    function loadCategoriesList() {
-      let categories = JSON.parse(localStorage.getItem('a2z_categories_list')) || [];
-      let container = document.getElementById('categoriesListContainer');
-      if (categories.length === 0) {
-        container.innerHTML = `<div class="empty-msg">No categories added yet.</div>`;
-        return;
-      }
-      let html = '';
-      categories.forEach((cat, index) => {
-        let imgSrc = cat.image || 'https://via.placeholder.com/45';
-        html += `
-          <div class="item-preview-card">
-            <div class="item-preview-left">
-              <img src="${imgSrc}" class="item-thumb">
-              <div class="item-info">
-                <h4>${cat.title}</h4>
-              </div>
-            </div>
-            <button class="btn-del-item" onclick="deleteCategory(${index})">Delete</button>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }
-
-    function deleteCategory(index) {
-      let categories = JSON.parse(localStorage.getItem('a2z_categories_list')) || [];
-      categories.splice(index, 1);
-      localStorage.setItem('a2z_categories_list', JSON.stringify(categories));
-      loadCategoriesList();
-    }
-
-    /* --- SERVICES MANAGEMENT --- */
-    function addNewService() {
-      let name = document.getElementById('srvName').value;
-      let price = document.getElementById('srvPrice').value;
-      let time = document.getElementById('srvTime').value || '1 hr';
-      let fileInput = document.getElementById('srvImgFile');
-
-      if (!name || !price) { alert("Enter service name and price!"); return; }
-
-      if (fileInput.files && fileInput.files[0]) {
-        let reader = new FileReader();
-        reader.onload = function(e) {
-          saveServiceToList(name, price, time, e.target.result);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-      } else {
-        saveServiceToList(name, price, time, '');
-      }
-    }
-
-    function saveServiceToList(name, price, time, image) {
-      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
-      services.push({ name, price, time, image });
-      localStorage.setItem('a2z_services_list', JSON.stringify(services));
-      
-      document.getElementById('srvName').value = '';
-      document.getElementById('srvPrice').value = '';
-      document.getElementById('srvTime').value = '';
-      document.getElementById('srvImgFile').value = '';
-      loadServicesList();
-      alert("Service added successfully!");
-    }
-
-    function loadServicesList() {
-      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
-      let container = document.getElementById('servicesListContainer');
-      if (services.length === 0) {
-        container.innerHTML = `<div class="empty-msg">No services added yet.</div>`;
-        return;
-      }
-      let html = '';
-      services.forEach((srv, index) => {
-        let imgSrc = srv.image || 'https://via.placeholder.com/45';
-        html += `
-          <div class="item-preview-card">
-            <div class="item-preview-left">
-              <img src="${imgSrc}" class="item-thumb">
-              <div class="item-info">
-                <h4>${srv.name}</h4>
-                <p>₹${srv.price} • ${srv.time || '1 hr'}</p>
-              </div>
-            </div>
-            <button class="btn-del-item" onclick="deleteService(${index})">Delete</button>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }
-
-    function deleteService(index) {
-      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
-      services.splice(index, 1);
-      localStorage.setItem('a2z_services_list', JSON.stringify(services));
-      loadServicesList();
-    }
-
-    /* --- APP SETTINGS --- */
-    function saveAppConfig() {
-      let callNum = document.getElementById('appCallNum').value;
-      let whatsapp = document.getElementById('appWaNum').value;
-      let bannerFile = document.getElementById('bannerFile');
-
-      let appConfig = JSON.parse(localStorage.getItem('a2z_app_config')) || {};
-      appConfig.call = callNum;
-      appConfig.whatsapp = whatsapp;
-
-      if (bannerFile.files && bannerFile.files[0]) {
-        let reader = new FileReader();
-        reader.onload = function(e) {
-          appConfig.banner = e.target.result;
-          localStorage.setItem('a2z_app_config', JSON.stringify(appConfig));
-          alert("Settings & Banner updated successfully!");
-          loadAppConfigPreview();
-        };
-        reader.readAsDataURL(bannerFile.files[0]);
-      } else {
-        localStorage.setItem('a2z_app_config', JSON.stringify(appConfig));
-        alert("Settings updated successfully!");
-      }
-    }
-
-    function loadAppConfigPreview() {
-      let app = JSON.parse(localStorage.getItem('a2z_app_config'));
-      if (app) {
-        if(app.call) document.getElementById('appCallNum').value = app.call;
-        if(app.whatsapp) document.getElementById('appWaNum').value = app.whatsapp;
-        if(app.banner) {
-          document.getElementById('bannerPreviewBox').innerHTML = `
-            <label style="font-size:12px; font-weight:700; color:#475569;">Banner Preview:</label><br>
-            <img src="${app.banner}" style="width:100%; height:100px; object-fit:cover; border-radius:8px; margin-top:4px;">
           `;
-        }
-      }
+        });
+
+        html += `
+          <div class="order-card">
+            <div class="order-head">
+              <span class="order-id">ID: ${order.id}</span>
+              <span class="status-badge ${isConfirmed ? 'status-confirmed' : 'status-pending'}">
+                ${order.status || 'Pending'}
+              </span>
+            </div>
+
+            <div class="order-info"><strong>Customer:</strong> ${order.name} (${order.phone})</div>
+            <div class="order-info"><strong>Address:</strong> ${order.fullAddress}</div>
+            <div class="order-info"><strong>Date & Time:</strong> ${order.date} at ${order.time}</div>
+            <div class="order-info"><strong>Payment:</strong> ${order.payment}</div>
+
+            <div class="service-box">
+              ${itemsHtml}
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:14px; margin-bottom: 8px;">
+              <span>Total Bill:</span>
+              <span style="color:#0879e8;">₹${total}</span>
+            </div>
+
+            ${!isConfirmed ? `
+              <button class="btn-confirm" onclick="confirmOrder(${actualIndex})">Confirm Order</button>
+            ` : `
+              <div style="text-align:center; font-size:13px; color:#166534; font-weight:800; padding:6px 0;">✔ Booking Confirmed</div>
+            `}
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
     }
 
-    window.onload = function() {
-      renderAdminOrders();
-      loadCategoriesList();
-      loadServicesList();
-      loadAppConfigPreview();
+    // CONFIRM ORDER FUNCTION
+    function confirmOrder(index) {
+      let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
+      orders[index].status = "Confirmed";
+      localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
+      loadAdminOrders();
     }
+
+    document.addEventListener("DOMContentLoaded", loadAdminOrders);
   </script>
 </body>
 </html>
