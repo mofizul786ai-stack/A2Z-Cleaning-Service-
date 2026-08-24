@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Professional Admin Dashboard - A2Z Service</title>
+  <title>A2Z Admin Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background: #f1f5f9; color: #0f172a; padding: 16px; padding-bottom: 60px; }
-
     .container { max-width: 600px; margin: 0 auto; }
 
     header { 
@@ -18,7 +17,6 @@
     .page-title { font-size: 18px; font-weight: 800; color: #0879e8; }
     .btn-exit { text-decoration: none; font-size: 13px; font-weight: 700; color: #ef4444; background: #fee2e2; padding: 6px 12px; border-radius: 8px; }
 
-    /* TABS */
     .admin-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
     .tab-btn {
       background: white; border: 1px solid #cbd5e1; padding: 10px 16px; border-radius: 10px;
@@ -29,7 +27,6 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* CARDS */
     .admin-card {
       background: white; border-radius: 16px; padding: 18px;
       margin-bottom: 14px; border: 1px solid #e2e8f0;
@@ -48,7 +45,6 @@
 
     .order-total { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e2e8f0; font-weight: 800; font-size: 15px; color: #0879e8; }
 
-    /* ACTION BUTTONS */
     .action-box { display: flex; gap: 6px; margin-top: 14px; }
     .btn-action {
       flex: 1; padding: 8px 4px; border: none; border-radius: 8px; font-weight: 700;
@@ -59,21 +55,29 @@
     .btn-complete { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
     .btn-delete { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
 
-    /* FORM CONTROLS FOR SETTINGS */
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 4px; }
     .form-control {
       width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #cbd5e1;
       font-size: 13px; outline: none; background: #f8fafc;
     }
-    .form-control:focus { border-color: #0879e8; background: #fff; }
     
     .btn-save {
       background: #16a34a; color: white; border: none; width: 100%; padding: 12px;
       border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 10px;
     }
-    
-    .empty-msg { text-align: center; padding: 40px 0; color: #64748b; font-weight: 600; }
+
+    .item-preview-card {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 10px; margin-bottom: 8px;
+    }
+    .item-preview-left { display: flex; align-items: center; gap: 10px; }
+    .item-thumb { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; background: #cbd5e1; }
+    .item-info h4 { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .item-info p { font-size: 12px; color: #64748b; }
+    .btn-del-item { background: #fee2e2; color: #dc2626; border: none; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+
+    .empty-msg { text-align: center; padding: 30px 0; color: #64748b; font-weight: 600; font-size: 13px; }
   </style>
 </head>
 <body>
@@ -84,11 +88,10 @@
       <a href="index.html" class="btn-exit">Exit App</a>
     </header>
 
-    <!-- TABS NAVIGATION -->
     <div class="admin-tabs">
       <button class="tab-btn active" onclick="switchTab('ordersTab', this)">📋 Orders</button>
       <button class="tab-btn" onclick="switchTab('servicesTab', this)">🛠️ Services & Prices</button>
-      <button class="tab-btn" onclick="switchTab('bannersTab', this)">🖼️ Banners & App Info</button>
+      <button class="tab-btn" onclick="switchTab('bannersTab', this)">🖼️ Banners & Settings</button>
     </div>
 
     <!-- TAB 1: ORDERS -->
@@ -96,40 +99,44 @@
       <div id="adminOrders"></div>
     </div>
 
-    <!-- TAB 2: SERVICES & PRICES -->
+    <!-- TAB 2: SERVICES -->
     <div id="servicesTab" class="tab-content">
       <div class="admin-card">
-        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Manage Services & Prices</h3>
-        
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Add Service from Gallery</h3>
         <div class="form-group">
           <label>Service Name</label>
-          <input type="text" id="srvName" class="form-control" value="Sofa Deep Cleaning">
+          <input type="text" id="srvName" class="form-control" placeholder="e.g. Sofa Cleaning">
         </div>
         <div class="form-group">
           <label>Price (₹)</label>
-          <input type="number" id="srvPrice" class="form-control" value="800">
+          <input type="number" id="srvPrice" class="form-control" placeholder="800">
         </div>
         <div class="form-group">
-          <label>Service Image URL / Link</label>
-          <input type="text" id="srvImg" class="form-control" placeholder="https://image-link.com/photo.jpg">
+          <label>Select Photo from Gallery</label>
+          <input type="file" id="srvImgFile" class="form-control" accept="image/*">
         </div>
-        <button class="btn-save" onclick="saveServiceConfig()">Save Service Details</button>
+        <button class="btn-save" onclick="addNewService()">Add Service</button>
+      </div>
+
+      <div class="admin-card">
+        <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 10px;">All Services</h3>
+        <div id="servicesListContainer"></div>
       </div>
     </div>
 
-    <!-- TAB 3: BANNERS & APP INFO -->
+    <!-- TAB 3: APP SETTINGS -->
     <div id="bannersTab" class="tab-content">
       <div class="admin-card">
         <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">App & Banner Settings</h3>
-        
         <div class="form-group">
           <label>WhatsApp Contact Number (with Country Code)</label>
           <input type="text" id="appWaNum" class="form-control" value="919101616836">
         </div>
         <div class="form-group">
-          <label>App Banner Image URL</label>
-          <input type="text" id="appBanner" class="form-control" placeholder="https://banner-image-url.jpg">
+          <label>Banner Photo from Gallery</label>
+          <input type="file" id="bannerFile" class="form-control" accept="image/*">
         </div>
+        <div id="bannerPreviewBox" style="margin-top: 10px; margin-bottom: 10px;"></div>
         <button class="btn-save" onclick="saveAppConfig()">Save App Settings</button>
       </div>
     </div>
@@ -144,16 +151,13 @@
       btn.classList.add('active');
     }
 
-    // LOAD ORDERS
     function renderAdminOrders() {
       let orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
       const container = document.getElementById('adminOrders');
-
       if (orders.length === 0) {
         container.innerHTML = `<div class="empty-msg">No orders received yet!</div>`;
         return;
       }
-
       let html = '';
       [...orders].reverse().forEach((order, reverseIndex) => {
         let actualIndex = orders.length - 1 - reverseIndex;
@@ -174,12 +178,10 @@
             <div class="info-row">📍 <b>Address:</b> ${order.address || 'N/A'}</div>
             <div class="info-row">📦 <b>Services:</b> ${itemsList}</div>
             <div class="info-row">📅 <b>Booking:</b> ${order.bookingDate || 'N/A'} (${order.bookingTime || 'N/A'})</div>
-            
             <div class="order-total">
               <span>Total Price:</span>
               <span>₹${order.totalAmount || 0}</span>
             </div>
-
             <div class="action-box">
               <button class="btn-action btn-pending" onclick="changeStatus(${actualIndex}, 'Pending')">Pending</button>
               <button class="btn-action btn-confirm" onclick="changeStatus(${actualIndex}, 'Confirmed')">Confirm</button>
@@ -208,44 +210,114 @@
       }
     }
 
-    // CONFIG SAVING
-    function saveServiceConfig() {
-      let config = {
-        name: document.getElementById('srvName').value,
-        price: document.getElementById('srvPrice').value,
-        image: document.getElementById('srvImg').value
-      };
-      localStorage.setItem('a2z_service_config', JSON.stringify(config));
-      alert("Service details updated successfully!");
+    function addNewService() {
+      let name = document.getElementById('srvName').value;
+      let price = document.getElementById('srvPrice').value;
+      let fileInput = document.getElementById('srvImgFile');
+
+      if (!name || !price) {
+        alert("Enter service name and price!");
+        return;
+      }
+
+      if (fileInput.files && fileInput.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+          saveServiceToList(name, price, e.target.result);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        saveServiceToList(name, price, '');
+      }
+    }
+
+    function saveServiceToList(name, price, image) {
+      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
+      services.push({ name, price, image });
+      localStorage.setItem('a2z_services_list', JSON.stringify(services));
+      
+      document.getElementById('srvName').value = '';
+      document.getElementById('srvPrice').value = '';
+      document.getElementById('srvImgFile').value = '';
+      loadServicesList();
+      alert("Service added successfully!");
+    }
+
+    function loadServicesList() {
+      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
+      let container = document.getElementById('servicesListContainer');
+
+      if (services.length === 0) {
+        container.innerHTML = `<div class="empty-msg">No services added yet.</div>`;
+        return;
+      }
+
+      let html = '';
+      services.forEach((srv, index) => {
+        let imgSrc = srv.image || 'https://via.placeholder.com/45';
+        html += `
+          <div class="item-preview-card">
+            <div class="item-preview-left">
+              <img src="${imgSrc}" class="item-thumb">
+              <div class="item-info">
+                <h4>${srv.name}</h4>
+                <p>₹${srv.price}</p>
+              </div>
+            </div>
+            <button class="btn-del-item" onclick="deleteService(${index})">Delete</button>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function deleteService(index) {
+      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
+      services.splice(index, 1);
+      localStorage.setItem('a2z_services_list', JSON.stringify(services));
+      loadServicesList();
     }
 
     function saveAppConfig() {
-      let appConfig = {
-        whatsapp: document.getElementById('appWaNum').value,
-        banner: document.getElementById('appBanner').value
-      };
-      localStorage.setItem('a2z_app_config', JSON.stringify(appConfig));
-      alert("App settings updated successfully!");
+      let whatsapp = document.getElementById('appWaNum').value;
+      let bannerFile = document.getElementById('bannerFile');
+
+      let appConfig = JSON.parse(localStorage.getItem('a2z_app_config')) || {};
+      appConfig.whatsapp = whatsapp;
+
+      if (bannerFile.files && bannerFile.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+          appConfig.banner = e.target.result;
+          localStorage.setItem('a2z_app_config', JSON.stringify(appConfig));
+          alert("Settings & Banner updated successfully!");
+          loadAppConfigPreview();
+        };
+        reader.readAsDataURL(bannerFile.files[0]);
+      } else {
+        localStorage.setItem('a2z_app_config', JSON.stringify(appConfig));
+        alert("Settings updated successfully!");
+      }
     }
 
-    // LOAD SAVED CONFIG ON START
+    function loadAppConfigPreview() {
+      let app = JSON.parse(localStorage.getItem('a2z_app_config'));
+      if (app) {
+        if(app.whatsapp) document.getElementById('appWaNum').value = app.whatsapp;
+        if(app.banner) {
+          document.getElementById('bannerPreviewBox').innerHTML = `
+            <label style="font-size:12px; font-weight:700; color:#475569;">Banner Preview:</label><br>
+            <img src="${app.banner}" style="width:100%; height:100px; object-fit:cover; border-radius:8px; margin-top:4px;">
+          `;
+        }
+      }
+    }
+
     window.onload = function() {
       renderAdminOrders();
-      
-      let srv = JSON.parse(localStorage.getItem('a2z_service_config'));
-      if(srv) {
-        document.getElementById('srvName').value = srv.name || '';
-        document.getElementById('srvPrice').value = srv.price || '';
-        document.getElementById('srvImg').value = srv.image || '';
-      }
-
-      let app = JSON.parse(localStorage.getItem('a2z_app_config'));
-      if(app) {
-        document.getElementById('appWaNum').value = app.whatsapp || '919101616836';
-        document.getElementById('appBanner').value = app.banner || '';
-      }
+      loadServicesList();
+      loadAppConfigPreview();
     }
   </script>
 </body>
 </html>
-  
