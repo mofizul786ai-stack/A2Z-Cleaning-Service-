@@ -6,7 +6,7 @@
   <title>Your Cart & Address - A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding-bottom: 30px; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
     header {
       position: sticky; top: 0; z-index: 100; background: #ffffff;
@@ -19,20 +19,30 @@
 
     .container { padding: 16px; max-width: 500px; margin: 0 auto; }
 
-    /* LOCATION & MAP BOX */
+    /* CART ITEMS SECTION */
+    .cart-section { background: white; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
+    .cart-head { font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; }
+    .cart-item:last-child { border-bottom: none; }
+    .item-name { font-size: 14px; font-weight: 700; color: #1e293b; }
+    .item-price { font-size: 14px; font-weight: 800; color: #0879e8; margin-right: 10px; }
+    .btn-delete { background: #fee2e2; color: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; }
+    
+    .cart-total { margin-top: 12px; padding-top: 10px; border-top: 2px solid #f1f5f9; display: flex; justify-content: space-between; font-weight: 800; font-size: 16px; color: #0f172a; }
+
+    /* LOCATION SECTION */
     .location-box { background: white; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
     .loc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .loc-title { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; }
-    .btn-relo { background: #f0f7ff; color: #0879e8; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .loc-title { font-size: 12px; font-weight: 800; color: #64748b; letter-spacing: 0.5px; }
+    .btn-relo { background: #f0f7ff; color: #0879e8; border: 1px solid #bfdbfe; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-    .detected-address { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 12px; line-height: 1.4; display: flex; align-items: flex-start; gap: 6px; }
+    .detected-address { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 12px; line-height: 1.4; display: flex; align-items: flex-start; gap: 6px; }
 
     .input-group { margin-bottom: 12px; }
-    .input-group label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px; }
     .input-field { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 14px; outline: none; }
     .input-field:focus { border-color: #0879e8; }
 
-    .btn-proceed { width: 100%; background: #0879e8; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 8px; }
+    .btn-proceed { width: 100%; background: #0879e8; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; }
     .btn-proceed:disabled { background: #cbd5e1; cursor: not-allowed; }
   </style>
 </head>
@@ -46,21 +56,36 @@
 
   <div class="container">
     
+    <!-- ADDED ITEMS IN CART WITH DELETE BUTTON -->
+    <div class="cart-section">
+      <div class="cart-head">
+        <span>Selected Services</span>
+        <span id="itemCountBadge" style="font-size: 12px; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 10px;">0 Items</span>
+      </div>
+      <div id="cartItemsList">
+        <!-- Dynamic Cart Items Rendered Here -->
+      </div>
+      <div class="cart-total">
+        <span>Total Amount</span>
+        <span id="cartTotalPrice">₹0</span>
+      </div>
+    </div>
+
     <!-- LOCATION SECTION -->
     <div class="location-box">
       <div class="loc-header">
-        <span class="loc-title">Select Delivery Location</span>
+        <span class="loc-title">SELECT DELIVERY LOCATION</span>
         <button class="btn-relo" onclick="getUserLocation()">📍 Locate Me</button>
       </div>
 
       <div class="detected-address">
         <span>📍</span>
-        <span id="locStatus">Fetching current location...</span>
+        <span id="locStatus">Getting live location...</span>
       </div>
 
       <form id="addressForm" onsubmit="saveAddressAndProceed(event)">
         <div class="input-group">
-          <input type="text" id="autoAddress" class="input-field" placeholder="Detected Area / Road Name" required>
+          <input type="text" id="autoAddress" class="input-field" placeholder="Detected Location/Area" required>
         </div>
 
         <div class="input-group">
@@ -71,20 +96,61 @@
           <input type="text" id="landmark" class="input-field" placeholder="Landmark (Optional)">
         </div>
 
-        <button type="submit" id="submitBtn" class="btn-proceed" disabled>Save and proceed to slots</button>
+        <button type="submit" id="submitBtn" class="btn-proceed">Save and proceed to slots</button>
       </form>
     </div>
 
   </div>
 
   <script>
-    // AUTOMATIC GEOLOCATION FETCH
+    // 1. RENDER & DELETE CART ITEMS
+    function renderCartItems() {
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      const listContainer = document.getElementById('cartItemsList');
+      const totalEl = document.getElementById('cartTotalPrice');
+      const badgeEl = document.getElementById('itemCountBadge');
+
+      if (cart.length === 0) {
+        listContainer.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:15px; font-size:13px;">Your cart is empty!</div>`;
+        totalEl.innerText = "₹0";
+        badgeEl.innerText = "0 Items";
+        return;
+      }
+
+      let html = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.priceNum;
+        html += `
+          <div class="cart-item">
+            <div class="item-name">${item.title}</div>
+            <div style="display:flex; align-items:center;">
+              <span class="item-price">₹${item.priceNum}</span>
+              <button class="btn-delete" onclick="deleteCartItem(${index})" title="Remove item">🗑️ Delete</button>
+            </div>
+          </div>
+        `;
+      });
+
+      listContainer.innerHTML = html;
+      totalEl.innerText = `₹${total}`;
+      badgeEl.innerText = `${cart.length} Item${cart.length > 1 ? 's' : ''}`;
+    }
+
+    function deleteCartItem(index) {
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('a2z_cart', JSON.stringify(cart));
+      renderCartItems();
+    }
+
+    // 2. ACCURATE REVERSE GEOCODING LOCATION
     function getUserLocation() {
       const locStatus = document.getElementById('locStatus');
       const autoAddressInput = document.getElementById('autoAddress');
-      const submitBtn = document.getElementById('submitBtn');
 
-      locStatus.innerText = "Fetching GPS Location...";
+      locStatus.innerText = "Fetching current location...";
 
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
@@ -92,40 +158,51 @@
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
 
-            // REVERSE GEOCODING VIA OPENSTREETMAP API (FREE & NO API KEY NEEDED)
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            // API 1: BigDataCloud Reverse Geocoding API (Fast & Highly Accurate for India)
+            fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
               .then(res => res.json())
               .then(data => {
-                if (data && data.display_name) {
-                  const fullAddr = data.display_name;
-                  locStatus.innerText = fullAddr;
-                  autoAddressInput.value = fullAddr;
-                  submitBtn.disabled = false;
+                if (data && (data.locality || data.city)) {
+                  let locName = [data.locality || data.city, data.principalSubdivision, data.postcode, data.countryName].filter(Boolean).join(', ');
+                  locStatus.innerText = locName;
+                  autoAddressInput.value = locName;
                 } else {
-                  locStatus.innerText = "Location found (Enter landmark manually)";
-                  autoAddressInput.value = `Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`;
-                  submitBtn.disabled = false;
+                  fetchOSM(lat, lon);
                 }
               })
-              .catch(err => {
-                locStatus.innerText = "Location detected. Please enter area name.";
-                submitBtn.disabled = false;
-              });
+              .catch(() => fetchOSM(lat, lon));
           },
           function(error) {
-            locStatus.innerText = "Please allow location access or type address manually.";
-            submitBtn.disabled = false;
+            locStatus.innerText = "Agamoni, Dhubri, Assam, 783332, India";
+            autoAddressInput.value = "Agamoni, Dhubri, Assam, 783332, India";
           },
-          { enableHighAccuracy: true, timeout: 10000 }
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
         );
       } else {
-        locStatus.innerText = "Geolocation is not supported by your browser.";
-        submitBtn.disabled = false;
+        locStatus.innerText = "Agamoni, Dhubri, Assam, 783332, India";
+        autoAddressInput.value = "Agamoni, Dhubri, Assam, 783332, India";
       }
+    }
+
+    function fetchOSM(lat, lon) {
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.display_name) {
+            document.getElementById('locStatus').innerText = data.display_name;
+            document.getElementById('autoAddress').value = data.display_name;
+          }
+        });
     }
 
     function saveAddressAndProceed(e) {
       e.preventDefault();
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      if (cart.length === 0) {
+        alert("Your cart is empty! Please add a service first.");
+        return;
+      }
+
       const userAddress = {
         area: document.getElementById('autoAddress').value,
         houseNo: document.getElementById('houseNo').value,
@@ -133,11 +210,11 @@
       };
       
       localStorage.setItem('a2z_user_address', JSON.stringify(userAddress));
-      alert("Address saved successfully!");
-      // NEXT STEP NAVIGATION (e.g., slot-booking.html)
+      alert("Address saved! Proceeding to slot selection...");
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+      renderCartItems();
       getUserLocation();
     });
   </script>
