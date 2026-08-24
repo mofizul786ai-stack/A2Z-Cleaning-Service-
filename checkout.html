@@ -72,10 +72,10 @@
 
     <form id="checkoutForm" onsubmit="handleFinalBooking(event)">
       
-      <!-- 2. CONTACT & FULL ADDRESS SECTION -->
+      <!-- 2. USER DETAILS & ADDRESS SECTION -->
       <div class="card-box">
         <div class="card-head">
-          <span>Contact & Delivery Address</span>
+          <span>Customer & Address Details</span>
           <button type="button" class="btn-relo" onclick="getUserLocation()">📍 Locate Me</button>
         </div>
         
@@ -84,7 +84,12 @@
           <span id="locStatus">Getting live location...</span>
         </div>
 
-        <!-- Phone Number -->
+        <!-- Full Name -->
+        <div class="input-group">
+          <input type="text" id="userName" class="input-field" placeholder="Full Name*" required>
+        </div>
+
+        <!-- Mobile Phone Number -->
         <div class="input-group">
           <input type="tel" id="userPhone" class="input-field" placeholder="Mobile Number*" pattern="[0-9]{10}" maxlength="10" required>
         </div>
@@ -94,7 +99,7 @@
           <input type="text" id="houseNo" class="input-field" placeholder="House / Flat / Building No.*" required>
         </div>
 
-        <!-- Auto/Street Address -->
+        <!-- Street / Area Address -->
         <div class="input-group">
           <input type="text" id="autoAddress" class="input-field" placeholder="Street / Area Name*" required>
         </div>
@@ -148,6 +153,7 @@
     let selectedDate = '';
     let selectedTime = '';
 
+    // RENDER CART ITEMS
     function renderCartItems() {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       const listContainer = document.getElementById('cartItemsList');
@@ -187,6 +193,7 @@
       renderCartItems();
     }
 
+    // GENERATE DATES
     function generateDates() {
       const dateGrid = document.getElementById('dateGrid');
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -216,6 +223,7 @@
       selectedTime = el.innerText;
     }
 
+    // LOCATION ACCURACY
     function getUserLocation() {
       const locStatus = document.getElementById('locStatus');
       const autoAddressInput = document.getElementById('autoAddress');
@@ -248,6 +256,7 @@
       }
     }
 
+    // FINAL BOOKING & WHATSAPP REDIRECT
     function handleFinalBooking(e) {
       e.preventDefault();
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
@@ -261,23 +270,59 @@
       }
 
       const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      const userName = document.getElementById('userName').value;
+      const userPhone = document.getElementById('userPhone').value;
+      const fullAddress = `${document.getElementById('houseNo').value}, ${document.getElementById('autoAddress').value}, ${document.getElementById('landmark').value || ''} - ${document.getElementById('pincode').value}`;
+
       const orderData = {
         id: "ORD" + Date.now(),
         items: cart,
-        phone: document.getElementById('userPhone').value,
-        fullAddress: `${document.getElementById('houseNo').value}, ${document.getElementById('autoAddress').value}, ${document.getElementById('landmark').value || ''} - ${document.getElementById('pincode').value}`,
+        name: userName,
+        phone: userPhone,
+        fullAddress: fullAddress,
         date: selectedDate,
         time: selectedTime,
         payment: paymentMethod,
-        status: "Booked"
+        status: "Pending" // Initial Status
       };
 
+      // Save Order locally for orders.html and admin.html
       let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
       orders.push(orderData);
       localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
 
+      // Clear Cart
       localStorage.removeItem('a2z_cart');
-      alert(`🎉 Order Booked Successfully!\n\nOrder ID: ${orderData.id}\nPhone: ${orderData.phone}\nDate: ${selectedDate}\nTime: ${selectedTime}`);
+
+      // Prepare WhatsApp Message
+      let itemsText = "";
+      let totalAmount = 0;
+      cart.forEach(item => {
+        itemsText += `- ${item.title} (₹${item.priceNum})\n`;
+        totalAmount += item.priceNum;
+      });
+
+      // Change this to your WhatsApp Number (with country code, e.g. 919876543210)
+      let adminWhatsAppNumber = "919876543210"; 
+      
+      let whatsappMessage = `🔔 *New Service Booking (Pending)*\n\n` +
+                            `🆔 Order ID: ${orderData.id}\n` +
+                            `👤 Name: ${userName}\n` +
+                            `📞 Phone: ${userPhone}\n` +
+                            `📍 Address: ${fullAddress}\n\n` +
+                            `🛠️ *Services:* \n${itemsText}\n` +
+                            `💰 *Total:* ₹${totalAmount}\n` +
+                            `📅 Date: ${selectedDate}\n` +
+                            `⏰ Time: ${selectedTime}\n` +
+                            `💳 Payment: ${paymentMethod}\n\n` +
+                            `👉 Please check Admin Panel to Confirm.`;
+
+      let whatsappURL = `https://wa.me/${adminWhatsAppNumber}?text=` + encodeURIComponent(whatsappMessage);
+
+      alert(`🎉 Booking Request Sent!\nStatus: Pending\n\nDirecting to WhatsApp for confirmation...`);
+      
+      // Redirect to WhatsApp & Orders page
+      window.open(whatsappURL, '_blank');
       window.location.href = "orders.html";
     }
 
@@ -288,5 +333,5 @@
     });
   </script>
 </body>
-            </html>
-            
+          </html>
+          
