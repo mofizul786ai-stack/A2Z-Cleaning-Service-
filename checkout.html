@@ -19,11 +19,9 @@
 
     .container { padding: 16px; max-width: 500px; margin: 0 auto; }
 
-    /* CARD BOX STYLES */
     .card-box { background: white; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
     .card-head { font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
 
-    /* CART ITEMS */
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; }
     .cart-item:last-child { border-bottom: none; }
     .item-name { font-size: 14px; font-weight: 700; color: #1e293b; }
@@ -31,22 +29,21 @@
     .btn-delete { background: #fee2e2; color: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; }
     .cart-total { margin-top: 12px; padding-top: 10px; border-top: 2px solid #f1f5f9; display: flex; justify-content: space-between; font-weight: 800; font-size: 16px; color: #0f172a; }
 
-    /* LOCATION & INPUTS */
     .btn-relo { background: #f0f7ff; color: #0879e8; border: 1px solid #bfdbfe; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
     .detected-address { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px; line-height: 1.4; display: flex; align-items: flex-start; gap: 6px; }
+    
     .input-group { margin-bottom: 12px; }
+    .input-row { display: flex; gap: 8px; }
     .input-field { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 14px; outline: none; }
+    .input-field:focus { border-color: #0879e8; }
 
-    /* DATE & TIME SLOTS */
     .slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
     .slot-btn { background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px 6px; border-radius: 10px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 700; color: #334155; }
     .slot-btn.active { background: #0879e8; color: white; border-color: #0879e8; }
 
-    /* PAYMENT OPTIONS */
     .pay-option { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 14px; font-weight: 700; }
     .pay-option input { width: 18px; height: 18px; accent-color: #0879e8; }
 
-    /* PROCEED BUTTON */
     .btn-proceed { width: 100%; background: #0879e8; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 10px; }
   </style>
 </head>
@@ -75,24 +72,37 @@
 
     <form id="checkoutForm" onsubmit="handleFinalBooking(event)">
       
-      <!-- 2. LOCATION SECTION -->
+      <!-- 2. CONTACT & FULL ADDRESS SECTION -->
       <div class="card-box">
         <div class="card-head">
-          <span>Delivery Location</span>
+          <span>Contact & Delivery Address</span>
           <button type="button" class="btn-relo" onclick="getUserLocation()">📍 Locate Me</button>
         </div>
+        
         <div class="detected-address">
           <span>📍</span>
           <span id="locStatus">Getting live location...</span>
         </div>
+
+        <!-- Phone Number -->
         <div class="input-group">
-          <input type="text" id="autoAddress" class="input-field" placeholder="Area / Road Address" required>
+          <input type="tel" id="userPhone" class="input-field" placeholder="Mobile Number*" pattern="[0-9]{10}" maxlength="10" required>
         </div>
+
+        <!-- House / Flat No -->
         <div class="input-group">
-          <input type="text" id="houseNo" class="input-field" placeholder="House / Flat Number*" required>
+          <input type="text" id="houseNo" class="input-field" placeholder="House / Flat / Building No.*" required>
         </div>
+
+        <!-- Auto/Street Address -->
         <div class="input-group">
+          <input type="text" id="autoAddress" class="input-field" placeholder="Street / Area Name*" required>
+        </div>
+
+        <!-- Landmark & Pincode -->
+        <div class="input-group input-row">
           <input type="text" id="landmark" class="input-field" placeholder="Landmark (Optional)">
+          <input type="text" id="pincode" class="input-field" placeholder="Pincode*" maxlength="6" pattern="[0-9]{6}" required>
         </div>
       </div>
 
@@ -138,7 +148,6 @@
     let selectedDate = '';
     let selectedTime = '';
 
-    // RENDER CART
     function renderCartItems() {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       const listContainer = document.getElementById('cartItemsList');
@@ -178,7 +187,6 @@
       renderCartItems();
     }
 
-    // DYNAMIC DATES (Today, Tomorrow, Day after)
     function generateDates() {
       const dateGrid = document.getElementById('dateGrid');
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -208,10 +216,10 @@
       selectedTime = el.innerText;
     }
 
-    // LOCATION
     function getUserLocation() {
       const locStatus = document.getElementById('locStatus');
       const autoAddressInput = document.getElementById('autoAddress');
+      const pincodeInput = document.getElementById('pincode');
       locStatus.innerText = "Fetching current location...";
 
       if ("geolocation" in navigator) {
@@ -222,9 +230,10 @@
             fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
               .then(res => res.json())
               .then(data => {
-                let locName = [data.locality || data.city, data.principalSubdivision, data.postcode].filter(Boolean).join(', ');
+                let locName = [data.locality || data.city, data.principalSubdivision].filter(Boolean).join(', ');
                 locStatus.innerText = locName || "Location Detected";
-                autoAddressInput.value = locName || "Guwahati, Assam";
+                autoAddressInput.value = locName || "";
+                if (data.postcode) pincodeInput.value = data.postcode;
               })
               .catch(() => {
                 locStatus.innerText = "Agamoni, Dhubri, Assam";
@@ -239,7 +248,6 @@
       }
     }
 
-    // FINAL BOOKING SUBMIT
     function handleFinalBooking(e) {
       e.preventDefault();
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
@@ -256,7 +264,8 @@
       const orderData = {
         id: "ORD" + Date.now(),
         items: cart,
-        address: document.getElementById('autoAddress').value + ", " + document.getElementById('houseNo').value,
+        phone: document.getElementById('userPhone').value,
+        fullAddress: `${document.getElementById('houseNo').value}, ${document.getElementById('autoAddress').value}, ${document.getElementById('landmark').value || ''} - ${document.getElementById('pincode').value}`,
         date: selectedDate,
         time: selectedTime,
         payment: paymentMethod,
@@ -267,9 +276,8 @@
       orders.push(orderData);
       localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
 
-      // CLEAR CART
       localStorage.removeItem('a2z_cart');
-      alert(`🎉 Order Booked Successfully!\n\nOrder ID: ${orderData.id}\nDate: ${selectedDate}\nTime: ${selectedTime}`);
+      alert(`🎉 Order Booked Successfully!\n\nOrder ID: ${orderData.id}\nPhone: ${orderData.phone}\nDate: ${selectedDate}\nTime: ${selectedTime}`);
       window.location.href = "orders.html";
     }
 
@@ -280,4 +288,5 @@
     });
   </script>
 </body>
-</html>
+            </html>
+            
