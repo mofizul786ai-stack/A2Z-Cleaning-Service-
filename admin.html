@@ -3,75 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A2Z Admin - Photo Manager</title>
+  <title>Admin Dashboard - A2Z Service</title>
   <style>
-    body { font-family: -apple-system, sans-serif; background: #f8fafc; padding: 20px; color: #1e293b; }
-    .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: 0 auto 15px; }
-    h2 { font-size: 18px; margin-bottom: 15px; color: #0879e8; }
-    .upload-group { margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
-    label { font-size: 14px; font-weight: 600; display: block; margin-bottom: 6px; }
-    input[type="file"] { font-size: 13px; }
-    .btn-reset { background: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; margin-top: 10px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 40px; }
+
+    .container { max-width: 600px; margin: 0 auto; }
+
+    header { 
+      display: flex; justify-content: space-between; align-items: center; 
+      margin-bottom: 20px; background: white; padding: 16px; border-radius: 16px;
+      border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .page-title { font-size: 18px; font-weight: 800; color: #0879e8; }
+    .btn-exit { text-decoration: none; font-size: 13px; font-weight: 700; color: #ef4444; background: #fee2e2; padding: 6px 12px; border-radius: 8px; }
+
+    /* ORDER CARD */
+    .admin-card {
+      background: white; border-radius: 16px; padding: 18px;
+      margin-bottom: 14px; border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+    .order-id { font-size: 15px; font-weight: 800; color: #0f172a; }
+    
+    .badge-status { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+    .status-pending { background: #fef3c7; color: #d97706; }
+    .status-confirmed { background: #dcfce7; color: #15803d; }
+    .status-completed { background: #e0f2fe; color: #0369a1; }
+
+    .info-row { font-size: 13px; color: #334155; margin-bottom: 6px; line-height: 1.4; }
+    .info-row b { color: #0f172a; }
+
+    .order-total { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e2e8f0; font-weight: 800; font-size: 15px; color: #0879e8; }
+
+    /* ACTION BUTTONS */
+    .action-box { display: flex; gap: 6px; margin-top: 14px; }
+    .btn-action {
+      flex: 1; padding: 8px 4px; border: none; border-radius: 8px; font-weight: 700;
+      font-size: 11px; cursor: pointer; text-align: center; transition: 0.2s;
+    }
+    .btn-pending { background: #fffbebf; color: #d97706; border: 1px solid #fde68a; }
+    .btn-confirm { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .btn-complete { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
+    .btn-delete { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+    .empty-msg { text-align: center; padding: 60px 0; color: #64748b; font-weight: 600; }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>Photo Manager (A2Z Service)</h2>
-    
-    <div class="upload-group">
-      <label>1. Main Top Banner Photo:</label>
-      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_banner')">
-    </div>
+  <div class="container">
+    <header>
+      <h1 class="page-title">A2Z Admin Panel</h1>
+      <a href="index.html" class="btn-exit">Exit App</a>
+    </header>
 
-    <div class="upload-group">
-      <label>2. Cleaning Category Photo:</label>
-      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_cleaning')">
-    </div>
-
-    <div class="upload-group">
-      <label>3. Electrician Category Photo:</label>
-      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_electrician')">
-    </div>
-
-    <div class="upload-group">
-      <label>4. Plumber Category Photo:</label>
-      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_plumber')">
-    </div>
-
-    <div class="upload-group">
-      <label>5. Repair Category Photo:</label>
-      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_cat_repair')">
-    </div>
-
-    <div class="upload-group">
-      <label>6. Sofa Deep Cleaning Photo:</label>
-      <input type="file" accept="image/*" onchange="uploadImage(event, 'img_service_sofa')">
-    </div>
-
-    <button class="btn-reset" onclick="resetAllPhotos()">Reset All Original Photos</button>
+    <div id="adminOrders"></div>
   </div>
 
   <script>
-    function uploadImage(event, key) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          localStorage.setItem(key, e.target.result);
-          alert("Photo Updated Successfully!");
-        };
-        reader.readAsDataURL(file);
+    function renderAdminOrders() {
+      let orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
+      const container = document.getElementById('adminOrders');
+
+      if (orders.length === 0) {
+        container.innerHTML = `<div class="empty-msg">No orders found in database!</div>`;
+        return;
+      }
+
+      let html = '';
+      
+      // নতুন অর্ডারগুলো ওপরে দেখানোর জন্য রিভার্স করা হচ্ছে
+      [...orders].reverse().forEach((order, reverseIndex) => {
+        // আসল ইনডেক্স খুঁজে বের করার জন্য
+        let actualIndex = orders.length - 1 - reverseIndex;
+        
+        let itemsList = order.items && Array.isArray(order.items) 
+          ? order.items.map(i => i.title).join(', ') 
+          : 'Service Order';
+
+        let id = order.orderId || 'A2Z-0000';
+        let name = order.customerName || 'Not Provided';
+        let phone = order.phone || 'Not Provided';
+        let address = order.address || 'Not Provided';
+        let date = order.bookingDate || 'N/A';
+        let time = order.bookingTime ? `(${order.bookingTime})` : '';
+        let total = order.totalAmount || order.total || 0;
+        let status = order.status || 'Pending';
+
+        let statusClass = 'status-pending';
+        if (status === 'Confirmed') statusClass = 'status-confirmed';
+        if (status === 'Completed') statusClass = 'status-completed';
+
+        html += `
+          <div class="admin-card">
+            <div class="order-header">
+              <span class="order-id">ID: ${id}</span>
+              <span class="badge-status ${statusClass}">${status}</span>
+            </div>
+            
+            <div class="info-row">👤 <b>Customer:</b> ${name}</div>
+            <div class="info-row">📞 <b>Phone:</b> ${phone}</div>
+            <div class="info-row">📍 <b>Address:</b> ${address}</div>
+            <div class="info-row">📦 <b>Services:</b> ${itemsList}</div>
+            <div class="info-row">📅 <b>Booking:</b> ${date} ${time}</div>
+            
+            <div class="order-total">
+              <span>Total Price:</span>
+              <span>₹${total}</span>
+            </div>
+
+            <div class="action-box">
+              <button class="btn-action btn-pending" onclick="changeStatus(${actualIndex}, 'Pending')">Pending</button>
+              <button class="btn-action btn-confirm" onclick="changeStatus(${actualIndex}, 'Confirmed')">Confirm</button>
+              <button class="btn-action btn-complete" onclick="changeStatus(${actualIndex}, 'Completed')">Complete</button>
+              <button class="btn-action btn-delete" onclick="removeOrder(${actualIndex})">Delete</button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function changeStatus(index, newStatus) {
+      let orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
+      orders[index].status = newStatus;
+      localStorage.setItem('a2z_orders', JSON.stringify(orders));
+      renderAdminOrders();
+    }
+
+    function removeOrder(index) {
+      if(confirm("Are you sure you want to delete this order?")) {
+        let orders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
+        orders.splice(index, 1);
+        localStorage.setItem('a2z_orders', JSON.stringify(orders));
+        renderAdminOrders();
       }
     }
 
-    function resetAllPhotos() {
-      if (confirm("Are you sure you want to reset all photos to default?")) {
-        const keys = ['img_banner', 'img_cat_cleaning', 'img_cat_electrician', 'img_cat_plumber', 'img_cat_repair', 'img_service_sofa'];
-        keys.forEach(key => localStorage.removeItem(key));
-        alert("All photos reset!");
-      }
-    }
+    document.addEventListener("DOMContentLoaded", renderAdminOrders);
   </script>
 </body>
 </html>
