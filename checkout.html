@@ -3,234 +3,143 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - A2Z Service</title>
+  <title>Your Cart & Address - A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 60px; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 30px; }
 
-    .container { max-width: 500px; margin: 0 auto; }
-
-    header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .btn-back { text-decoration: none; font-size: 20px; color: #0f172a; font-weight: bold; }
-    .page-title { font-size: 18px; font-weight: 800; color: #0879e8; }
-    
-    .btn-clear-all { background: #fee2e2; color: #ef4444; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
-
-    /* CART ITEM LIST */
-    .cart-item {
-      background: white; border-radius: 16px; padding: 16px;
-      margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
-      border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    header {
+      position: sticky; top: 0; z-index: 100; background: #ffffff;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
     }
-    .item-info { font-weight: 800; font-size: 15px; color: #0f172a; }
-    .item-price { color: #0879e8; font-weight: 800; font-size: 15px; margin-top: 4px; }
-    
-    .btn-remove {
-      background: #fef2f2; color: #ef4444; border: none;
-      width: 36px; height: 36px; border-radius: 10px;
-      font-weight: bold; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
-    }
+    .back-btn { font-size: 20px; text-decoration: none; color: #0f172a; font-weight: 800; }
+    .page-title { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .close-btn { font-size: 18px; text-decoration: none; color: #0f172a; background: #f1f5f9; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 
-    .empty-msg { text-align: center; padding: 40px 0; color: #64748b; font-weight: 600; }
-    
-    .total-box {
-      background: white; border-radius: 16px; padding: 18px; margin: 16px 0;
-      border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;
-      font-weight: 800; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    }
+    .container { padding: 16px; max-width: 500px; margin: 0 auto; }
 
-    /* ADDRESS FORM SECTION */
-    .address-card {
-      background: white; border-radius: 20px; padding: 20px;
-      border: 1px solid #e2e8f0; margin-top: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-    }
-    .card-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 16px; }
-    
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px; }
-    .form-control {
-      width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid #e2e8f0;
-      font-size: 14px; outline: none; background: #f8fafc; color: #0f172a; font-weight: 500;
-    }
-    .form-control:focus { border-color: #0879e8; background: #ffffff; }
+    /* LOCATION & MAP BOX */
+    .location-box { background: white; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
+    .loc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .loc-title { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; }
+    .btn-relo { background: #f0f7ff; color: #0879e8; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-    .form-row { display: flex; gap: 10px; }
-    .form-row .form-group { flex: 1; }
+    .detected-address { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 12px; line-height: 1.4; display: flex; align-items: flex-start; gap: 6px; }
 
-    /* PLACE ORDER BUTTON */
-    .btn-submit-order {
-      width: 100%; background: #16a34a; color: white; border: none;
-      padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 800;
-      cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
-    }
+    .input-group { margin-bottom: 12px; }
+    .input-group label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px; }
+    .input-field { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 14px; outline: none; }
+    .input-field:focus { border-color: #0879e8; }
+
+    .btn-proceed { width: 100%; background: #0879e8; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 8px; }
+    .btn-proceed:disabled { background: #cbd5e1; cursor: not-allowed; }
   </style>
 </head>
 <body>
 
+  <header>
+    <a href="index.html" class="back-btn">←</a>
+    <div class="page-title">Your cart</div>
+    <a href="index.html" class="close-btn">✕</a>
+  </header>
+
   <div class="container">
-    <header>
-      <a href="index.html" class="btn-back">←</a>
-      <h1 class="page-title">Your Cart</h1>
-      <button class="btn-clear-all" onclick="clearAllCart()">Clear All</button>
-    </header>
-
-    <div id="cartList"></div>
     
-    <div id="totalBox" class="total-box" style="display: none;">
-      <span>Total Amount:</span>
-      <span id="totalPrice" style="color: #0879e8; font-size: 18px;">₹0</span>
-    </div>
-
-    <!-- DELIVERY & BOOKING DETAILS FORM -->
-    <div id="addressSection" class="address-card" style="display: none;">
-      <div class="card-title">Delivery & Contact Address</div>
-      
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="custName" class="form-control" placeholder="Enter your full name">
-      </div>
-      
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" id="custPhone" class="form-control" placeholder="Enter mobile number">
+    <!-- LOCATION SECTION -->
+    <div class="location-box">
+      <div class="loc-header">
+        <span class="loc-title">Select Delivery Location</span>
+        <button class="btn-relo" onclick="getUserLocation()">📍 Locate Me</button>
       </div>
 
-      <div class="form-group">
-        <label>House / Flat / Building No.</label>
-        <input type="text" id="custHouse" class="form-control" placeholder="House/Flat No., Building Name">
+      <div class="detected-address">
+        <span>📍</span>
+        <span id="locStatus">Fetching current location...</span>
       </div>
 
-      <div class="form-group">
-        <label>Area / Street / Landmark</label>
-        <input type="text" id="custArea" class="form-control" placeholder="Street Address, Nearby Landmark">
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Service Date</label>
-          <input type="date" id="custDate" class="form-control">
+      <form id="addressForm" onsubmit="saveAddressAndProceed(event)">
+        <div class="input-group">
+          <input type="text" id="autoAddress" class="input-field" placeholder="Detected Area / Road Name" required>
         </div>
-        <div class="form-group">
-          <label>Preferred Time</label>
-          <select id="custTime" class="form-control">
-            <option value="">Select Time</option>
-            <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
-            <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-            <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
-            <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
-            <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
-          </select>
-        </div>
-      </div>
 
-      <button type="button" class="btn-submit-order" onclick="processOrder()">💬 Order via WhatsApp</button>
+        <div class="input-group">
+          <input type="text" id="houseNo" class="input-field" placeholder="House/Flat Number*" required>
+        </div>
+
+        <div class="input-group">
+          <input type="text" id="landmark" class="input-field" placeholder="Landmark (Optional)">
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-proceed" disabled>Save and proceed to slots</button>
+      </form>
     </div>
 
   </div>
 
   <script>
-    function renderCart() {
-      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
-      const listContainer = document.getElementById('cartList');
-      const totalBox = document.getElementById('totalBox');
-      const addressSection = document.getElementById('addressSection');
-      
-      if (cart.length === 0) {
-        listContainer.innerHTML = `<div class="empty-msg">Your cart is empty!</div>`;
-        totalBox.style.display = 'none';
-        addressSection.style.display = 'none';
-        return;
-      }
+    // AUTOMATIC GEOLOCATION FETCH
+    function getUserLocation() {
+      const locStatus = document.getElementById('locStatus');
+      const autoAddressInput = document.getElementById('autoAddress');
+      const submitBtn = document.getElementById('submitBtn');
 
-      let html = '';
-      let total = 0;
+      locStatus.innerText = "Fetching GPS Location...";
 
-      cart.forEach((item, index) => {
-        total += item.priceNum;
-        html += `
-          <div class="cart-item">
-            <div>
-              <div class="item-info">${item.title}</div>
-              <div class="item-price">₹${item.priceNum}</div>
-            </div>
-            <button class="btn-remove" onclick="removeItem(${index})">✕</button>
-          </div>
-        `;
-      });
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
 
-      listContainer.innerHTML = html;
-      document.getElementById('totalPrice').innerText = `₹${total}`;
-      totalBox.style.display = 'flex';
-      addressSection.style.display = 'block';
-
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('custDate').setAttribute('min', today);
-    }
-
-    function removeItem(index) {
-      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
-      cart.splice(index, 1);
-      localStorage.setItem('a2z_cart', JSON.stringify(cart));
-      renderCart();
-    }
-
-    function clearAllCart() {
-      if(confirm("Are you sure you want to clear all items?")) {
-        localStorage.removeItem('a2z_cart');
-        renderCart();
+            // REVERSE GEOCODING VIA OPENSTREETMAP API (FREE & NO API KEY NEEDED)
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+              .then(res => res.json())
+              .then(data => {
+                if (data && data.display_name) {
+                  const fullAddr = data.display_name;
+                  locStatus.innerText = fullAddr;
+                  autoAddressInput.value = fullAddr;
+                  submitBtn.disabled = false;
+                } else {
+                  locStatus.innerText = "Location found (Enter landmark manually)";
+                  autoAddressInput.value = `Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`;
+                  submitBtn.disabled = false;
+                }
+              })
+              .catch(err => {
+                locStatus.innerText = "Location detected. Please enter area name.";
+                submitBtn.disabled = false;
+              });
+          },
+          function(error) {
+            locStatus.innerText = "Please allow location access or type address manually.";
+            submitBtn.disabled = false;
+          },
+          { enableHighAccuracy: true, timeout: 10000 }
+        );
+      } else {
+        locStatus.innerText = "Geolocation is not supported by your browser.";
+        submitBtn.disabled = false;
       }
     }
 
-    function processOrder() {
-      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
-      if(cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const house = document.getElementById('custHouse').value.trim();
-      const area = document.getElementById('custArea').value.trim();
-      const date = document.getElementById('custDate').value;
-      const time = document.getElementById('custTime').value;
-
-      if (!name || !phone || !house || !area || !date || !time) {
-        alert("Please fill in all details (Name, Phone, House No, Address, Date, Time).");
-        return;
-      }
-
-      let total = cart.reduce((sum, item) => sum + item.priceNum, 0);
-
-      // ১. অ্যাপের Orders পেজে সেভ রাখার ডেটা
-      let existingOrders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
-      let newOrder = {
-        orderId: "A2Z-" + Math.floor(1000 + Math.random() * 9000),
-        customerName: name,
-        phone: phone,
-        address: `${house}, ${area}`,
-        items: cart,
-        totalAmount: total,
-        bookingDate: date,
-        bookingTime: time,
-        orderDate: new Date().toLocaleDateString(),
-        status: "Pending"
+    function saveAddressAndProceed(e) {
+      e.preventDefault();
+      const userAddress = {
+        area: document.getElementById('autoAddress').value,
+        houseNo: document.getElementById('houseNo').value,
+        landmark: document.getElementById('landmark').value
       };
-      existingOrders.push(newOrder);
-      localStorage.setItem('a2z_orders', JSON.stringify(existingOrders));
-
-      // ২. হোয়াটসঅ্যাপ মেসেজ তৈরি ও পাঠানো
-      let itemsList = cart.map(i => `• ${i.title} (₹${i.priceNum})`).join('\n');
-      let waMessage = `*NEW SERVICE ORDER*\n\n*Customer Details:*\n• Name: ${name}\n• Phone: ${phone}\n• House No: ${house}\n• Address/Landmark: ${area}\n\n*Booking Schedule:*\n• Date: ${date}\n• Time Slot: ${time}\n\n*Ordered Services:*\n${itemsList}\n\n*Total Amount:* ₹${total}`;
-
-      localStorage.removeItem('a2z_cart');
-
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=919101616836&text=${encodeURIComponent(waMessage)}`;
-      window.location.href = whatsappUrl;
+      
+      localStorage.setItem('a2z_user_address', JSON.stringify(userAddress));
+      alert("Address saved successfully!");
+      // NEXT STEP NAVIGATION (e.g., slot-booking.html)
     }
 
-    document.addEventListener("DOMContentLoaded", renderCart);
+    document.addEventListener("DOMContentLoaded", function() {
+      getUserLocation();
+    });
   </script>
 </body>
 </html>
