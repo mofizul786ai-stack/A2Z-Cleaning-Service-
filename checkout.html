@@ -85,48 +85,46 @@
     <!-- DELIVERY & BOOKING DETAILS FORM -->
     <div id="addressSection" class="address-card" style="display: none;">
       <div class="card-title">Delivery & Contact Address</div>
-      <form onsubmit="processOrder(event)">
-        
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="custName" class="form-control" placeholder="Enter your full name" required>
-        </div>
-        
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="tel" id="custPhone" class="form-control" placeholder="Enter mobile number" required>
-        </div>
+      
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="custName" class="form-control" placeholder="Enter your full name">
+      </div>
+      
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="custPhone" class="form-control" placeholder="Enter mobile number">
+      </div>
 
+      <div class="form-group">
+        <label>House / Flat / Building No.</label>
+        <input type="text" id="custHouse" class="form-control" placeholder="House/Flat No., Building Name">
+      </div>
+
+      <div class="form-group">
+        <label>Area / Street / Landmark</label>
+        <input type="text" id="custArea" class="form-control" placeholder="Street Address, Nearby Landmark">
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
-          <label>House / Flat / Building No.</label>
-          <input type="text" id="custHouse" class="form-control" placeholder="House/Flat No., Building Name" required>
+          <label>Service Date</label>
+          <input type="date" id="custDate" class="form-control">
         </div>
-
         <div class="form-group">
-          <label>Area / Street / Landmark</label>
-          <input type="text" id="custArea" class="form-control" placeholder="Street Address, Nearby Landmark" required>
+          <label>Preferred Time</label>
+          <select id="custTime" class="form-control">
+            <option value="">Select Time</option>
+            <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
+            <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+            <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
+            <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+            <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+          </select>
         </div>
+      </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Service Date</label>
-            <input type="date" id="custDate" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>Preferred Time</label>
-            <select id="custTime" class="form-control" required>
-              <option value="">Select Time</option>
-              <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
-              <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-              <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
-              <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
-              <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
-            </select>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit-order">💬 Order via WhatsApp</button>
-      </form>
+      <button type="button" class="btn-submit-order" onclick="processOrder()">💬 Order via WhatsApp</button>
     </div>
 
   </div>
@@ -166,7 +164,6 @@
       totalBox.style.display = 'flex';
       addressSection.style.display = 'block';
 
-      // Set default minimum date as today
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('custDate').setAttribute('min', today);
     }
@@ -185,25 +182,52 @@
       }
     }
 
-    function processOrder(e) {
-      e.preventDefault();
+    function processOrder() {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
-      if(cart.length === 0) return;
+      if(cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
 
-      const name = document.getElementById('custName').value;
-      const phone = document.getElementById('custPhone').value;
-      const house = document.getElementById('custHouse').value;
-      const area = document.getElementById('custArea').value;
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const house = document.getElementById('custHouse').value.trim();
+      const area = document.getElementById('custArea').value.trim();
       const date = document.getElementById('custDate').value;
       const time = document.getElementById('custTime').value;
 
-      let itemsList = cart.map(i => `• ${i.title} (₹${i.priceNum})`).join('\n');
+      if (!name || !phone || !house || !area || !date || !time) {
+        alert("Please fill in all details (Name, Phone, House No, Address, Date, Time).");
+        return;
+      }
+
       let total = cart.reduce((sum, item) => sum + item.priceNum, 0);
 
+      // ১. অ্যাপের Orders পেজে সেভ রাখার ডেটা
+      let existingOrders = JSON.parse(localStorage.getItem('a2z_orders')) || [];
+      let newOrder = {
+        orderId: "A2Z-" + Math.floor(1000 + Math.random() * 9000),
+        customerName: name,
+        phone: phone,
+        address: `${house}, ${area}`,
+        items: cart,
+        totalAmount: total,
+        bookingDate: date,
+        bookingTime: time,
+        orderDate: new Date().toLocaleDateString(),
+        status: "Pending"
+      };
+      existingOrders.push(newOrder);
+      localStorage.setItem('a2z_orders', JSON.stringify(existingOrders));
+
+      // ২. হোয়াটসঅ্যাপ মেসেজ তৈরি ও পাঠানো
+      let itemsList = cart.map(i => `• ${i.title} (₹${i.priceNum})`).join('\n');
       let waMessage = `*NEW SERVICE ORDER*\n\n*Customer Details:*\n• Name: ${name}\n• Phone: ${phone}\n• House No: ${house}\n• Address/Landmark: ${area}\n\n*Booking Schedule:*\n• Date: ${date}\n• Time Slot: ${time}\n\n*Ordered Services:*\n${itemsList}\n\n*Total Amount:* ₹${total}`;
 
       localStorage.removeItem('a2z_cart');
-      window.location.href = `https://wa.me/919101616836?text=${encodeURIComponent(waMessage)}`;
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=919101616836&text=${encodeURIComponent(waMessage)}`;
+      window.location.href = whatsappUrl;
     }
 
     document.addEventListener("DOMContentLoaded", renderCart);
