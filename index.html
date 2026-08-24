@@ -1,178 +1,323 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A2Z Service</title>
+  <title>Admin Dashboard</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 90px; }
-    .container { max-width: 500px; margin: 0 auto; }
-
-    /* HEADER */
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .logo { font-size: 22px; font-weight: 800; color: #0879e8; }
-    .header-btns { display: flex; gap: 8px; }
-    .btn-call { background: #0879e8; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 4px; }
-    .btn-wa { background: #25d366; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 4px; }
-
-    /* BANNER */
-    .banner-container { width: 100%; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .banner-img { width: 100%; height: auto; display: block; object-fit: cover; }
-
-    /* SECTION TITLE */
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .section-title { font-size: 18px; font-weight: 800; color: #0f172a; }
-    .badge-hot { background: #fee2e2; color: #ef4444; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
-
-    /* CATEGORIES GRID */
-    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
-    .category-card { background: white; border-radius: 16px; padding: 12px 6px; text-align: center; border: 1px solid #f1f5f9; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-    .category-img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; margin: 0 auto 6px; display: block; }
-    .category-title { font-size: 12px; font-weight: 700; color: #334155; }
-
-    /* SERVICE CARD & CART BAR */
-    .service-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); position: relative; }
-    .service-img-container { position: relative; width: 100%; }
-    .service-img { width: 100%; height: 200px; object-fit: cover; display: block; }
-    .time-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.9); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 4px; }
-    
-    .cart-bar { background: #0879e8; color: white; padding: 14px 20px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 15px; margin: 12px; }
-    .cart-bar a { color: white; text-decoration: none; font-size: 14px; }
-
-    /* EXACT FOOTER DESIGN */
-    .bottom-nav { 
-      position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; 
-      display: flex; justify-content: space-around; align-items: center;
-      padding: 8px 0; border-top: 1px solid #e2e8f0; z-index: 1000; 
+    /* Global Reset & Layout Fixes */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
     }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 600; gap: 3px; flex: 1; }
-    .nav-icon { font-size: 20px; line-height: 1; }
-    .nav-item.active { color: #0879e8; }
+
+    /* Footer Fix: Flexbox Layout */
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f0f4f8;
+    }
+
+    /* Main Container (Pushes footer down) */
+    .app-container {
+      flex: 1 0 auto;
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 15px;
+    }
+
+    /* Header Styling */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .header h2 {
+      color: #0056b3;
+      font-size: 18px;
+    }
+
+    .exit-btn {
+      background-color: #ffebe9;
+      color: #d9381e;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Navigation Tabs */
+    .tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .tab-btn.active {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+    }
+
+    /* Card Box */
+    .card {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    /* Form Inputs */
+    .input-group {
+      margin-bottom: 12px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      outline: none;
+    }
+
+    .add-btn {
+      width: 100%;
+      background-color: #10b981;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Services List */
+    .service-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .service-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .service-thumb {
+      width: 45px;
+      height: 45px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .service-details div:first-child {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .service-details div:last-child {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .delete-btn {
+      background-color: #ffebe9;
+      color: #d9381e;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* Footer Fix */
+    footer {
+      flex-shrink: 0;
+      background-color: #fff;
+      text-align: center;
+      padding: 15px;
+      border-top: 1px solid #e5e7eb;
+      margin-top: auto;
+    }
+
+    footer p {
+      color: #666;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- HEADER -->
-    <header>
-      <div class="logo">A2Z Service</div>
-      <div class="header-btns">
-        <a href="tel:9101616836" class="btn-call">📞 Call</a>
-        <a id="waBtnLink" href="https://wa.me/919101616836" class="btn-wa">💬 WhatsApp</a>
-      </div>
-    </header>
-
-    <!-- BANNER IMAGE -->
-    <div class="banner-container">
-      <img id="mainBannerImg" class="banner-img" src="https://via.placeholder.com/500x200" alt="A2Z Banner">
+  <!-- Main Application Wrapper -->
+  <div class="app-container">
+    
+    <!-- Header -->
+    <div class="header">
+      <h2>Admin Dashboard</h2>
+      <button class="exit-btn">Exit App</button>
     </div>
 
-    <!-- CATEGORIES SECTION -->
-    <h3 class="section-title" style="margin-bottom: 12px;">What are you looking for?</h3>
-    <div class="categories-grid" id="categoriesGrid">
-      <div class="category-card">
-        <img src="https://via.placeholder.com/50" class="category-img">
-        <div class="category-title">Cleaning</div>
-      </div>
-      <div class="category-card">
-        <img src="https://via.placeholder.com/50" class="category-img">
-        <div class="category-title">Electrician</div>
-      </div>
-      <div class="category-card">
-        <img src="https://via.placeholder.com/50" class="category-img">
-        <div class="category-title">Plumber</div>
-      </div>
-      <div class="category-card">
-        <img src="https://via.placeholder.com/50" class="category-img">
-        <div class="category-title">Repair</div>
-      </div>
+    <!-- Navigation Tabs -->
+    <div class="tab-container">
+      <button class="tab-btn active">🛠️ Services & Prices</button>
+      <button class="tab-btn">🖼️ Banners & Settings</button>
     </div>
 
-    <!-- MOST BOOKED SERVICES SECTION -->
-    <div class="section-header">
-      <h3 class="section-title">Most Booked Services</h3>
-      <span class="badge-hot">HOT</span>
+    <!-- Form Section -->
+    <div class="card">
+      <h3>Add Service from Gallery</h3>
+      <form id="serviceForm">
+        <div class="input-group">
+          <label>Service Name</label>
+          <input type="text" id="serviceName" placeholder="e.g. Sofa Cleaning" required>
+        </div>
+
+        <div class="input-group">
+          <label>Price (₹)</label>
+          <input type="number" id="servicePrice" placeholder="e.g. 250" required>
+        </div>
+
+        <div class="input-group">
+          <label>Select Photo from Gallery</label>
+          <input type="file" id="serviceImage" accept="image/*">
+        </div>
+
+        <button type="submit" class="add-btn">Add Service</button>
+      </form>
     </div>
 
-    <div id="dynamicServicesContainer"></div>
+    <!-- Services List Section -->
+    <div class="card">
+      <h3>All Services</h3>
+      <div id="servicesList">
+        <!-- JS rendered items will appear here -->
+      </div>
+    </div>
 
   </div>
 
-  <!-- EXACT FOOTER FROM SCREENSHOT -->
-  <nav class="bottom-nav">
-    <a href="index.html" class="nav-item active">
-      <span class="nav-icon">🏠</span>
-      <span>Home</span>
-    </a>
-    <a href="orders.html" class="nav-item">
-      <span class="nav-icon">📋</span>
-      <span>Orders</span>
-    </a>
-    <a href="categories.html" class="nav-item">
-      <span class="nav-icon">🔳</span>
-      <span>Categories</span>
-    </a>
-    <a href="profile.html" class="nav-item">
-      <span class="nav-icon">👤</span>
-      <span>Profile</span>
-    </a>
-  </nav>
+  <!-- Sticky Footer -->
+  <footer>
+    <p>© 2026 Admin Dashboard. All Rights Reserved.</p>
+  </footer>
 
   <script>
-    function loadHomePageData() {
-      // 1. ADMIN BANNER & WHATSAPP
-      let appConfig = JSON.parse(localStorage.getItem('a2z_app_config'));
-      if (appConfig) {
-        if (appConfig.banner) {
-          document.getElementById('mainBannerImg').src = appConfig.banner;
-        }
-        if (appConfig.whatsapp) {
-          document.getElementById('waBtnLink').href = "https://wa.me/" + appConfig.whatsapp;
-        }
-      }
+    // LocalStorage থেকে ডাটা লোড করা
+    let services = JSON.parse(localStorage.getItem('app_services')) || [
+      { id: 1, name: '1BHK', price: '2500', image: 'https://via.placeholder.com/150' }
+    ];
 
-      // 2. ADMIN SERVICES LIST
-      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
-      let container = document.getElementById('dynamicServicesContainer');
+    const serviceForm = document.getElementById('serviceForm');
+    const servicesList = document.getElementById('servicesList');
 
-      if (services.length === 0) {
-        container.innerHTML = `
-          <div class="service-card">
-            <div class="service-img-container">
-              <span class="time-badge">⏱️ 1 hr</span>
-              <img src="https://via.placeholder.com/400x200" class="service-img">
-            </div>
-            <div class="cart-bar">
-              <span>1 Item | ₹800</span>
-              <a href="checkout.html">View Cart →</a>
+    // UI-তে সার্ভিস তালিকা রেন্ডার করার ফংশন
+    function renderServices() {
+      servicesList.innerHTML = '';
+      
+      services.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'service-item';
+        itemDiv.innerHTML = `
+          <div class="service-info">
+            <img src="${item.image}" class="service-thumb" alt="${item.name}">
+            <div class="service-details">
+              <div>${item.name}</div>
+              <div>₹${item.price}</div>
             </div>
           </div>
+          <button class="delete-btn" onclick="deleteService(${item.id})">Delete</button>
         `;
-        return;
-      }
-
-      let html = '';
-      services.forEach(srv => {
-        let imgSrc = srv.image || 'https://via.placeholder.com/400x200';
-        html += `
-          <div class="service-card">
-            <div class="service-img-container">
-              <span class="time-badge">⏱️ 1 hr</span>
-              <img src="${imgSrc}" class="service-img">
-            </div>
-            <div class="cart-bar">
-              <span>${srv.name} | ₹${srv.price}</span>
-              <a href="checkout.html">View Cart →</a>
-            </div>
-          </div>
-        `;
+        servicesList.appendChild(itemDiv);
       });
 
-      container.innerHTML = html;
+      // LocalStorage আপ-টু-ডেট রাখা
+      localStorage.setItem('app_services', JSON.stringify(services));
     }
 
-    document.addEventListener("DOMContentLoaded", loadHomePageData);
+    // নতুন সার্ভিস এড হ্যান্ডলার (বহুবার আপডেট নিশ্চিত করে)
+    serviceForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('serviceName').value;
+      const priceInput = document.getElementById('servicePrice').value;
+      const imageInput = document.getElementById('serviceImage').files[0];
+
+      let imageUrl = 'https://via.placeholder.com/150';
+      if (imageInput) {
+        imageUrl = URL.createObjectURL(imageInput);
+      }
+
+      const newService = {
+        id: Date.now(),
+        name: nameInput,
+        price: priceInput,
+        image: imageUrl
+      };
+
+      // Array-তে নতুন ডাটা যোগ করা
+      services.unshift(newService);
+
+      // UI আপডেট করা
+      renderServices();
+
+      // Form Reset করা (পরবর্তীবার আবার ইনপুট নেওয়ার জন্য)
+      serviceForm.reset();
+    });
+
+    // ডিলিট হ্যান্ডলার
+    function deleteService(id) {
+      services = services.filter(item => item.id !== id);
+      renderServices();
+    }
+
+    // প্রাথমিক রেন্ডার
+    renderServices();
   </script>
+
 </body>
 </html>
