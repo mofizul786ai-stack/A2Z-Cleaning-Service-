@@ -13,6 +13,7 @@
     header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .btn-back { text-decoration: none; font-size: 20px; color: #0f172a; font-weight: bold; }
     .page-title { font-size: 18px; font-weight: 800; color: #0879e8; }
+    .btn-clear { background: #fee2e2; color: #ef4444; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
 
     /* ORDER CARD */
     .order-card {
@@ -51,7 +52,7 @@
     <header>
       <a href="index.html" class="btn-back">←</a>
       <h1 class="page-title">My Orders</h1>
-      <div></div>
+      <button class="btn-clear" onclick="clearOrders()">Clear History</button>
     </header>
 
     <div id="ordersList"></div>
@@ -76,30 +77,47 @@
       }
 
       let html = '';
-      // রিভার্স করা হচ্ছে যেন নতুন অর্ডার আগে দেখায়
-      orders.reverse().forEach(order => {
-        let itemsList = order.items.map(i => i.title).join(', ');
-        
+      
+      // নতুন অর্ডারগুলো ওপরে দেখানোর জন্য উল্টে নেওয়া হচ্ছে
+      [...orders].reverse().forEach(order => {
+        let itemsList = order.items && Array.isArray(order.items) 
+          ? order.items.map(i => i.title).join(', ') 
+          : 'Service Order';
+
+        let id = order.orderId || 'A2Z-' + Math.floor(1000 + Math.random() * 9000);
+        let date = order.bookingDate || 'N/A';
+        let time = order.bookingTime ? `(${order.bookingTime})` : '';
+        let address = order.address || 'Address Not Provided';
+        let total = order.totalAmount || order.total || 0;
+        let status = order.status || 'Pending';
+
         html += `
           <div class="order-card">
             <div class="order-header">
-              <span class="order-id">ID: ${order.orderId}</span>
-              <span class="badge-status">${order.status || 'Pending'}</span>
+              <span class="order-id">ID: ${id}</span>
+              <span class="badge-status">${status}</span>
             </div>
             <div class="order-item-title">📦 ${itemsList}</div>
             <div class="order-meta">
-              📅 Date: <b>${order.bookingDate}</b> (${order.bookingTime})<br>
-              📍 Address: ${order.address}
+              📅 Date: <b>${date}</b> ${time}<br>
+              📍 Address: ${address}
             </div>
             <div class="order-total">
               <span>Total Paid/Due:</span>
-              <span>₹${order.totalAmount}</span>
+              <span>₹${total}</span>
             </div>
           </div>
         `;
       });
 
       listContainer.innerHTML = html;
+    }
+
+    function clearOrders() {
+      if(confirm("Are you sure you want to clear all order history?")) {
+        localStorage.removeItem('a2z_orders');
+        renderOrders();
+      }
     }
 
     document.addEventListener("DOMContentLoaded", renderOrders);
