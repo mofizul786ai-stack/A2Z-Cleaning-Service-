@@ -10,7 +10,7 @@
 
     .container { max-width: 500px; margin: 0 auto; }
 
-    /* HEADER DASHBOARD CARD */
+    /* DASHBOARD CARD */
     .dashboard-card {
       background: #ffffff; border-radius: 20px; padding: 16px 20px;
       display: flex; justify-content: space-between; align-items: center;
@@ -23,7 +23,7 @@
       text-decoration: none; cursor: pointer;
     }
 
-    /* TABS SCROLLABLE MENU */
+    /* TAB BUTTONS */
     .tabs-wrapper { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 4px; }
     .tabs-wrapper::-webkit-scrollbar { display: none; }
     
@@ -34,7 +34,7 @@
     }
     .tab-btn.active { background: #0879e8; color: #ffffff; border-color: #0879e8; }
 
-    /* ORDER CARDS & EMPTY STATE */
+    /* ORDER BOX & EMPTY STATE */
     .empty-state { text-align: center; color: #94a3b8; padding: 60px 20px; font-size: 15px; font-weight: 500; }
     
     .order-card {
@@ -73,12 +73,12 @@
       <a href="index.html" class="btn-exit">Exit App</a>
     </div>
 
-    <!-- TAB BUTTONS -->
+    <!-- TABS MENU -->
     <div class="tabs-wrapper">
-      <button class="tab-btn active" onclick="switchTab('orders', this)">📋 Orders</button>
-      <button class="tab-btn" onclick="switchTab('categories', this)">🔲 Categories</button>
-      <button class="tab-btn" onclick="switchTab('services', this)">🛠️ Services</button>
-      <button class="tab-btn" onclick="switchTab('sliders', this)">🖼️ Sliders</button>
+      <button class="tab-btn active" id="btn-orders" onclick="switchTab('orders')">📋 Orders</button>
+      <button class="tab-btn" id="btn-categories" onclick="switchTab('categories')">🔲 Categories</button>
+      <button class="tab-btn" id="btn-services" onclick="switchTab('services')">🛠️ Services</button>
+      <button class="tab-btn" id="btn-sliders" onclick="switchTab('sliders')">🖼️ Sliders</button>
     </div>
 
     <!-- TAB CONTENTS -->
@@ -87,24 +87,24 @@
     </div>
 
     <div id="tab-categories" style="display: none;">
-      <div class="empty-state">Category Management Section</div>
+      <div class="empty-state">No categories added yet!</div>
     </div>
 
     <div id="tab-services" style="display: none;">
-      <div class="empty-state">Services Management Section</div>
+      <div class="empty-state">No services added yet!</div>
     </div>
 
     <div id="tab-sliders" style="display: none;">
-      <div class="empty-state">Sliders Management Section</div>
+      <div class="empty-state">No sliders added yet!</div>
     </div>
 
   </div>
 
   <script>
-    // TAB SWITCHING FUNCTION
-    function switchTab(tabName, btnEl) {
+    // TAB SWITCHING
+    function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btnEl.classList.add('active');
+      document.getElementById('btn-' + tabName).classList.add('active');
 
       document.getElementById('tab-orders').style.display = 'none';
       document.getElementById('tab-categories').style.display = 'none';
@@ -112,9 +112,13 @@
       document.getElementById('tab-sliders').style.display = 'none';
 
       document.getElementById('tab-' + tabName).style.display = 'block';
+
+      if(tabName === 'orders') {
+        loadAdminOrders();
+      }
     }
 
-    // LOAD & DISPLAY ORDERS
+    // LOAD ORDERS FROM STORAGE
     function loadAdminOrders() {
       const container = document.getElementById('adminOrdersContainer');
       let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
@@ -125,22 +129,25 @@
       }
 
       let html = '';
-      // Latest orders first
+      // Reverse array to show newest orders first
       orders.slice().reverse().forEach((order, index) => {
         let actualIndex = orders.length - 1 - index;
         let isConfirmed = order.status === "Confirmed";
         
         let itemsHtml = '';
         let total = 0;
-        order.items.forEach(item => {
-          total += item.priceNum;
-          itemsHtml += `
-            <div class="service-item">
-              <span>• ${item.title}</span>
-              <span>₹${item.priceNum}</span>
-            </div>
-          `;
-        });
+        
+        if (order.items && Array.isArray(order.items)) {
+          order.items.forEach(item => {
+            total += (item.priceNum || 0);
+            itemsHtml += `
+              <div class="service-item">
+                <span>• ${item.title || 'Service'}</span>
+                <span>₹${item.priceNum || 0}</span>
+              </div>
+            `;
+          });
+        }
 
         html += `
           <div class="order-card">
@@ -151,10 +158,10 @@
               </span>
             </div>
 
-            <div class="order-info"><strong>Customer:</strong> ${order.name} (${order.phone})</div>
-            <div class="order-info"><strong>Address:</strong> ${order.fullAddress}</div>
-            <div class="order-info"><strong>Date & Time:</strong> ${order.date} at ${order.time}</div>
-            <div class="order-info"><strong>Payment:</strong> ${order.payment}</div>
+            <div class="order-info"><strong>Customer:</strong> ${order.name || 'N/A'} (${order.phone || 'N/A'})</div>
+            <div class="order-info"><strong>Address:</strong> ${order.fullAddress || 'N/A'}</div>
+            <div class="order-info"><strong>Date & Time:</strong> ${order.date || ''} at ${order.time || ''}</div>
+            <div class="order-info"><strong>Payment:</strong> ${order.payment || 'Cash'}</div>
 
             <div class="service-box">
               ${itemsHtml}
@@ -168,7 +175,7 @@
             ${!isConfirmed ? `
               <button class="btn-confirm" onclick="confirmOrder(${actualIndex})">Confirm Order</button>
             ` : `
-              <div style="text-align:center; font-size:13px; color:#166534; font-weight:800; padding:6px 0;">✔ Booking Confirmed</div>
+              <div style="text-align:center; font-size:13px; color:#166534; font-weight:800; padding:6px 0;">✔ Order Confirmed</div>
             `}
           </div>
         `;
