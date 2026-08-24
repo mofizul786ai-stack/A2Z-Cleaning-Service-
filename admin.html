@@ -32,12 +32,21 @@
     }
     .tab-btn.active { background: #0879e8; color: #ffffff; border-color: #0879e8; }
 
-    .empty-state { text-align: center; color: #94a3b8; padding: 60px 20px; font-size: 15px; font-weight: 500; }
+    .form-card { background: white; padding: 16px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
+    .form-card h4 { margin-bottom: 12px; font-size: 15px; color: #0f172a; }
+    .input-label { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 4px; display: block; }
+    .input-field { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 12px; font-size: 13px; outline: none; }
+    .btn-submit { width: 100%; background: #0879e8; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 14px; }
+
+    .item-list-card { background: white; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+    .item-img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; margin-right: 10px; background: #e2e8f0; }
+    .item-info { flex: 1; }
+    .item-title { font-size: 14px; font-weight: 700; color: #0f172a; }
+    .item-sub { font-size: 12px; color: #64748b; }
+
+    .empty-state { text-align: center; color: #94a3b8; padding: 40px 20px; font-size: 14px; font-weight: 500; }
     
-    .order-card {
-      background: #ffffff; border-radius: 16px; padding: 16px;
-      border: 1px solid #e2e8f0; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-    }
+    .order-card { background: #ffffff; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 14px; }
     .order-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px; }
     .order-id { font-size: 14px; font-weight: 800; color: #0f172a; }
     
@@ -46,18 +55,15 @@
     .status-confirmed { background: #dcfce7; color: #166534; }
     .status-completed { background: #e0f2fe; color: #0369a1; }
 
-    .order-info { font-size: 13px; color: #475569; margin-bottom: 4px; line-height: 1.4; }
-    .order-info strong { color: #0f172a; }
-
+    .order-info { font-size: 13px; color: #475569; margin-bottom: 4px; }
     .service-box { background: #f8fafc; border-radius: 10px; padding: 10px; margin: 10px 0; font-size: 13px; }
     .service-item { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 4px; color: #334155; }
-    .service-item:last-child { margin-bottom: 0; }
 
     .action-grid { display: flex; gap: 8px; margin-top: 10px; }
-    .btn-action { flex: 1; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; text-align: center; }
+    .btn-action { flex: 1; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; text-align: center; }
     .btn-confirm { background: #16a34a; color: white; }
     .btn-complete { background: #0284c7; color: white; }
-    .btn-delete { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; flex: 0.4; }
+    .btn-delete { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; }
   </style>
 </head>
 <body>
@@ -73,28 +79,68 @@
       <button class="tab-btn active" id="btn-orders" onclick="switchTab('orders')">📋 Orders</button>
       <button class="tab-btn" id="btn-categories" onclick="switchTab('categories')">🔲 Categories</button>
       <button class="tab-btn" id="btn-services" onclick="switchTab('services')">🛠️ Services</button>
-      <button class="tab-btn" id="btn-sliders" onclick="switchTab('sliders')">🖼️ Sliders</button>
+      <button class="tab-btn" id="btn-sliders" onclick="switchTab('sliders')">🖼️ Banners</button>
+      <button class="tab-btn" id="btn-settings" onclick="switchTab('settings')">⚙️ Settings</button>
     </div>
 
+    <!-- 1. ORDERS TAB -->
     <div id="tab-orders">
       <div id="adminOrdersContainer"></div>
     </div>
 
+    <!-- 2. CATEGORIES TAB -->
     <div id="tab-categories" style="display: none;">
-      <div class="empty-state">Category Management Section</div>
+      <div class="form-card">
+        <h4>Add New Category</h4>
+        <label class="input-label">Category Name</label>
+        <input type="text" id="catName" class="input-field" placeholder="e.g. Cleaning">
+        <label class="input-label">Select Photo</label>
+        <input type="file" id="catFile" class="input-field" accept="image/*">
+        <button class="btn-submit" onclick="addCategory()">+ Add Category</button>
+      </div>
+      <div id="categoryListContainer"></div>
     </div>
 
+    <!-- 3. SERVICES TAB -->
     <div id="tab-services" style="display: none;">
-      <div class="empty-state">Services Management Section</div>
+      <div class="form-card">
+        <h4>Add New Service</h4>
+        <label class="input-label">Service Title</label>
+        <input type="text" id="serTitle" class="input-field" placeholder="e.g. Full Home Cleaning">
+        <label class="input-label">Price (₹)</label>
+        <input type="number" id="serPrice" class="input-field" placeholder="e.g. 500">
+        <label class="input-label">Select Photo</label>
+        <input type="file" id="serFile" class="input-field" accept="image/*">
+        <button class="btn-submit" onclick="addService()">+ Add Service</button>
+      </div>
+      <div id="serviceListContainer"></div>
     </div>
 
+    <!-- 4. SLIDERS / BANNERS TAB -->
     <div id="tab-sliders" style="display: none;">
-      <div class="empty-state">Sliders Management Section</div>
+      <div class="form-card">
+        <h4>Add Banner Photo</h4>
+        <label class="input-label">Select Banner Image</label>
+        <input type="file" id="bannerFile" class="input-field" accept="image/*">
+        <button class="btn-submit" onclick="addBanner()">+ Add Banner Photo</button>
+      </div>
+      <div id="bannerListContainer"></div>
+    </div>
+
+    <!-- 5. SETTINGS TAB -->
+    <div id="tab-settings" style="display: none;">
+      <div class="form-card">
+        <h4>Admin Settings</h4>
+        <label class="input-label">WhatsApp Order Phone Number</label>
+        <input type="tel" id="adminPhone" class="input-field" placeholder="919101616836">
+        <button class="btn-submit" onclick="saveSettings()">Save Phone Number</button>
+      </div>
     </div>
 
   </div>
 
   <script>
+    // Tab Switcher
     function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('btn-' + tabName).classList.add('active');
@@ -103,14 +149,29 @@
       document.getElementById('tab-categories').style.display = 'none';
       document.getElementById('tab-services').style.display = 'none';
       document.getElementById('tab-sliders').style.display = 'none';
+      document.getElementById('tab-settings').style.display = 'none';
 
       document.getElementById('tab-' + tabName).style.display = 'block';
 
-      if(tabName === 'orders') {
-        loadAdminOrders();
-      }
+      if(tabName === 'orders') loadAdminOrders();
+      if(tabName === 'categories') loadCategories();
+      if(tabName === 'services') loadServices();
+      if(tabName === 'sliders') loadBanners();
+      if(tabName === 'settings') loadSettings();
     }
 
+    // Helper: Read File to Base64 String
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        if (!file) { resolve(''); return; }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // --- 1. ORDERS LOGIC ---
     function loadAdminOrders() {
       const container = document.getElementById('adminOrdersContainer');
       let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
@@ -130,16 +191,10 @@
         
         let itemsHtml = '';
         let total = 0;
-        
         if (order.items && Array.isArray(order.items)) {
           order.items.forEach(item => {
             total += (item.priceNum || 0);
-            itemsHtml += `
-              <div class="service-item">
-                <span>• ${item.title || 'Service'}</span>
-                <span>₹${item.priceNum || 0}</span>
-              </div>
-            `;
+            itemsHtml += `<div class="service-item"><span>• ${item.title || 'Service'}</span><span>₹${item.priceNum || 0}</span></div>`;
           });
         }
 
@@ -149,21 +204,11 @@
               <span class="order-id">ID: ${order.id}</span>
               <span class="status-badge ${statusClass}">${status}</span>
             </div>
-
             <div class="order-info"><strong>Customer:</strong> ${order.name || 'N/A'} (${order.phone || 'N/A'})</div>
             <div class="order-info"><strong>Address:</strong> ${order.fullAddress || 'N/A'}</div>
             <div class="order-info"><strong>Date & Time:</strong> ${order.date || ''} at ${order.time || ''}</div>
-            <div class="order-info"><strong>Payment:</strong> ${order.payment || 'Cash'}</div>
-
-            <div class="service-box">
-              ${itemsHtml}
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:14px; margin-bottom: 8px;">
-              <span>Total Bill:</span>
-              <span style="color:#0879e8;">₹${total}</span>
-            </div>
-
+            <div class="service-box">${itemsHtml}</div>
+            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:14px; margin-bottom:8px;"><span>Total Bill:</span><span style="color:#0879e8;">₹${total}</span></div>
             <div class="action-grid">
               ${status === 'Pending' ? `<button class="btn-action btn-confirm" onclick="updateOrderStatus(${actualIndex}, 'Confirmed')">Confirm</button>` : ''}
               ${status === 'Confirmed' ? `<button class="btn-action btn-complete" onclick="updateOrderStatus(${actualIndex}, 'Completed')">Complete</button>` : ''}
@@ -172,7 +217,6 @@
           </div>
         `;
       });
-
       container.innerHTML = html;
     }
 
@@ -190,6 +234,148 @@
         localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
         loadAdminOrders();
       }
+    }
+
+    // --- 2. CATEGORIES LOGIC ---
+    async function addCategory() {
+      let name = document.getElementById('catName').value.trim();
+      let fileInput = document.getElementById('catFile');
+      if(!name) return alert("Enter category name");
+      
+      let imgData = await fileToBase64(fileInput.files[0]);
+
+      let categories = JSON.parse(localStorage.getItem('a2z_categories')) || [];
+      categories.push({ id: Date.now(), name, img: imgData || 'https://via.placeholder.com/80' });
+      localStorage.setItem('a2z_categories', JSON.stringify(categories));
+      
+      document.getElementById('catName').value = '';
+      fileInput.value = '';
+      loadCategories();
+    }
+
+    function loadCategories() {
+      let categories = JSON.parse(localStorage.getItem('a2z_categories')) || [];
+      const container = document.getElementById('categoryListContainer');
+      if(categories.length === 0) { container.innerHTML = `<div class="empty-state">No categories added yet!</div>`; return; }
+      
+      let html = '';
+      categories.forEach((cat, index) => {
+        html += `
+          <div class="item-list-card">
+            <img src="${cat.img}" class="item-img" onerror="this.src='https://via.placeholder.com/80'">
+            <div class="item-info"><div class="item-title">${cat.name}</div></div>
+            <button class="btn-action btn-delete" style="flex:0.3;" onclick="deleteCategory(${index})">🗑️ Delete</button>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function deleteCategory(index) {
+      let categories = JSON.parse(localStorage.getItem('a2z_categories')) || [];
+      categories.splice(index, 1);
+      localStorage.setItem('a2z_categories', JSON.stringify(categories));
+      loadCategories();
+    }
+
+    // --- 3. SERVICES LOGIC ---
+    async function addService() {
+      let title = document.getElementById('serTitle').value.trim();
+      let price = parseInt(document.getElementById('serPrice').value);
+      let fileInput = document.getElementById('serFile');
+      if(!title || !price) return alert("Enter Service Title and Price");
+
+      let imgData = await fileToBase64(fileInput.files[0]);
+
+      let services = JSON.parse(localStorage.getItem('a2z_services')) || [];
+      services.push({ id: Date.now(), title, priceNum: price, img: imgData || 'https://via.placeholder.com/80' });
+      localStorage.setItem('a2z_services', JSON.stringify(services));
+      
+      document.getElementById('serTitle').value = '';
+      document.getElementById('serPrice').value = '';
+      fileInput.value = '';
+      loadServices();
+    }
+
+    function loadServices() {
+      let services = JSON.parse(localStorage.getItem('a2z_services')) || [];
+      const container = document.getElementById('serviceListContainer');
+      if(services.length === 0) { container.innerHTML = `<div class="empty-state">No services added yet!</div>`; return; }
+
+      let html = '';
+      services.forEach((ser, index) => {
+        html += `
+          <div class="item-list-card">
+            <img src="${ser.img}" class="item-img" onerror="this.src='https://via.placeholder.com/80'">
+            <div class="item-info">
+              <div class="item-title">${ser.title}</div>
+              <div class="item-sub">Price: ₹${ser.priceNum}</div>
+            </div>
+            <button class="btn-action btn-delete" style="flex:0.3;" onclick="deleteService(${index})">🗑️ Delete</button>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function deleteService(index) {
+      let services = JSON.parse(localStorage.getItem('a2z_services')) || [];
+      services.splice(index, 1);
+      localStorage.setItem('a2z_services', JSON.stringify(services));
+      loadServices();
+    }
+
+    // --- 4. BANNERS LOGIC ---
+    async function addBanner() {
+      let fileInput = document.getElementById('bannerFile');
+      if(!fileInput.files[0]) return alert("Please select a photo file");
+
+      let imgData = await fileToBase64(fileInput.files[0]);
+
+      let banners = JSON.parse(localStorage.getItem('a2z_banners')) || [];
+      banners.push({ id: Date.now(), img: imgData });
+      localStorage.setItem('a2z_banners', JSON.stringify(banners));
+      
+      fileInput.value = '';
+      loadBanners();
+    }
+
+    function loadBanners() {
+      let banners = JSON.parse(localStorage.getItem('a2z_banners')) || [];
+      const container = document.getElementById('bannerListContainer');
+      if(banners.length === 0) { container.innerHTML = `<div class="empty-state">No banner photos added yet!</div>`; return; }
+
+      let html = '';
+      banners.forEach((ban, index) => {
+        html += `
+          <div class="item-list-card">
+            <img src="${ban.img}" class="item-img" style="width:70px; height:40px;" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="item-info"><div class="item-title">Banner ${index + 1}</div></div>
+            <button class="btn-action btn-delete" style="flex:0.3;" onclick="deleteBanner(${index})">🗑️ Delete</button>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function deleteBanner(index) {
+      let banners = JSON.parse(localStorage.getItem('a2z_banners')) || [];
+      banners.splice(index, 1);
+      localStorage.setItem('a2z_banners', JSON.stringify(banners));
+      loadBanners();
+    }
+
+    // --- 5. SETTINGS LOGIC ---
+    function loadSettings() {
+      let phone = localStorage.getItem('a2z_admin_phone') || '919101616836';
+      document.getElementById('adminPhone').value = phone;
+    }
+
+    function saveSettings() {
+      let phone = document.getElementById('adminPhone').value.trim();
+      if(!phone) return alert("Enter valid WhatsApp number");
+      localStorage.setItem('a2z_admin_phone', phone);
+      alert("WhatsApp Number Saved Successfully!");
     }
 
     document.addEventListener("DOMContentLoaded", loadAdminOrders);
