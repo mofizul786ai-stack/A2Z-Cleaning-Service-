@@ -6,7 +6,7 @@
   <title>Checkout - A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 50px; }
+    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 60px; }
 
     .container { max-width: 500px; margin: 0 auto; }
 
@@ -18,46 +18,51 @@
 
     /* CART ITEM LIST */
     .cart-item {
-      background: white; border-radius: 12px; padding: 14px;
-      margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
-      border: 1px solid #e2e8f0;
+      background: white; border-radius: 16px; padding: 16px;
+      margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+      border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
-    .item-info { font-weight: 700; font-size: 14px; }
+    .item-info { font-weight: 800; font-size: 15px; color: #0f172a; }
     .item-price { color: #0879e8; font-weight: 800; font-size: 15px; margin-top: 4px; }
     
     .btn-remove {
-      background: #f1f5f9; color: #ef4444; border: none;
-      width: 32px; height: 32px; border-radius: 8px;
-      font-weight: bold; cursor: pointer; font-size: 16px;
+      background: #fef2f2; color: #ef4444; border: none;
+      width: 36px; height: 36px; border-radius: 10px;
+      font-weight: bold; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
     }
 
     .empty-msg { text-align: center; padding: 40px 0; color: #64748b; font-weight: 600; }
     
     .total-box {
-      background: white; border-radius: 12px; padding: 16px; margin: 16px 0;
-      border: 1px solid #e2e8f0; display: flex; justify-content: space-between; font-weight: 800; font-size: 16px;
+      background: white; border-radius: 16px; padding: 18px; margin: 16px 0;
+      border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;
+      font-weight: 800; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
 
     /* ADDRESS FORM SECTION */
     .address-card {
-      background: white; border-radius: 16px; padding: 18px;
-      border: 1px solid #e2e8f0; margin-top: 10px;
+      background: white; border-radius: 20px; padding: 20px;
+      border: 1px solid #e2e8f0; margin-top: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
-    .card-title { font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 14px; }
+    .card-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 16px; }
     
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 4px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px; }
     .form-control {
-      width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;
-      font-size: 14px; outline: none; background: #f8fafc;
+      width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid #e2e8f0;
+      font-size: 14px; outline: none; background: #f8fafc; color: #0f172a; font-weight: 500;
     }
     .form-control:focus { border-color: #0879e8; background: #ffffff; }
+
+    .form-row { display: flex; gap: 10px; }
+    .form-row .form-group { flex: 1; }
 
     /* PLACE ORDER BUTTON */
     .btn-submit-order {
       width: 100%; background: #16a34a; color: white; border: none;
-      padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 800;
-      cursor: pointer; margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 800;
+      cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
     }
   </style>
 </head>
@@ -74,13 +79,14 @@
     
     <div id="totalBox" class="total-box" style="display: none;">
       <span>Total Amount:</span>
-      <span id="totalPrice" style="color: #0879e8;">₹0</span>
+      <span id="totalPrice" style="color: #0879e8; font-size: 18px;">₹0</span>
     </div>
 
-    <!-- ADDRESS & CONTACT DETAILS FORM -->
+    <!-- DELIVERY & BOOKING DETAILS FORM -->
     <div id="addressSection" class="address-card" style="display: none;">
       <div class="card-title">Delivery & Contact Address</div>
       <form onsubmit="processOrder(event)">
+        
         <div class="form-group">
           <label>Full Name</label>
           <input type="text" id="custName" class="form-control" placeholder="Enter your full name" required>
@@ -92,8 +98,31 @@
         </div>
 
         <div class="form-group">
-          <label>Full Service Address</label>
-          <textarea id="custAddress" class="form-control" rows="3" placeholder="House/Flat No, Area, Landmark" required></textarea>
+          <label>House / Flat / Building No.</label>
+          <input type="text" id="custHouse" class="form-control" placeholder="House/Flat No., Building Name" required>
+        </div>
+
+        <div class="form-group">
+          <label>Area / Street / Landmark</label>
+          <input type="text" id="custArea" class="form-control" placeholder="Street Address, Nearby Landmark" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Service Date</label>
+            <input type="date" id="custDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Preferred Time</label>
+            <select id="custTime" class="form-control" required>
+              <option value="">Select Time</option>
+              <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
+              <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+              <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
+              <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+              <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+            </select>
+          </div>
         </div>
 
         <button type="submit" class="btn-submit-order">💬 Order via WhatsApp</button>
@@ -136,6 +165,10 @@
       document.getElementById('totalPrice').innerText = `₹${total}`;
       totalBox.style.display = 'flex';
       addressSection.style.display = 'block';
+
+      // Set default minimum date as today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('custDate').setAttribute('min', today);
     }
 
     function removeItem(index) {
@@ -159,22 +192,21 @@
 
       const name = document.getElementById('custName').value;
       const phone = document.getElementById('custPhone').value;
-      const address = document.getElementById('custAddress').value;
+      const house = document.getElementById('custHouse').value;
+      const area = document.getElementById('custArea').value;
+      const date = document.getElementById('custDate').value;
+      const time = document.getElementById('custTime').value;
 
       let itemsList = cart.map(i => `• ${i.title} (₹${i.priceNum})`).join('\n');
       let total = cart.reduce((sum, item) => sum + item.priceNum, 0);
 
-      let waMessage = `*NEW SERVICE ORDER*\n\n*Customer Details:*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*Ordered Services:*\n${itemsList}\n\n*Total Amount:* ₹${total}`;
+      let waMessage = `*NEW SERVICE ORDER*\n\n*Customer Details:*\n• Name: ${name}\n• Phone: ${phone}\n• House No: ${house}\n• Address/Landmark: ${area}\n\n*Booking Schedule:*\n• Date: ${date}\n• Time Slot: ${time}\n\n*Ordered Services:*\n${itemsList}\n\n*Total Amount:* ₹${total}`;
 
-      // Clear Cart after placing order
       localStorage.removeItem('a2z_cart');
-      
-      // Redirect to WhatsApp
       window.location.href = `https://wa.me/919101616836?text=${encodeURIComponent(waMessage)}`;
     }
 
     document.addEventListener("DOMContentLoaded", renderCart);
   </script>
 </body>
-            </html>
-            
+</html>
