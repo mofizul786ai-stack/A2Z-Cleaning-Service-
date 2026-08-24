@@ -1,323 +1,382 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+  <title>A2Z Service</title>
   <style>
-    /* Global Reset & Layout Fixes */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Footer Fix: Flexbox Layout */
-    html, body {
-      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      background-color: #f0f4f8;
+      background-color: #f8fafc;
+      /* Floating bar & Nav bar-এর জন্য নিচে পর্যাপ্ত জায়গা রাখা হয়েছে */
+      padding-bottom: 140px; 
     }
 
-    /* Main Container (Pushes footer down) */
-    .app-container {
-      flex: 1 0 auto;
-      max-width: 500px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 15px;
-    }
-
-    /* Header Styling */
+    /* Top Header */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 12px 16px;
       background: #fff;
-      padding: 12px 15px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
-    .header h2 {
-      color: #0056b3;
-      font-size: 18px;
+    .brand-name {
+      color: #0284c7;
+      font-size: 20px;
+      font-weight: 800;
     }
 
-    .exit-btn {
-      background-color: #ffebe9;
-      color: #d9381e;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* Navigation Tabs */
-    .tab-container {
+    .header-btns {
       display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
+      gap: 8px;
     }
 
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      background-color: #fff;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
-    .tab-btn.active {
-      background-color: #007bff;
+    .btn-call {
+      background: #0284c7;
       color: #fff;
       border: none;
-      font-weight: bold;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
     }
 
-    /* Card Box */
-    .card {
-      background-color: #fff;
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+    }
+
+    /* Main Container */
+    .container {
       padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      max-width: 500px;
+      margin: 0 auto;
     }
 
-    .card h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-      color: #333;
-    }
-
-    /* Form Inputs */
-    .input-group {
-      margin-bottom: 12px;
-    }
-
-    .input-group label {
-      display: block;
-      font-size: 12px;
-      color: #555;
-      margin-bottom: 5px;
-    }
-
-    .input-group input {
+    /* Banner Image */
+    .banner-img {
       width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
+      border-radius: 16px;
+      display: block;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Section Titles */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .badge-hot {
+      background: #fee2e2;
+      color: #ef4444;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* Categories Grid */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .category-card {
+      background: #fff;
+      padding: 12px 6px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid #f1f5f9;
+    }
+
+    .category-icon {
+      width: 45px;
+      height: 45px;
+      object-fit: cover;
+      margin-bottom: 6px;
+      border-radius: 8px;
+    }
+
+    .category-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    /* Callback Form Card */
+    .form-card {
+      background: #fff;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .form-title {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #0f172a;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 14px;
       outline: none;
     }
 
-    .add-btn {
+    .form-submit {
       width: 100%;
-      background-color: #10b981;
+      background: #2563eb;
       color: #fff;
       border: none;
       padding: 12px;
       border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 15px;
       cursor: pointer;
     }
 
-    /* Services List */
-    .service-item {
+    /* Information Sections (Our Services, Contact Info, Service Area) */
+    .info-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .info-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    .info-title.blue { color: #2563eb; }
+    .info-title.green { color: #16a34a; }
+
+    .info-desc {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    .phone-large {
+      font-size: 18px;
+      font-weight: 800;
+      color: #16a34a;
+      margin-bottom: 2px;
+    }
+
+    /* Fixed Floating Cart Bar */
+    .floating-cart {
+      position: fixed;
+      bottom: 65px; /* Bottom Nav Bar-এর ঠিক উপরে */
+      left: 15px;
+      right: 15px;
+      max-width: 470px;
+      margin: 0 auto;
+      background: #0284c7;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px;
-      border: 1px solid #eee;
-      border-radius: 8px;
-      margin-bottom: 8px;
+      z-index: 99;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
     }
 
-    .service-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .service-thumb {
-      width: 45px;
-      height: 45px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-
-    .service-details div:first-child {
-      font-weight: bold;
+    .cart-info {
+      font-weight: 600;
       font-size: 14px;
     }
 
-    .service-details div:last-child {
-      color: #666;
-      font-size: 13px;
+    .cart-btn {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .delete-btn {
-      background-color: #ffebe9;
-      color: #d9381e;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 6px;
-      cursor: pointer;
+    /* Fixed Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      border-top: 1px solid #e2e8f0;
+      z-index: 100;
     }
 
-    /* Footer Fix */
-    footer {
-      flex-shrink: 0;
-      background-color: #fff;
-      text-align: center;
-      padding: 15px;
-      border-top: 1px solid #e5e7eb;
-      margin-top: auto;
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 500;
     }
 
-    footer p {
-      color: #666;
-      font-size: 13px;
+    .nav-item.active {
+      color: #0284c7;
+    }
+
+    .nav-icon {
+      font-size: 18px;
+      margin-bottom: 2px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Main Application Wrapper -->
-  <div class="app-container">
+  <!-- Top Header -->
+  <div class="header">
+    <div class="brand-name">A2Z Service</div>
+    <div class="header-btns">
+      <a href="tel:+919101616836" class="btn-call">📞 Call</a>
+      <a href="https://wa.me/919101616836" class="btn-whatsapp">💬 WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="container">
     
-    <!-- Header -->
-    <div class="header">
-      <h2>Admin Dashboard</h2>
-      <button class="exit-btn">Exit App</button>
+    <!-- Banner -->
+    <img src="https://via.placeholder.com/500x250" alt="A2Z Banner" class="banner-img">
+
+    <!-- Categories -->
+    <div class="section-header">
+      <div class="section-title">What are you looking for?</div>
     </div>
 
-    <!-- Navigation Tabs -->
-    <div class="tab-container">
-      <button class="tab-btn active">🛠️ Services & Prices</button>
-      <button class="tab-btn">🖼️ Banners & Settings</button>
+    <div class="categories-grid">
+      <div class="category-card">
+        <img src="https://via.placeholder.com/45" class="category-icon" alt="Cleaning">
+        <div class="category-name">Cleaning</div>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/45" class="category-icon" alt="Electrician">
+        <div class="category-name">Electrician</div>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/45" class="category-icon" alt="Plumber">
+        <div class="category-name">Plumber</div>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/45" class="category-icon" alt="Repair">
+        <div class="category-name">Repair</div>
+      </div>
     </div>
 
-    <!-- Form Section -->
-    <div class="card">
-      <h3>Add Service from Gallery</h3>
-      <form id="serviceForm">
-        <div class="input-group">
-          <label>Service Name</label>
-          <input type="text" id="serviceName" placeholder="e.g. Sofa Cleaning" required>
-        </div>
-
-        <div class="input-group">
-          <label>Price (₹)</label>
-          <input type="number" id="servicePrice" placeholder="e.g. 250" required>
-        </div>
-
-        <div class="input-group">
-          <label>Select Photo from Gallery</label>
-          <input type="file" id="serviceImage" accept="image/*">
-        </div>
-
-        <button type="submit" class="add-btn">Add Service</button>
+    <!-- Callback Form Section -->
+    <div class="form-card">
+      <div class="form-title">Request A Callback</div>
+      <form id="callbackForm">
+        <input type="text" class="form-input" placeholder="Your Full Name" required>
+        <input type="tel" class="form-input" placeholder="Contact Number" required>
+        <button type="submit" class="form-submit">Submit</button>
       </form>
     </div>
 
-    <!-- Services List Section -->
-    <div class="card">
-      <h3>All Services</h3>
-      <div id="servicesList">
-        <!-- JS rendered items will appear here -->
+    <!-- Our Services Info -->
+    <div class="info-box">
+      <div class="info-title">Our Services</div>
+      <div class="info-desc">
+        • Home Cleaning • Deep Cleaning • Office & Commercial Cleaning • Bathroom & Kitchen Cleaning • Sofa & Carpet Cleaning • Post-Construction Cleaning
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="info-box">
+      <div class="info-title blue">Get In Touch</div>
+      <div class="phone-large">+91 9101616836</div>
+      <div class="info-desc">info@a2zcleaningservice.in</div>
+      <br>
+      <div class="info-desc"><b>Business Hours:</b><br>8:00 AM – 6:00 PM 7 Days a Week</div>
+    </div>
+
+    <!-- Service Area -->
+    <div class="info-box">
+      <div class="info-title green">Service Area</div>
+      <div class="info-desc">
+        Guwahati City • Hajo • Pan Bajar • Fancy Bazar • Dispur • Beltola • Six Mile • Ganeshguri • Paltan Bazaar • Zoo Road • Maligaon
       </div>
     </div>
 
   </div>
 
-  <!-- Sticky Footer -->
-  <footer>
-    <p>© 2026 Admin Dashboard. All Rights Reserved.</p>
-  </footer>
+  <!-- Floating Cart Bar -->
+  <div class="floating-cart">
+    <div class="cart-info">1 Item | ₹800</div>
+    <a href="#" class="cart-btn">View Cart →</a>
+  </div>
 
-  <script>
-    // LocalStorage থেকে ডাটা লোড করা
-    let services = JSON.parse(localStorage.getItem('app_services')) || [
-      { id: 1, name: '1BHK', price: '2500', image: 'https://via.placeholder.com/150' }
-    ];
-
-    const serviceForm = document.getElementById('serviceForm');
-    const servicesList = document.getElementById('servicesList');
-
-    // UI-তে সার্ভিস তালিকা রেন্ডার করার ফংশন
-    function renderServices() {
-      servicesList.innerHTML = '';
-      
-      services.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'service-item';
-        itemDiv.innerHTML = `
-          <div class="service-info">
-            <img src="${item.image}" class="service-thumb" alt="${item.name}">
-            <div class="service-details">
-              <div>${item.name}</div>
-              <div>₹${item.price}</div>
-            </div>
-          </div>
-          <button class="delete-btn" onclick="deleteService(${item.id})">Delete</button>
-        `;
-        servicesList.appendChild(itemDiv);
-      });
-
-      // LocalStorage আপ-টু-ডেট রাখা
-      localStorage.setItem('app_services', JSON.stringify(services));
-    }
-
-    // নতুন সার্ভিস এড হ্যান্ডলার (বহুবার আপডেট নিশ্চিত করে)
-    serviceForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const nameInput = document.getElementById('serviceName').value;
-      const priceInput = document.getElementById('servicePrice').value;
-      const imageInput = document.getElementById('serviceImage').files[0];
-
-      let imageUrl = 'https://via.placeholder.com/150';
-      if (imageInput) {
-        imageUrl = URL.createObjectURL(imageInput);
-      }
-
-      const newService = {
-        id: Date.now(),
-        name: nameInput,
-        price: priceInput,
-        image: imageUrl
-      };
-
-      // Array-তে নতুন ডাটা যোগ করা
-      services.unshift(newService);
-
-      // UI আপডেট করা
-      renderServices();
-
-      // Form Reset করা (পরবর্তীবার আবার ইনপুট নেওয়ার জন্য)
-      serviceForm.reset();
-    });
-
-    // ডিলিট হ্যান্ডলার
-    function deleteService(id) {
-      services = services.filter(item => item.id !== id);
-      renderServices();
-    }
-
-    // প্রাথমিক রেন্ডার
-    renderServices();
-  </script>
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <a href="#" class="nav-item active">
+      <span class="nav-icon">🏠</span>
+      Home
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-icon">📋</span>
+      Orders
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-icon">🔳</span>
+      Categories
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-icon">👤</span>
+      Profile
+    </a>
+  </div>
 
 </body>
 </html>
