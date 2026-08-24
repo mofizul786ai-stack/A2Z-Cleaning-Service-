@@ -57,7 +57,6 @@
 
   <div class="container">
     
-    <!-- 1. SELECTED SERVICES -->
     <div class="card-box">
       <div class="card-head">
         <span>Selected Services</span>
@@ -72,7 +71,6 @@
 
     <form id="checkoutForm" onsubmit="handleFinalBooking(event)">
       
-      <!-- 2. USER DETAILS & ADDRESS SECTION -->
       <div class="card-box">
         <div class="card-head">
           <span>Customer & Address Details</span>
@@ -84,44 +82,37 @@
           <span id="locStatus">Getting live location...</span>
         </div>
 
-        <!-- Full Name -->
         <div class="input-group">
           <input type="text" id="userName" class="input-field" placeholder="Full Name*" required>
         </div>
 
-        <!-- Mobile Phone Number -->
         <div class="input-group">
           <input type="tel" id="userPhone" class="input-field" placeholder="Mobile Number*" pattern="[0-9]{10}" maxlength="10" required>
         </div>
 
-        <!-- House / Flat No -->
         <div class="input-group">
           <input type="text" id="houseNo" class="input-field" placeholder="House / Flat / Building No.*" required>
         </div>
 
-        <!-- Street / Area Address -->
         <div class="input-group">
           <input type="text" id="autoAddress" class="input-field" placeholder="Street / Area Name*" required>
         </div>
 
-        <!-- Landmark & Pincode -->
         <div class="input-group input-row">
           <input type="text" id="landmark" class="input-field" placeholder="Landmark (Optional)">
           <input type="text" id="pincode" class="input-field" placeholder="Pincode*" maxlength="6" pattern="[0-9]{6}" required>
         </div>
       </div>
 
-      <!-- 3. DATE SELECTION -->
       <div class="card-box">
         <div class="card-head">Select Service Date</div>
         <div class="slot-grid" id="dateGrid"></div>
       </div>
 
-      <!-- 4. TIME SLOT SELECTION -->
       <div class="card-box">
         <div class="card-head">Select Time Slot</div>
         <div class="slot-grid">
-          <div class="slot-btn time-slot" onclick="selectTime(this)">09:00 AM</div>
+          <div class="slot-btn time-slot active" onclick="selectTime(this)">09:00 AM</div>
           <div class="slot-btn time-slot" onclick="selectTime(this)">11:00 AM</div>
           <div class="slot-btn time-slot" onclick="selectTime(this)">01:00 PM</div>
           <div class="slot-btn time-slot" onclick="selectTime(this)">03:00 PM</div>
@@ -129,18 +120,15 @@
         </div>
       </div>
 
-      <!-- 5. PAYMENT OPTIONS -->
       <div class="card-box">
         <div class="card-head">Payment Method</div>
-        
         <label class="pay-option">
-          <input type="radio" name="payment" value="UPI / Online" checked>
-          <span>📲 Pay via UPI / Online (GPay, PhonePe, Paytm)</span>
-        </label>
-        
-        <label class="pay-option">
-          <input type="radio" name="payment" value="Cash on Service">
+          <input type="radio" name="payment" value="Cash on Service" checked>
           <span>💵 Cash on Service (Pay after work)</span>
+        </label>
+        <label class="pay-option">
+          <input type="radio" name="payment" value="UPI / Online">
+          <span>📲 Pay via UPI / Online</span>
         </label>
       </div>
 
@@ -151,9 +139,8 @@
 
   <script>
     let selectedDate = '';
-    let selectedTime = '';
+    let selectedTime = '09:00 AM';
 
-    // RENDER CART ITEMS
     function renderCartItems() {
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       const listContainer = document.getElementById('cartItemsList');
@@ -176,7 +163,7 @@
             <div class="item-name">${item.title}</div>
             <div style="display:flex; align-items:center;">
               <span class="item-price">₹${item.priceNum}</span>
-              <button class="btn-delete" onclick="deleteCartItem(${index})" type="button">🗑️ Delete</button>
+              <button class="btn-delete" onclick="deleteCartItem(${index})" type="button">🗑️</button>
             </div>
           </div>
         `;
@@ -193,7 +180,6 @@
       renderCartItems();
     }
 
-    // GENERATE DATES
     function generateDates() {
       const dateGrid = document.getElementById('dateGrid');
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -223,12 +209,11 @@
       selectedTime = el.innerText;
     }
 
-    // LOCATION ACCURACY
     function getUserLocation() {
       const locStatus = document.getElementById('locStatus');
       const autoAddressInput = document.getElementById('autoAddress');
       const pincodeInput = document.getElementById('pincode');
-      locStatus.innerText = "Fetching current location...";
+      locStatus.innerText = "Fetching location...";
 
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
@@ -239,33 +224,28 @@
               .then(res => res.json())
               .then(data => {
                 let locName = [data.locality || data.city, data.principalSubdivision].filter(Boolean).join(', ');
-                locStatus.innerText = locName || "Location Detected";
+                locStatus.innerText = locName || "Location Found";
                 autoAddressInput.value = locName || "";
                 if (data.postcode) pincodeInput.value = data.postcode;
               })
               .catch(() => {
-                locStatus.innerText = "Agamoni, Dhubri, Assam";
-                autoAddressInput.value = "Agamoni, Dhubri, Assam";
+                locStatus.innerText = "Agamani, Assam";
+                autoAddressInput.value = "Agamani, Assam";
               });
           },
           function() {
-            locStatus.innerText = "Agamoni, Dhubri, Assam";
-            autoAddressInput.value = "Agamoni, Dhubri, Assam";
+            locStatus.innerText = "Agamani, Assam";
+            autoAddressInput.value = "Agamani, Assam";
           }
         );
       }
     }
 
-    // FINAL BOOKING & WHATSAPP REDIRECT
     function handleFinalBooking(e) {
       e.preventDefault();
       let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
       if (cart.length === 0) {
         alert("Your cart is empty!");
-        return;
-      }
-      if (!selectedTime) {
-        alert("Please select a Time Slot!");
         return;
       }
 
@@ -283,10 +263,10 @@
         date: selectedDate,
         time: selectedTime,
         payment: paymentMethod,
-        status: "Pending" // Initial Status
+        status: "Pending"
       };
 
-      // Save Order locally for orders.html and admin.html
+      // Save Order locally
       let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
       orders.push(orderData);
       localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
@@ -294,7 +274,7 @@
       // Clear Cart
       localStorage.removeItem('a2z_cart');
 
-      // Prepare WhatsApp Message
+      // WhatsApp Message Formatting
       let itemsText = "";
       let totalAmount = 0;
       cart.forEach(item => {
@@ -302,26 +282,23 @@
         totalAmount += item.priceNum;
       });
 
-      // Change this to your WhatsApp Number (with country code, e.g. 919876543210)
-      let adminWhatsAppNumber = "919876543210"; 
+      // Target WhatsApp Number 9101616836
+      let adminWhatsAppNumber = "919101616836"; 
       
-      let whatsappMessage = `🔔 *New Service Booking (Pending)*\n\n` +
+      let whatsappMessage = `🔔 *New Booking Request*\n\n` +
                             `🆔 Order ID: ${orderData.id}\n` +
-                            `👤 Name: ${userName}\n` +
+                            `👤 Customer: ${userName}\n` +
                             `📞 Phone: ${userPhone}\n` +
                             `📍 Address: ${fullAddress}\n\n` +
                             `🛠️ *Services:* \n${itemsText}\n` +
-                            `💰 *Total:* ₹${totalAmount}\n` +
+                            `💰 *Total Bill:* ₹${totalAmount}\n` +
                             `📅 Date: ${selectedDate}\n` +
                             `⏰ Time: ${selectedTime}\n` +
-                            `💳 Payment: ${paymentMethod}\n\n` +
-                            `👉 Please check Admin Panel to Confirm.`;
+                            `💳 Payment: ${paymentMethod}`;
 
       let whatsappURL = `https://wa.me/${adminWhatsAppNumber}?text=` + encodeURIComponent(whatsappMessage);
 
-      alert(`🎉 Booking Request Sent!\nStatus: Pending\n\nDirecting to WhatsApp for confirmation...`);
-      
-      // Redirect to WhatsApp & Orders page
+      // Open WhatsApp automatically & redirect user to orders.html
       window.open(whatsappURL, '_blank');
       window.location.href = "orders.html";
     }
@@ -333,5 +310,5 @@
     });
   </script>
 </body>
-          </html>
-          
+  </html>
+  
