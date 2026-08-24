@@ -5,378 +5,185 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A2Z Service</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 90px; }
+    .container { max-width: 500px; margin: 0 auto; }
 
-    body {
-      background-color: #f8fafc;
-      /* Floating bar & Nav bar-এর জন্য নিচে পর্যাপ্ত জায়গা রাখা হয়েছে */
-      padding-bottom: 140px; 
-    }
+    /* HEADER */
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .logo { font-size: 22px; font-weight: 800; color: #0879e8; }
+    .header-btns { display: flex; gap: 8px; }
+    .btn-call { background: #0879e8; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    .btn-wa { background: #25d366; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 4px; }
 
-    /* Top Header */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 16px;
-      background: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
+    /* BANNER */
+    .banner-container { width: 100%; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .banner-img { width: 100%; height: auto; display: block; object-fit: cover; }
 
-    .brand-name {
-      color: #0284c7;
-      font-size: 20px;
-      font-weight: 800;
-    }
+    /* SECTION TITLE */
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .section-title { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .badge-hot { background: #fee2e2; color: #ef4444; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
 
-    .header-btns {
-      display: flex;
-      gap: 8px;
-    }
+    /* CATEGORIES GRID */
+    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+    .category-card { background: white; border-radius: 16px; padding: 12px 6px; text-align: center; border: 1px solid #f1f5f9; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .category-img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; margin: 0 auto 6px; display: block; }
+    .category-title { font-size: 12px; font-weight: 700; color: #334155; }
 
-    .btn-call {
-      background: #0284c7;
-      color: #fff;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      text-decoration: none;
-    }
+    /* SERVICE CARD & CART BAR */
+    .service-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); position: relative; }
+    .service-img-container { position: relative; width: 100%; }
+    .service-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .time-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.9); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 4px; }
+    
+    .cart-bar { background: #0879e8; color: white; padding: 14px 20px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 15px; margin: 12px; }
+    .cart-bar a { color: white; text-decoration: none; font-size: 14px; }
 
-    .btn-whatsapp {
-      background: #25d366;
-      color: #fff;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      text-decoration: none;
+    /* FOOTER DESIGN */
+    .bottom-nav { 
+      position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; 
+      display: flex; justify-content: space-around; align-items: center;
+      padding: 8px 0; border-top: 1px solid #e2e8f0; z-index: 1000; 
     }
-
-    /* Main Container */
-    .container {
-      padding: 15px;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    /* Banner Image */
-    .banner-img {
-      width: 100%;
-      border-radius: 16px;
-      display: block;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Section Titles */
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    .badge-hot {
-      background: #fee2e2;
-      color: #ef4444;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
-    }
-
-    /* Categories Grid */
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 25px;
-    }
-
-    .category-card {
-      background: #fff;
-      padding: 12px 6px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid #f1f5f9;
-    }
-
-    .category-icon {
-      width: 45px;
-      height: 45px;
-      object-fit: cover;
-      margin-bottom: 6px;
-      border-radius: 8px;
-    }
-
-    .category-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: #334155;
-    }
-
-    /* Callback Form Card */
-    .form-card {
-      background: #fff;
-      padding: 16px;
-      border-radius: 16px;
-      margin-bottom: 25px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-
-    .form-title {
-      text-align: center;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #0f172a;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .form-submit {
-      width: 100%;
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    /* Information Sections (Our Services, Contact Info, Service Area) */
-    .info-box {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .info-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #1e293b;
-    }
-
-    .info-title.blue { color: #2563eb; }
-    .info-title.green { color: #16a34a; }
-
-    .info-desc {
-      font-size: 13px;
-      color: #475569;
-      line-height: 1.6;
-    }
-
-    .phone-large {
-      font-size: 18px;
-      font-weight: 800;
-      color: #16a34a;
-      margin-bottom: 2px;
-    }
-
-    /* Fixed Floating Cart Bar */
-    .floating-cart {
-      position: fixed;
-      bottom: 65px; /* Bottom Nav Bar-এর ঠিক উপরে */
-      left: 15px;
-      right: 15px;
-      max-width: 470px;
-      margin: 0 auto;
-      background: #0284c7;
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 99;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-    }
-
-    .cart-info {
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .cart-btn {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* Fixed Bottom Navigation Bar */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0;
-      border-top: 1px solid #e2e8f0;
-      z-index: 100;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: #64748b;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .nav-item.active {
-      color: #0284c7;
-    }
-
-    .nav-icon {
-      font-size: 18px;
-      margin-bottom: 2px;
-    }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 600; gap: 3px; flex: 1; }
+    .nav-icon { font-size: 20px; line-height: 1; }
+    .nav-item.active { color: #0879e8; }
   </style>
 </head>
 <body>
 
-  <!-- Top Header -->
-  <div class="header">
-    <div class="brand-name">A2Z Service</div>
-    <div class="header-btns">
-      <a href="tel:+919101616836" class="btn-call">📞 Call</a>
-      <a href="https://wa.me/919101616836" class="btn-whatsapp">💬 WhatsApp</a>
-    </div>
-  </div>
-
   <div class="container">
-    
-    <!-- Banner -->
-    <img src="https://via.placeholder.com/500x250" alt="A2Z Banner" class="banner-img">
+    <!-- HEADER -->
+    <header>
+      <div class="logo">A2Z Service</div>
+      <div class="header-btns">
+        <a id="callBtnLink" href="tel:9101616836" class="btn-call">📞 Call</a>
+        <a id="waBtnLink" href="https://wa.me/919101616836" class="btn-wa">💬 WhatsApp</a>
+      </div>
+    </header>
 
-    <!-- Categories -->
+    <!-- BANNER IMAGE -->
+    <div class="banner-container">
+      <img id="mainBannerImg" class="banner-img" src="https://via.placeholder.com/500x200" alt="A2Z Banner">
+    </div>
+
+    <!-- CATEGORIES SECTION -->
+    <h3 class="section-title" style="margin-bottom: 12px;">What are you looking for?</h3>
+    <div class="categories-grid" id="categoriesGrid"></div>
+
+    <!-- MOST BOOKED SERVICES SECTION -->
     <div class="section-header">
-      <div class="section-title">What are you looking for?</div>
+      <h3 class="section-title">Most Booked Services</h3>
+      <span class="badge-hot">HOT</span>
     </div>
 
-    <div class="categories-grid">
-      <div class="category-card">
-        <img src="https://via.placeholder.com/45" class="category-icon" alt="Cleaning">
-        <div class="category-name">Cleaning</div>
-      </div>
-      <div class="category-card">
-        <img src="https://via.placeholder.com/45" class="category-icon" alt="Electrician">
-        <div class="category-name">Electrician</div>
-      </div>
-      <div class="category-card">
-        <img src="https://via.placeholder.com/45" class="category-icon" alt="Plumber">
-        <div class="category-name">Plumber</div>
-      </div>
-      <div class="category-card">
-        <img src="https://via.placeholder.com/45" class="category-icon" alt="Repair">
-        <div class="category-name">Repair</div>
-      </div>
-    </div>
-
-    <!-- Callback Form Section -->
-    <div class="form-card">
-      <div class="form-title">Request A Callback</div>
-      <form id="callbackForm">
-        <input type="text" class="form-input" placeholder="Your Full Name" required>
-        <input type="tel" class="form-input" placeholder="Contact Number" required>
-        <button type="submit" class="form-submit">Submit</button>
-      </form>
-    </div>
-
-    <!-- Our Services Info -->
-    <div class="info-box">
-      <div class="info-title">Our Services</div>
-      <div class="info-desc">
-        • Home Cleaning • Deep Cleaning • Office & Commercial Cleaning • Bathroom & Kitchen Cleaning • Sofa & Carpet Cleaning • Post-Construction Cleaning
-      </div>
-    </div>
-
-    <!-- Contact Info -->
-    <div class="info-box">
-      <div class="info-title blue">Get In Touch</div>
-      <div class="phone-large">+91 9101616836</div>
-      <div class="info-desc">info@a2zcleaningservice.in</div>
-      <br>
-      <div class="info-desc"><b>Business Hours:</b><br>8:00 AM – 6:00 PM 7 Days a Week</div>
-    </div>
-
-    <!-- Service Area -->
-    <div class="info-box">
-      <div class="info-title green">Service Area</div>
-      <div class="info-desc">
-        Guwahati City • Hajo • Pan Bajar • Fancy Bazar • Dispur • Beltola • Six Mile • Ganeshguri • Paltan Bazaar • Zoo Road • Maligaon
-      </div>
-    </div>
+    <div id="dynamicServicesContainer"></div>
 
   </div>
 
-  <!-- Floating Cart Bar -->
-  <div class="floating-cart">
-    <div class="cart-info">1 Item | ₹800</div>
-    <a href="#" class="cart-btn">View Cart →</a>
-  </div>
-
-  <!-- Bottom Navigation Bar -->
-  <div class="bottom-nav">
-    <a href="#" class="nav-item active">
+  <!-- FOOTER -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
       <span class="nav-icon">🏠</span>
-      Home
+      <span>Home</span>
     </a>
-    <a href="#" class="nav-item">
+    <a href="orders.html" class="nav-item">
       <span class="nav-icon">📋</span>
-      Orders
+      <span>Orders</span>
     </a>
-    <a href="#" class="nav-item">
+    <a href="categories.html" class="nav-item">
       <span class="nav-icon">🔳</span>
-      Categories
+      <span>Categories</span>
     </a>
-    <a href="#" class="nav-item">
+    <a href="profile.html" class="nav-item">
       <span class="nav-icon">👤</span>
-      Profile
+      <span>Profile</span>
     </a>
-  </div>
+  </nav>
 
+  <script>
+    function loadHomePageData() {
+      // 1. DYNAMIC BANNER & CONTACT BUTTONS
+      let appConfig = JSON.parse(localStorage.getItem('a2z_app_config'));
+      if (appConfig) {
+        if (appConfig.banner) {
+          document.getElementById('mainBannerImg').src = appConfig.banner;
+        }
+        if (appConfig.call) {
+          document.getElementById('callBtnLink').href = "tel:" + appConfig.call;
+        }
+        if (appConfig.whatsapp) {
+          document.getElementById('waBtnLink').href = "https://wa.me/" + appConfig.whatsapp;
+        }
+      }
+
+      // 2. DYNAMIC CATEGORIES LOAD
+      let categories = JSON.parse(localStorage.getItem('a2z_categories_list')) || [];
+      let catContainer = document.getElementById('categoriesGrid');
+
+      if (categories.length === 0) {
+        // Default categories if empty
+        catContainer.innerHTML = `
+          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Cleaning</div></div>
+          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Electrician</div></div>
+          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Plumber</div></div>
+          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Repair</div></div>
+        `;
+      } else {
+        let catHtml = '';
+        categories.forEach(cat => {
+          let catImg = cat.image || 'https://via.placeholder.com/50';
+          catHtml += `
+            <div class="category-card">
+              <img src="${catImg}" class="category-img">
+              <div class="category-title">${cat.title}</div>
+            </div>
+          `;
+        });
+        catContainer.innerHTML = catHtml;
+      }
+
+      // 3. DYNAMIC SERVICES LOAD
+      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
+      let srvContainer = document.getElementById('dynamicServicesContainer');
+
+      if (services.length === 0) {
+        srvContainer.innerHTML = `
+          <div class="service-card">
+            <div class="service-img-container">
+              <span class="time-badge">⏱️ 1 hr</span>
+              <img src="https://via.placeholder.com/400x200" class="service-img">
+            </div>
+            <div class="cart-bar">
+              <span>1 Item | ₹800</span>
+              <a href="checkout.html">View Cart →</a>
+            </div>
+          </div>
+        `;
+      } else {
+        let srvHtml = '';
+        services.forEach(srv => {
+          let imgSrc = srv.image || 'https://via.placeholder.com/400x200';
+          let timeVal = srv.time || '1 hr';
+          srvHtml += `
+            <div class="service-card">
+              <div class="service-img-container">
+                <span class="time-badge">⏱️ ${timeVal}</span>
+                <img src="${imgSrc}" class="service-img">
+              </div>
+              <div class="cart-bar">
+                <span>${srv.name} | ₹${srv.price}</span>
+                <a href="checkout.html">View Cart →</a>
+              </div>
+            </div>
+          `;
+        });
+        srvContainer.innerHTML = srvHtml;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadHomePageData);
+  </script>
 </body>
 </html>
