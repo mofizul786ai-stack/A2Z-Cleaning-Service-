@@ -39,7 +39,8 @@
     .service-item { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 4px; color: #334155; }
     .service-item:last-child { margin-bottom: 0; }
 
-    .order-total { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 15px; border-top: 1px solid #f1f5f9; padding-top: 10px; margin-top: 8px; }
+    .order-footer { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 15px; border-top: 1px solid #f1f5f9; padding-top: 10px; margin-top: 8px; }
+    .btn-delete-user { background: #fee2e2; color: #ef4444; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -50,9 +51,7 @@
     <div style="width: 20px;"></div>
   </header>
 
-  <div class="container" id="customerOrdersList">
-    <!-- Orders will render here -->
-  </div>
+  <div class="container" id="customerOrdersList"></div>
 
   <script>
     function renderCustomerOrders() {
@@ -70,8 +69,8 @@
       }
 
       let html = '';
-      // Reverse to show latest orders first
-      orders.slice().reverse().forEach(order => {
+      orders.slice().reverse().forEach((order, index) => {
+        let actualIndex = orders.length - 1 - index;
         let status = order.status || 'Pending';
         let statusClass = 'status-pending';
         if (status === 'Confirmed') statusClass = 'status-confirmed';
@@ -106,15 +105,24 @@
               ${itemsHtml}
             </div>
 
-            <div class="order-total">
-              <span>Total Bill</span>
-              <span style="color:#0879e8;">₹${total}</span>
+            <div class="order-footer">
+              <div>Total: <span style="color:#0879e8;">₹${total}</span></div>
+              <button class="btn-delete-user" onclick="deleteCustomerOrder(${actualIndex})">🗑️ Cancel / Delete</button>
             </div>
           </div>
         `;
       });
 
       container.innerHTML = html;
+    }
+
+    function deleteCustomerOrder(index) {
+      if (confirm("Do you want to remove this order?")) {
+        let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
+        orders.splice(index, 1);
+        localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
+        renderCustomerOrders();
+      }
     }
 
     document.addEventListener("DOMContentLoaded", renderCustomerOrders);
