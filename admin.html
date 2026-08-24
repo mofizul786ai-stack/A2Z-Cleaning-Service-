@@ -10,7 +10,6 @@
 
     .container { max-width: 500px; margin: 0 auto; }
 
-    /* DASHBOARD CARD */
     .dashboard-card {
       background: #ffffff; border-radius: 20px; padding: 16px 20px;
       display: flex; justify-content: space-between; align-items: center;
@@ -23,7 +22,6 @@
       text-decoration: none; cursor: pointer;
     }
 
-    /* TAB BUTTONS */
     .tabs-wrapper { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 4px; }
     .tabs-wrapper::-webkit-scrollbar { display: none; }
     
@@ -34,7 +32,6 @@
     }
     .tab-btn.active { background: #0879e8; color: #ffffff; border-color: #0879e8; }
 
-    /* ORDER BOX & EMPTY STATE */
     .empty-state { text-align: center; color: #94a3b8; padding: 60px 20px; font-size: 15px; font-weight: 500; }
     
     .order-card {
@@ -47,6 +44,7 @@
     .status-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 8px; }
     .status-pending { background: #fef9c3; color: #854d0e; }
     .status-confirmed { background: #dcfce7; color: #166534; }
+    .status-completed { background: #e0f2fe; color: #0369a1; }
 
     .order-info { font-size: 13px; color: #475569; margin-bottom: 4px; line-height: 1.4; }
     .order-info strong { color: #0f172a; }
@@ -55,25 +53,22 @@
     .service-item { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 4px; color: #334155; }
     .service-item:last-child { margin-bottom: 0; }
 
-    .btn-confirm {
-      width: 100%; background: #16a34a; color: white; border: none;
-      padding: 10px; border-radius: 10px; font-size: 14px; font-weight: 800;
-      cursor: pointer; margin-top: 8px;
-    }
-    .btn-confirm:hover { background: #15803d; }
+    .action-grid { display: flex; gap: 8px; margin-top: 10px; }
+    .btn-action { flex: 1; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; text-align: center; }
+    .btn-confirm { background: #16a34a; color: white; }
+    .btn-complete { background: #0284c7; color: white; }
+    .btn-delete { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; flex: 0.4; }
   </style>
 </head>
 <body>
 
   <div class="container">
     
-    <!-- DASHBOARD HEADER -->
     <div class="dashboard-card">
       <div class="dash-title">Admin Dashboard</div>
       <a href="index.html" class="btn-exit">Exit App</a>
     </div>
 
-    <!-- TABS MENU -->
     <div class="tabs-wrapper">
       <button class="tab-btn active" id="btn-orders" onclick="switchTab('orders')">📋 Orders</button>
       <button class="tab-btn" id="btn-categories" onclick="switchTab('categories')">🔲 Categories</button>
@@ -81,27 +76,25 @@
       <button class="tab-btn" id="btn-sliders" onclick="switchTab('sliders')">🖼️ Sliders</button>
     </div>
 
-    <!-- TAB CONTENTS -->
     <div id="tab-orders">
       <div id="adminOrdersContainer"></div>
     </div>
 
     <div id="tab-categories" style="display: none;">
-      <div class="empty-state">No categories added yet!</div>
+      <div class="empty-state">Category Management Section</div>
     </div>
 
     <div id="tab-services" style="display: none;">
-      <div class="empty-state">No services added yet!</div>
+      <div class="empty-state">Services Management Section</div>
     </div>
 
     <div id="tab-sliders" style="display: none;">
-      <div class="empty-state">No sliders added yet!</div>
+      <div class="empty-state">Sliders Management Section</div>
     </div>
 
   </div>
 
   <script>
-    // TAB SWITCHING
     function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('btn-' + tabName).classList.add('active');
@@ -118,7 +111,6 @@
       }
     }
 
-    // LOAD ORDERS FROM STORAGE
     function loadAdminOrders() {
       const container = document.getElementById('adminOrdersContainer');
       let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
@@ -129,10 +121,12 @@
       }
 
       let html = '';
-      // Reverse array to show newest orders first
       orders.slice().reverse().forEach((order, index) => {
         let actualIndex = orders.length - 1 - index;
-        let isConfirmed = order.status === "Confirmed";
+        let status = order.status || 'Pending';
+        let statusClass = 'status-pending';
+        if (status === 'Confirmed') statusClass = 'status-confirmed';
+        if (status === 'Completed') statusClass = 'status-completed';
         
         let itemsHtml = '';
         let total = 0;
@@ -153,9 +147,7 @@
           <div class="order-card">
             <div class="order-head">
               <span class="order-id">ID: ${order.id}</span>
-              <span class="status-badge ${isConfirmed ? 'status-confirmed' : 'status-pending'}">
-                ${order.status || 'Pending'}
-              </span>
+              <span class="status-badge ${statusClass}">${status}</span>
             </div>
 
             <div class="order-info"><strong>Customer:</strong> ${order.name || 'N/A'} (${order.phone || 'N/A'})</div>
@@ -172,11 +164,11 @@
               <span style="color:#0879e8;">₹${total}</span>
             </div>
 
-            ${!isConfirmed ? `
-              <button class="btn-confirm" onclick="confirmOrder(${actualIndex})">Confirm Order</button>
-            ` : `
-              <div style="text-align:center; font-size:13px; color:#166534; font-weight:800; padding:6px 0;">✔ Order Confirmed</div>
-            `}
+            <div class="action-grid">
+              ${status === 'Pending' ? `<button class="btn-action btn-confirm" onclick="updateOrderStatus(${actualIndex}, 'Confirmed')">Confirm</button>` : ''}
+              ${status === 'Confirmed' ? `<button class="btn-action btn-complete" onclick="updateOrderStatus(${actualIndex}, 'Completed')">Complete</button>` : ''}
+              <button class="btn-action btn-delete" onclick="deleteAdminOrder(${actualIndex})">🗑️ Delete</button>
+            </div>
           </div>
         `;
       });
@@ -184,12 +176,20 @@
       container.innerHTML = html;
     }
 
-    // CONFIRM ORDER FUNCTION
-    function confirmOrder(index) {
+    function updateOrderStatus(index, newStatus) {
       let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
-      orders[index].status = "Confirmed";
+      orders[index].status = newStatus;
       localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
       loadAdminOrders();
+    }
+
+    function deleteAdminOrder(index) {
+      if (confirm("Are you sure you want to delete this order?")) {
+        let orders = JSON.parse(localStorage.getItem('a2z_orders_list')) || [];
+        orders.splice(index, 1);
+        localStorage.setItem('a2z_orders_list', JSON.stringify(orders));
+        loadAdminOrders();
+      }
     }
 
     document.addEventListener("DOMContentLoaded", loadAdminOrders);
