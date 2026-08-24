@@ -6,183 +6,358 @@
   <title>A2Z Service</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; padding: 16px; padding-bottom: 90px; }
-    .container { max-width: 500px; margin: 0 auto; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 140px; }
 
     /* HEADER */
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .logo { font-size: 22px; font-weight: 800; color: #0879e8; }
-    .header-btns { display: flex; gap: 8px; }
-    .btn-call { background: #0879e8; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 4px; }
-    .btn-wa { background: #25d366; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 4px; }
-
-    /* BANNER */
-    .banner-container { width: 100%; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .banner-img { width: 100%; height: auto; display: block; object-fit: cover; }
-
-    /* SECTION TITLE */
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .section-title { font-size: 18px; font-weight: 800; color: #0f172a; }
-    .badge-hot { background: #fee2e2; color: #ef4444; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
-
-    /* CATEGORIES GRID */
-    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
-    .category-card { background: white; border-radius: 16px; padding: 12px 6px; text-align: center; border: 1px solid #f1f5f9; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-    .category-img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; margin: 0 auto 6px; display: block; }
-    .category-title { font-size: 12px; font-weight: 700; color: #334155; }
-
-    /* SERVICE CARD & CART BAR */
-    .service-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); position: relative; }
-    .service-img-container { position: relative; width: 100%; }
-    .service-img { width: 100%; height: 200px; object-fit: cover; display: block; }
-    .time-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.9); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 4px; }
-    
-    .cart-bar { background: #0879e8; color: white; padding: 14px 20px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 15px; margin: 12px; }
-    .cart-bar a { color: white; text-decoration: none; font-size: 14px; }
-
-    /* FOOTER DESIGN */
-    .bottom-nav { 
-      position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; 
-      display: flex; justify-content: space-around; align-items: center;
-      padding: 8px 0; border-top: 1px solid #e2e8f0; z-index: 1000; 
+    header {
+      position: sticky; top: 0; z-index: 100; background: #ffffff;
+      padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #f1f5f9;
     }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 600; gap: 3px; flex: 1; }
-    .nav-icon { font-size: 20px; line-height: 1; }
+    .brand { font-size: 22px; font-weight: 800; color: #0879e8; text-decoration: none; }
+    .header-actions { display: flex; gap: 8px; }
+    .btn-action { text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .btn-call { background: #0879e8; color: white; }
+    .btn-wa { background: #25d366; color: white; }
+
+    .container { padding: 16px; max-width: 500px; margin: 0 auto; }
+
+    /* BANNER SLIDER */
+    .banner-container {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .banner-slide {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* CATEGORIES SECTION */
+    .section-title { font-size: 20px; font-weight: 800; margin-bottom: 14px; color: #0f172a; display: flex; align-items: center; justify-content: space-between; }
+    .badge-hot { background: #fee2e2; color: #ef4444; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 700; letter-spacing: 0.5px; }
+
+    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; text-align: center; }
+    .cat-card { background: white; border-radius: 16px; padding: 12px 4px; border: 1px solid #f1f5f9; text-decoration: none; color: inherit; display: block; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .cat-img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; margin: 0 auto 8px; display: block; }
+    .cat-name { font-size: 13px; font-weight: 600; color: #1e293b; }
+
+    /* SERVICE CARD */
+    .service-card { position: relative; background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    
+    .time-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(4px);
+      padding: 4px 10px; border-radius: 6px;
+      font-size: 12px; font-weight: 700; color: #0f172a;
+      display: flex; align-items: center; gap: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .service-img { width: 100%; height: 210px; object-fit: cover; display: block; }
+    .service-details { padding: 16px; }
+    .service-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    
+    .view-link { 
+      font-size: 13px; font-weight: 700; color: #0879e8; 
+      text-decoration: none; display: inline-block; margin-bottom: 16px; 
+    }
+
+    .service-footer { display: flex; justify-content: space-between; align-items: center; }
+    .price-rating { font-size: 17px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px; }
+    .rating-star { font-size: 13px; font-weight: 600; color: #64748b; }
+
+    .btn-add { 
+      background: #f0f7ff; 
+      color: #0879e8; 
+      border: 1px solid #bfdbfe; 
+      padding: 8px 20px; 
+      border-radius: 10px; 
+      font-weight: 800; 
+      font-size: 13px; 
+      cursor: pointer; 
+    }
+
+    /* FIXED FLOATING CART BAR */
+    #cartBar { 
+      position: fixed; 
+      bottom: 70px; 
+      left: 16px; 
+      right: 16px; 
+      max-width: 468px; 
+      margin: 0 auto; 
+      background: #0879e8; 
+      color: white; 
+      padding: 14px 18px; 
+      border-radius: 14px; 
+      display: none; 
+      justify-content: space-between; 
+      align-items: center; 
+      z-index: 999; 
+      box-shadow: 0 8px 20px rgba(8, 121, 232, 0.4); 
+    }
+
+    /* BOTTOM NAVIGATION BAR */
+    .bottom-nav { 
+      position: fixed; 
+      bottom: 0; 
+      left: 0; 
+      width: 100%; 
+      background: #ffffff; 
+      display: flex; 
+      justify-content: space-around; 
+      align-items: center;
+      padding: 8px 0 10px; 
+      border-top: 1px solid #e2e8f0; 
+      z-index: 1000; 
+    }
+    .nav-item { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center;
+      color: #64748b; 
+      text-decoration: none; 
+      font-size: 11px; 
+      font-weight: 600; 
+      gap: 2px;
+      flex: 1;
+    }
+    .nav-item span:first-child { font-size: 20px; line-height: 1; }
     .nav-item.active { color: #0879e8; }
   </style>
 </head>
 <body>
 
+  <header>
+    <a href="index.html" class="brand">A2Z Service</a>
+    <div class="header-actions">
+      <a id="hdr_call_link" href="tel:+919101616836" class="btn-action btn-call">📞 Call</a>
+      <a id="hdr_wa_link" href="https://wa.me/919101616836" class="btn-action btn-wa">💬 WhatsApp</a>
+    </div>
+  </header>
+
   <div class="container">
-    <!-- HEADER -->
-    <header>
-      <div class="logo">A2Z Service</div>
-      <div class="header-btns">
-        <a id="callBtnLink" href="tel:9101616836" class="btn-call">📞 Call</a>
-        <a id="waBtnLink" href="https://wa.me/919101616836" class="btn-wa">💬 WhatsApp</a>
-      </div>
-    </header>
 
-    <!-- BANNER IMAGE -->
+    <!-- HERO PROMO BANNER -->
     <div class="banner-container">
-      <img id="mainBannerImg" class="banner-img" src="https://via.placeholder.com/500x200" alt="A2Z Banner">
+      <img id="img_banner" class="banner-slide" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1000" alt="Special Offer Banner">
     </div>
 
-    <!-- CATEGORIES SECTION -->
-    <h3 class="section-title" style="margin-bottom: 12px;">What are you looking for?</h3>
-    <div class="categories-grid" id="categoriesGrid"></div>
-
-    <!-- MOST BOOKED SERVICES SECTION -->
-    <div class="section-header">
-      <h3 class="section-title">Most Booked Services</h3>
-      <span class="badge-hot">HOT</span>
+    <div class="section-title">What are you looking for?</div>
+    <div class="categories-grid" id="dynamicCategoriesGrid">
+      <a href="cleaning.html" class="cat-card">
+        <img id="img_cat_cleaning" class="cat-img" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200">
+        <div class="cat-name">Cleaning</div>
+      </a>
+      <a href="electrician.html" class="cat-card">
+        <img id="img_cat_electrician" class="cat-img" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=200">
+        <div class="cat-name">Electrician</div>
+      </a>
+      <a href="plumber.html" class="cat-card">
+        <img id="img_cat_plumber" class="cat-img" src="https://images.unsplash.com/photo-1505798577917-a65157d3320a?w=200">
+        <div class="cat-name">Plumber</div>
+      </a>
+      <a href="repair.html" class="cat-card">
+        <img id="img_cat_repair" class="cat-img" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=200">
+        <div class="cat-name">Repair</div>
+      </a>
     </div>
 
-    <div id="dynamicServicesContainer"></div>
+    <div class="section-title">Most Booked Services <span class="badge-hot">HOT</span></div>
+    
+    <!-- DYNAMIC SERVICES CONTAINER -->
+    <div id="dynamicServicesList">
+      <div class="service-card">
+        <div class="time-badge">⏱️ 1 hr</div>
+        <img id="img_service_sofa" class="service-img" src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800">
+        <div class="service-details">
+          <div class="service-title">Sofa Deep Cleaning</div>
+          <a href="sofa-cleaning-details.html" class="view-link">View Details →</a>
+          <div class="service-footer">
+            <div class="price-rating">
+              ₹800 <span class="rating-star">• ⭐ 4.8</span>
+            </div>
+            <button class="btn-add" onclick="addToCart('Sofa Deep Cleaning', 800)">ADD +</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
-  <!-- FOOTER -->
+  <!-- FOOTER SECTION -->
+  <footer style="background: #ffffff; padding: 30px 16px 40px; text-align: center; border-top: 1px solid #f1f5f9; margin-top: 20px;">
+    <div style="font-size: 22px; font-weight: 900; color: #16a34a; margin-bottom: 4px;">A2Z Cleaning Service</div>
+    <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Request A Callback</div>
+
+    <form onsubmit="handleCallback(event)" style="max-width: 350px; margin: 0 auto 24px; display: flex; flex-direction: column; gap: 10px;">
+      <input type="text" id="cbName" placeholder="Your Full Name" required style="padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none;">
+      <input type="tel" id="cbPhone" placeholder="Contact Number" required style="padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none;">
+      <button type="submit" style="background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;">Submit</button>
+    </form>
+
+    <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">Our Services</div>
+    <p style="font-size: 13px; color: #475569; line-height: 1.6; max-width: 400px; margin: 0 auto 20px;">
+      • Home Cleaning • Deep Cleaning • Office & Commercial Cleaning • Bathroom & Kitchen Cleaning • Sofa & Carpet Cleaning • Post-Construction Cleaning
+    </p>
+
+    <div style="font-size: 18px; font-weight: 800; color: #2563eb; margin-bottom: 8px;">Get In Touch</div>
+    <a id="ftr_call_link" href="tel:+919101616836" style="font-size: 16px; font-weight: 700; color: #16a34a; text-decoration: none; display: block; margin-bottom: 4px;">+91 9101616836</a>
+    <a href="mailto:info@a2zcleaningservice.in" style="font-size: 14px; color: #475569; text-decoration: none; display: block; margin-bottom: 12px;">info@a2zcleaningservice.in</a>
+
+    <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">Business Hours:</div>
+    <p style="font-size: 13px; color: #475569; margin-bottom: 20px;">8:00 AM – 6:00 PM 7 Days a Week</p>
+
+    <div style="font-size: 14px; font-weight: 800; color: #16a34a; margin-bottom: 6px;">Service Area</div>
+    <p style="font-size: 12px; color: #475569; line-height: 1.6; max-width: 420px; margin: 0 auto;">
+      Guwahati City • Hajo • Pan Bajar • Fancy Bazar • Dispur • Beltola • Six Mile • Ganeshguri • Paltan Bazaar • Zoo Road • Maligaon
+    </p>
+  </footer>
+
+  <!-- FLOATING CART BAR -->
+  <div id="cartBar">
+    <div>
+      <span id="cartCount" style="font-weight: 800; font-size: 14px;">0 Items</span>
+      <span style="margin: 0 6px;">|</span>
+      <span id="cartPrice" style="font-size: 14px;">₹0</span>
+    </div>
+    <a href="checkout.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 13px;">View Cart →</a>
+  </div>
+
+  <!-- BOTTOM NAVIGATION BAR -->
   <nav class="bottom-nav">
-    <a href="index.html" class="nav-item active">
-      <span class="nav-icon">🏠</span>
-      <span>Home</span>
-    </a>
-    <a href="orders.html" class="nav-item">
-      <span class="nav-icon">📋</span>
-      <span>Orders</span>
-    </a>
-    <a href="categories.html" class="nav-item">
-      <span class="nav-icon">🔳</span>
-      <span>Categories</span>
-    </a>
-    <a href="profile.html" class="nav-item">
-      <span class="nav-icon">👤</span>
-      <span>Profile</span>
-    </a>
+    <a href="index.html" class="nav-item active"><span>🏠</span><span>Home</span></a>
+    <a href="orders.html" class="nav-item"><span>📋</span><span>Orders</span></a>
+    <a href="categories.html" class="nav-item"><span>🔳</span><span>Categories</span></a>
+    <a href="profile.html" class="nav-item"><span>👤</span><span>Profile</span></a>
   </nav>
 
   <script>
-    function loadHomePageData() {
-      // BANNER & CONTACT LINK SYNC
+    function loadAllDynamicData() {
+      // 1. BANNER SYNC (Multiple Key Support)
+      let bannerUrl = localStorage.getItem('img_banner') || localStorage.getItem('banner_url');
       let appConfig = JSON.parse(localStorage.getItem('a2z_app_config'));
+      
+      if (appConfig && appConfig.banner) {
+        bannerUrl = appConfig.banner;
+      }
+      if (bannerUrl) {
+        document.getElementById('img_banner').src = bannerUrl;
+      }
+
+      // 2. CONTACT SYNC
       if (appConfig) {
-        if (appConfig.banner) {
-          document.getElementById('mainBannerImg').src = appConfig.banner;
-        }
         if (appConfig.call) {
-          document.getElementById('callBtnLink').href = "tel:" + appConfig.call;
+          document.getElementById('hdr_call_link').href = "tel:" + appConfig.call;
+          document.getElementById('ftr_call_link').href = "tel:" + appConfig.call;
+          document.getElementById('ftr_call_link').innerText = appConfig.call.startsWith('+') ? appConfig.call : '+' + appConfig.call;
         }
         if (appConfig.whatsapp) {
-          document.getElementById('waBtnLink').href = "https://wa.me/" + appConfig.whatsapp;
+          document.getElementById('hdr_wa_link').href = "https://wa.me/" + appConfig.whatsapp;
         }
       }
 
-      // CATEGORIES SYNC
-      let categories = JSON.parse(localStorage.getItem('a2z_categories_list')) || [];
-      let catContainer = document.getElementById('categoriesGrid');
+      // 3. CATEGORIES SYNC
+      let catCleaning = localStorage.getItem('img_cat_cleaning');
+      let catElectrician = localStorage.getItem('img_cat_electrician');
+      let catPlumber = localStorage.getItem('img_cat_plumber');
+      let catRepair = localStorage.getItem('img_cat_repair');
 
-      if (categories.length === 0) {
-        catContainer.innerHTML = `
-          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Cleaning</div></div>
-          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Electrician</div></div>
-          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Plumber</div></div>
-          <div class="category-card"><img src="https://via.placeholder.com/50" class="category-img"><div class="category-title">Repair</div></div>
-        `;
-      } else {
+      if (catCleaning) document.getElementById('img_cat_cleaning').src = catCleaning;
+      if (catElectrician) document.getElementById('img_cat_electrician').src = catElectrician;
+      if (catPlumber) document.getElementById('img_cat_plumber').src = catPlumber;
+      if (catRepair) document.getElementById('img_cat_repair').src = catRepair;
+
+      let categories = JSON.parse(localStorage.getItem('a2z_categories_list')) || [];
+      if (categories.length > 0) {
         let catHtml = '';
         categories.forEach(cat => {
-          let catImg = cat.image || 'https://via.placeholder.com/50';
+          let imgSrc = cat.image || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200';
+          let pageLink = cat.title.toLowerCase().replace(/\s+/g, '') + '.html';
           catHtml += `
-            <div class="category-card">
-              <img src="${catImg}" class="category-img">
-              <div class="category-title">${cat.title}</div>
-            </div>
+            <a href="${pageLink}" class="cat-card">
+              <img class="cat-img" src="${imgSrc}">
+              <div class="cat-name">${cat.title}</div>
+            </a>
           `;
         });
-        catContainer.innerHTML = catHtml;
+        document.getElementById('dynamicCategoriesGrid').innerHTML = catHtml;
       }
 
-      // SERVICES SYNC
-      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
-      let srvContainer = document.getElementById('dynamicServicesContainer');
+      // 4. SERVICES SYNC
+      let serviceSofa = localStorage.getItem('img_service_sofa');
+      if (serviceSofa && document.getElementById('img_service_sofa')) {
+        document.getElementById('img_service_sofa').src = serviceSofa;
+      }
 
-      if (services.length === 0) {
-        srvContainer.innerHTML = `
-          <div class="service-card">
-            <div class="service-img-container">
-              <span class="time-badge">⏱️ 1 hr</span>
-              <img src="https://via.placeholder.com/400x200" class="service-img">
-            </div>
-            <div class="cart-bar">
-              <span>1 Item | ₹800</span>
-              <a href="checkout.html">View Cart →</a>
-            </div>
-          </div>
-        `;
-      } else {
+      let services = JSON.parse(localStorage.getItem('a2z_services_list')) || [];
+      if (services.length > 0) {
         let srvHtml = '';
         services.forEach(srv => {
-          let imgSrc = srv.image || 'https://via.placeholder.com/400x200';
+          let imgSrc = srv.image || 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800';
           let timeVal = srv.time || '1 hr';
+          let detailPage = srv.name.toLowerCase().replace(/\s+/g, '-') + '-details.html';
+          
           srvHtml += `
             <div class="service-card">
-              <div class="service-img-container">
-                <span class="time-badge">⏱️ ${timeVal}</span>
-                <img src="${imgSrc}" class="service-img">
-              </div>
-              <div class="cart-bar">
-                <span>${srv.name} | ₹${srv.price}</span>
-                <a href="checkout.html">View Cart →</a>
+              <div class="time-badge">⏱️ ${timeVal}</div>
+              <img class="service-img" src="${imgSrc}">
+              <div class="service-details">
+                <div class="service-title">${srv.name}</div>
+                <a href="${detailPage}" class="view-link">View Details →</a>
+                <div class="service-footer">
+                  <div class="price-rating">
+                    ₹${srv.price} <span class="rating-star">• ⭐ 4.8</span>
+                  </div>
+                  <button class="btn-add" onclick="addToCart('${srv.name}', ${srv.price})">ADD +</button>
+                </div>
               </div>
             </div>
           `;
         });
-        srvContainer.innerHTML = srvHtml;
+        document.getElementById('dynamicServicesList').innerHTML = srvHtml;
       }
     }
 
-    document.addEventListener("DOMContentLoaded", loadHomePageData);
+    function addToCart(title, priceNum) {
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      cart.push({ id: Date.now(), title: title, priceNum: priceNum });
+      localStorage.setItem('a2z_cart', JSON.stringify(cart));
+      updateCartBar();
+    }
+
+    function updateCartBar() {
+      let cart = JSON.parse(localStorage.getItem('a2z_cart')) || [];
+      const bar = document.getElementById('cartBar');
+      if (cart.length > 0) {
+        const total = cart.reduce((sum, item) => sum + item.priceNum, 0);
+        document.getElementById('cartCount').innerText = `${cart.length} Item${cart.length > 1 ? 's' : ''}`;
+        document.getElementById('cartPrice').innerText = `₹${total}`;
+        bar.style.display = 'flex';
+      } else {
+        bar.style.display = 'none';
+      }
+    }
+
+    function handleCallback(e) {
+      e.preventDefault();
+      const name = document.getElementById('cbName').value;
+      const phone = document.getElementById('cbPhone').value;
+      alert(`Thank you ${name}! We will call you back shortly on ${phone}.`);
+      e.target.reset();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      loadAllDynamicData();
+      updateCartBar();
+    });
   </script>
 </body>
 </html>
